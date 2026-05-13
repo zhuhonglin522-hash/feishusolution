@@ -1,32 +1,9 @@
-# FEEDBACK · 20260513-143546
+# Feedback
 
-本次 build：按参考 PPT 备注组装 19 页 HTML deck；17 页来自星巴克 / 欧普源 HTML，2 页从 PPT 内容转为原生 HTML。
+Merged the prepared first, second, and third HTML parts into one GitHub Pages-ready Lark-style HTML deck.
 
-## 关键决策
-
-1. 源 HTML 页采用“抽取 slide-frame + 保留对应页级 CSS”的方式。
-   为什么：两份材料都有大量页面级样式，直接重画会丢失原页面的视觉细节。
-   你的看法: [ ] 对 / [ ] 应改成截图式复刻 / [ ] 备注
-
-2. 资源路径按来源隔离为 `starbucks/...` 与 `opple/...`。
-   为什么：两份源文件都有 `assets/`、`input/`，直接合并有同名覆盖风险。
-   你的看法: [ ] 对 / [ ] 应统一扁平化资源 / [ ] 备注
-
-3. PPT 第 6 页改为原生 HTML 流程页，并保留 PPT 内嵌的两张截图作为证据区。
-   为什么：备注要求 PPT 转 HTML；流程和审核卡片适合原生 HTML，截图作为原始视觉素材保真。
-   你的看法: [ ] 对 / [ ] 应更贴近 PPT 原始坐标 / [ ] 备注
-
-4. 第 9 页将可见“知识管理”替换为“业务教练”，并同步改 `data-slide-key` 为 `business-coach`。
-   为什么：PPT 备注明确要求替换，key 也需要避免沿用旧语义。
-   你的看法: [ ] 对 / [ ] 只改标题不改正文 / [ ] 备注
-
-## 本次没解决的小毛病
-
-- 抽取页保留了源 deck 的局部样式，因此最终 HTML 不是最小 CSS 体积；优先保证按备注组装和视觉保真。
-
-## 你的额外建议
-
-- [ ] 
-- [ ] 
-
-累计 >=3 条值得反馈的(打钩 / 备注 / 自填),把这个文件发给 skill 维护者整合到下一版.
+Key decisions:
+- Kept part 1 as the full MINISO opening deck.
+- Used the corrected generated second part from the latest run.
+- Extracted only the enterprise AI implementation and closing section from the OPPLE deck as part 3, so the AI intro and case pages are not duplicated.
+- Namespaced `data-page` and asset paths per part to prevent page-specific CSS collisions.

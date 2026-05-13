@@ -1,0 +1,300 @@
+/* ============================================================
+   Lark PPT — Foundations: Colors & Type
+   Source: 飞书母版2025-打单 (LarkPPTTemplate.thmx)
+   Theme:  飞书PPT 主题色  ·  Font scheme: 飞书品牌字
+   ============================================================ */
+
+/* ---- Webfonts -------------------------------------------------
+   Original: 方正兰亭黑Pro_GB18030 (FangZheng LanTing Hei Pro)
+   This is a licensed commercial CJK family. We substitute Noto
+   Sans SC, the closest open-source geometric grotesque CJK
+   sans available on Google Fonts. FLAG to user: replace with
+   licensed FZLanTingHeiPro-* files for production parity.
+---------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+
+  /* ============================================================
+     COLOR PRIMITIVES — drawn directly from theme1.xml clrScheme
+     ============================================================ */
+
+  /* Background / surface — slides ship dark by default
+     (master clrMap swaps bg1="dk1", so dk1 is the page color) */
+  --lark-bg-black:    #000000;   /* dk1  · primary slide bg */
+  --lark-bg-deep:     #04060F;   /* near-black, used for hero gradients */
+  --lark-bg-navy:     #0A1230;   /* deep navy, hero gradient origin */
+  --lark-bg-twilight: #1B1F3A;   /* secondary panel */
+
+  /* Foreground (on dark) */
+  --lark-fg-white:    #FFFFFF;   /* lt1 · primary text on dark */
+  --lark-fg-muted:    #E7E6E6;   /* lt2 · low-emphasis text on dark */
+  --lark-fg-soft:     rgba(255,255,255,0.72);
+  --lark-fg-quiet:    rgba(255,255,255,0.48);
+  --lark-fg-faint:    rgba(255,255,255,0.16);
+
+  /* Foreground (on light, for product UI surfaces) */
+  --lark-ink:         #1F2329;   /* primary text on light surfaces */
+  --lark-ink-2:       #51565D;
+  --lark-ink-3:       #8F959E;
+  --lark-ink-4:       #BBBFC4;
+  --lark-line:        #DEE0E3;   /* divider on light */
+  --lark-surface:     #FFFFFF;
+  --lark-surface-2:   #F5F6F7;   /* page bg in product */
+  --lark-surface-3:   #EFF0F1;
+
+  /* Neutral — dk2/lt2 in theme */
+  --lark-neutral-700: #767171;   /* dk2 */
+  --lark-neutral-200: #E7E6E6;   /* lt2 */
+
+  /* ---------- Brand accent palette (the 6 swatches) ---------- */
+  --lark-blue:    #3C7FFF;       /* accent1 · primary brand blue */
+  --lark-cyan:    #24C3FF;       /* accent2 */
+  --lark-purple:  #5C3FFB;       /* accent3 · deep purple */
+  --lark-teal:    #33D6C0;       /* accent4 · Lark logo teal */
+  --lark-violet:  #9F6FF1;       /* accent5 */
+  --lark-orange:  #FE7F00;       /* accent6 */
+
+  /* Tints / shades for the brand blue (most-used accent) */
+  --lark-blue-50:  #EAF1FF;
+  --lark-blue-100: #C9DCFF;
+  --lark-blue-200: #9DBEFF;
+  --lark-blue-300: #6A9DFF;
+  --lark-blue-400: #3C7FFF;      /* base · accent1 */
+  --lark-blue-500: #2566EC;
+  --lark-blue-600: #0057F9;      /* folHlink */
+  --lark-blue-700: #003FB8;
+
+  /* Semantic */
+  --lark-link:           #3C7FFF;  /* hlink */
+  --lark-link-visited:   #0057F9;  /* folHlink */
+  --lark-success:        #33D6C0;
+  --lark-warning:        #FE7F00;
+  --lark-danger:         #F54A45;  /* commonly used in Lark product UI */
+  --lark-info:           #24C3FF;
+
+  /* ---------- Brand-defining gradients ---------- */
+  /* Hero/cover gradient: navy fades to black with a faint blue
+     glow top-left (matches image1.jpg / image4.jpg / image5.jpg) */
+  --lark-grad-hero:
+    radial-gradient(120% 100% at 0% 0%, #0F1A4A 0%, #060B22 38%, #000 78%);
+
+  /* Section gradient: deeper, used for chapter pages */
+  --lark-grad-section:
+    radial-gradient(140% 110% at 100% 0%, #1A2256 0%, #050817 50%, #000 100%);
+
+  /* Brand gradient (logo-derived: teal → cobalt → deep navy) */
+  --lark-grad-brand:
+    linear-gradient(135deg, #33D6C0 0%, #3C7FFF 50%, #1A1F6B 100%);
+
+  /* Accent strip gradient (used for thin keylines / dividers) */
+  --lark-grad-keyline:
+    linear-gradient(90deg, #33D6C0 0%, #3C7FFF 50%, #5C3FFB 100%);
+
+  /* ============================================================
+     TYPE — drawn from theme1.xml fontScheme + slideMaster txStyles
+     ============================================================ */
+
+  /* Display / sans CJK — primary brand face */
+  --lark-font-sans:
+    "Noto Sans SC", "FZLanTingHeiPro_GB18030",
+    "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Latin counterpart (numerals, English copy) */
+  --lark-font-latin:
+    "Inter", "Helvetica Neue", Arial,
+    "Noto Sans SC", sans-serif;
+
+  /* Mono (supporting — not in original theme, sensible default) */
+  --lark-font-mono:
+    "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---- Weights ---- */
+  --lark-w-light:    300;
+  --lark-w-regular:  400;
+  --lark-w-medium:   500;   /* FZLanTingHei Medium — body copy default */
+  --lark-w-semibold: 600;   /* FZLanTingHei SemiBold — H1/H2/title */
+  --lark-w-bold:     700;   /* FZLanTingHei Bold — cover & big numbers */
+  --lark-w-black:    900;
+
+  /* ---- Type scale (slide-friendly @ 1920×1080)
+     Names match the slide-master txStyles roles. Sizes scale
+     linearly to product UI when used inside a `.product` scope. ---- */
+  --lark-text-cover:    96px;   /* 50pt @ 1280 → ≈96px @ 1920 */
+  --lark-text-section:  84px;   /* 一级章节页 — chapter headers */
+  --lark-text-h1:       56px;   /* 30pt centered title */
+  --lark-text-h2:       40px;   /* 26pt content-page title */
+  --lark-text-h3:       32px;
+  --lark-text-quote:    52px;   /* 金句页 (key-quote slide) */
+  --lark-text-subtitle: 28px;   /* eyebrow / secondary line */
+  --lark-text-body:     24px;   /* slide body — never below 24 */
+  --lark-text-caption:  18px;
+  --lark-text-eyebrow:  16px;   /* uppercase metadata */
+
+  /* Line-height */
+  --lark-lh-tight:   1.10;
+  --lark-lh-snug:    1.25;
+  --lark-lh-normal:  1.40;
+  --lark-lh-loose:   1.65;
+
+  /* Letter-spacing (CJK is ~0; latin caps slightly tracked) */
+  --lark-tracking-tight:  -0.01em;
+  --lark-tracking-normal: 0;
+  --lark-tracking-wide:    0.04em;
+  --lark-tracking-eyebrow: 0.14em;
+
+  /* ============================================================
+     SPACING / RADII / SHADOWS / MOTION
+     ============================================================ */
+
+  --lark-space-1: 4px;
+  --lark-space-2: 8px;
+  --lark-space-3: 12px;
+  --lark-space-4: 16px;
+  --lark-space-5: 24px;
+  --lark-space-6: 32px;
+  --lark-space-7: 48px;
+  --lark-space-8: 64px;
+  --lark-space-9: 96px;
+  --lark-space-10: 128px;
+
+  --lark-radius-xs: 4px;
+  --lark-radius-sm: 6px;       /* Lark product buttons */
+  --lark-radius-md: 8px;       /* cards, inputs */
+  --lark-radius-lg: 12px;
+  --lark-radius-xl: 16px;
+  --lark-radius-2xl: 24px;
+  --lark-radius-pill: 999px;
+
+  /* Shadows — Lark product cards use soft, low elevations */
+  --lark-shadow-1: 0 1px 2px rgba(31, 35, 41, 0.06), 0 0 1px rgba(31, 35, 41, 0.10);
+  --lark-shadow-2: 0 4px 12px rgba(31, 35, 41, 0.08), 0 0 1px rgba(31, 35, 41, 0.10);
+  --lark-shadow-3: 0 8px 32px rgba(31, 35, 41, 0.12);
+  --lark-shadow-glow-blue: 0 0 32px rgba(60, 127, 255, 0.32);
+  --lark-shadow-glow-teal: 0 0 32px rgba(51, 214, 192, 0.28);
+
+  /* Borders */
+  --lark-border-thin:   1px solid rgba(255,255,255,0.10);
+  --lark-border-strong: 1px solid rgba(255,255,255,0.20);
+  --lark-border-light:  1px solid var(--lark-line);
+
+  /* Motion */
+  --lark-ease:          cubic-bezier(0.4, 0, 0.2, 1);
+  --lark-ease-out:      cubic-bezier(0.0, 0, 0.2, 1);
+  --lark-ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --lark-dur-fast:      120ms;
+  --lark-dur-base:      200ms;
+  --lark-dur-slow:      400ms;
+}
+
+/* ============================================================
+   SEMANTIC ROLES — apply directly to elements
+   ============================================================ */
+
+.lark-deck-bg {
+  background: var(--lark-grad-hero);
+  color: var(--lark-fg-white);
+  font-family: var(--lark-font-sans);
+}
+
+/* Cover slide title */
+.lark-cover-title {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-bold);
+  font-size: var(--lark-text-cover);
+  line-height: var(--lark-lh-tight);
+  letter-spacing: var(--lark-tracking-tight);
+  color: var(--lark-fg-white);
+}
+
+/* Section / chapter header */
+.lark-section-title {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-bold);
+  font-size: var(--lark-text-section);
+  line-height: var(--lark-lh-tight);
+  color: var(--lark-fg-white);
+}
+
+/* Content-page title (slide H2) */
+.lark-h1 {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-semibold);
+  font-size: var(--lark-text-h1);
+  line-height: var(--lark-lh-snug);
+  color: var(--lark-fg-white);
+}
+.lark-h2 {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-semibold);
+  font-size: var(--lark-text-h2);
+  line-height: var(--lark-lh-snug);
+  color: var(--lark-fg-white);
+}
+.lark-h3 {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-semibold);
+  font-size: var(--lark-text-h3);
+  line-height: var(--lark-lh-snug);
+  color: var(--lark-fg-white);
+}
+
+.lark-quote {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-semibold);
+  font-size: var(--lark-text-quote);
+  line-height: var(--lark-lh-snug);
+  color: var(--lark-fg-white);
+}
+
+.lark-subtitle {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-medium);
+  font-size: var(--lark-text-subtitle);
+  line-height: var(--lark-lh-normal);
+  color: var(--lark-fg-soft);
+}
+
+.lark-body {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-medium);
+  font-size: var(--lark-text-body);
+  line-height: var(--lark-lh-normal);
+  color: var(--lark-fg-soft);
+}
+
+.lark-caption {
+  font-family: var(--lark-font-sans);
+  font-weight: var(--lark-w-regular);
+  font-size: var(--lark-text-caption);
+  line-height: var(--lark-lh-normal);
+  color: var(--lark-fg-quiet);
+}
+
+.lark-eyebrow {
+  font-family: var(--lark-font-latin);
+  font-weight: var(--lark-w-semibold);
+  font-size: var(--lark-text-eyebrow);
+  letter-spacing: var(--lark-tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--lark-blue);
+}
+
+/* ============================================================
+   PRODUCT-UI scope — Lark Suite app (light surface)
+   Use by adding class `lark-product` on a container.
+   ============================================================ */
+.lark-product {
+  background: var(--lark-surface-2);
+  color: var(--lark-ink);
+  font-family: var(--lark-font-sans);
+  font-size: 14px;
+  line-height: var(--lark-lh-normal);
+}
+.lark-product h1 { font-size: 28px; font-weight: var(--lark-w-semibold); color: var(--lark-ink); }
+.lark-product h2 { font-size: 20px; font-weight: var(--lark-w-semibold); color: var(--lark-ink); }
+.lark-product h3 { font-size: 16px; font-weight: var(--lark-w-semibold); color: var(--lark-ink); }
+.lark-product p  { font-size: 14px; color: var(--lark-ink); }
+.lark-product a  { color: var(--lark-link); text-decoration: none; }
+.lark-product a:hover { text-decoration: underline; }

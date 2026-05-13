@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<!-- saved from url=(0110)https://fuqiang.github.io/feishusolution/OPPLE-AI-Lecture/prototypes/raw-material-intelligence-hub.html#prices -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>AI 原料情报站 · Raw Material Intelligence Hub</title>
+<link rel="stylesheet" href="./colors_and_type.css">
+<style>
+  :root{
+    --bg:        #0A1929;
+    --bg-2:      #0E1F35;
+    --bg-3:      #142A44;
+    --panel:     #0F2235;
+    --line:      rgba(255,255,255,0.08);
+    --line-2:    rgba(255,255,255,0.14);
+    --ink:       #E8EEF7;
+    --ink-2:     rgba(232,238,247,0.72);
+    --ink-3:     rgba(232,238,247,0.50);
+    --ink-4:     rgba(232,238,247,0.32);
+    --tech:      #3C7FFF;
+    --tech-2:    #6A9DFF;
+    --hi:        #FF6B35;   /* high risk */
+    --md:        #FFB627;   /* med risk */
+    --lo:        #00C896;   /* low risk */
+    --cyan:      #24C3FF;
+    --mono:      "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans:      var(--lark-font-sans);
+    --latin:     var(--lark-font-latin);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);}
+  body{
+    font-size:13px;
+    line-height:1.5;
+    min-height:100vh;
+    background:
+      radial-gradient(80% 60% at 10% -10%, rgba(60,127,255,0.10) 0%, transparent 60%),
+      radial-gradient(60% 50% at 100% 0%, rgba(36,195,255,0.06) 0%, transparent 60%),
+      var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .latin{font-family:var(--latin)}
+  .eyebrow{font-family:var(--latin);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  .hairline{border:1px solid var(--line)}
+
+  /* ============ LAYOUT ============ */
+  .app{
+    max-width:1440px;
+    margin:0 auto;
+    padding:18px 24px 40px;
+  }
+  /* HEADER */
+  .header{
+    display:flex; align-items:center; gap:24px;
+    padding:14px 18px;
+    background:linear-gradient(180deg, rgba(20,42,68,0.6) 0%, rgba(15,34,53,0.4) 100%);
+    border:1px solid var(--line);
+    border-radius:10px;
+    margin-bottom:16px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;min-width:280px}
+  .brand-logo{
+    width:36px;height:36px;border-radius:8px;
+    background: conic-gradient(from 220deg, #24C3FF, #3C7FFF, #5C3FFB, #24C3FF);
+    position:relative;flex-shrink:0;
+    box-shadow: 0 0 24px rgba(60,127,255,0.35);
+  }
+  .brand-logo::after{
+    content:"";position:absolute;inset:5px;border-radius:5px;background:var(--bg);
+    display:flex;
+  }
+  .brand-logo svg{position:absolute;inset:0;margin:auto;z-index:2;width:18px;height:18px}
+  .brand-name{display:flex;flex-direction:column;line-height:1.15}
+  .brand-name b{font-size:15px;font-weight:600;letter-spacing:0.01em}
+  .brand-name span{font-size:10px;color:var(--ink-3);font-family:var(--latin);letter-spacing:0.14em;text-transform:uppercase;margin-top:2px}
+
+  .scope-chip{
+    display:flex;align-items:center;gap:8px;
+    padding:7px 14px;font-size:11.5px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line);
+    border-radius:20px;color:var(--ink-2);
+    font-family:var(--sans);
+  }
+  .scope-chip b{color:#fff;font-weight:600;font-size:12px}
+  .scope-chip .scope-dot{
+    width:6px;height:6px;border-radius:50%;background:var(--lo);
+    box-shadow:0 0 0 3px rgba(0,200,150,0.18);
+    animation: pulse-dot-lo 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse-dot-lo{50%{box-shadow:0 0 0 6px rgba(0,200,150,0.06)}}
+  .lang-en .scope-chip{font-family:var(--latin);letter-spacing:0.04em}
+  .lang-en .scope-chip b{font-family:var(--latin)}
+  .industry-switch{display:none}
+
+  .header-meta{margin-left:auto;display:flex;gap:28px;align-items:center}
+  .meta-block{display:flex;flex-direction:column;line-height:1.2;font-size:11px}
+  .meta-block .lbl{color:var(--ink-4);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;font-family:var(--latin);font-weight:600;margin-bottom:3px}
+  .meta-block .val{color:var(--ink);font-family:var(--mono);font-size:12px}
+  .meta-block .val.dim{color:var(--ink-2)}
+  .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--lo);margin-right:6px;vertical-align:middle;box-shadow:0 0 0 3px rgba(0,200,150,0.18);animation:pulse-dot 2.4s ease-in-out infinite}
+  @keyframes pulse-dot{50%{box-shadow:0 0 0 6px rgba(0,200,150,0.05)}}
+
+  /* MAIN GRID */
+  .main-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:16px;
+  }
+  .panel{
+    background:linear-gradient(180deg, rgba(20,42,68,0.5) 0%, rgba(14,31,53,0.5) 100%);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+  }
+  .panel-head{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .panel-head h2{
+    margin:0;font-size:15px;font-weight:600;letter-spacing:0.01em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .panel-head h2 svg{width:14px;height:14px;opacity:0.85}
+  .panel-head .sub{font-size:11px;color:var(--ink-3);margin-top:3px;font-family:var(--latin)}
+  .panel-head .right{font-size:10px;color:var(--ink-4);font-family:var(--mono);text-align:right;letter-spacing:0.06em}
+
+  /* ============ ORIGIN CARDS (left panel) ============ */
+  .origin-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:10px;
+  }
+  .origin-card{
+    position:relative;
+    background:rgba(255,255,255,0.025);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 14px 12px 18px;
+    overflow:hidden;
+    transition: all 180ms ease;
+    cursor:default;
+  }
+  .origin-card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background: var(--ink-4);
+  }
+  .origin-card.high::before{background:var(--hi)}
+  .origin-card.med::before {background:var(--md)}
+  .origin-card.low::before {background:var(--lo)}
+  .origin-card:hover{border-color:var(--line-2);background:rgba(255,255,255,0.04);transform:translateY(-1px)}
+
+  .oc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+  .oc-region{font-size:13px;font-weight:600;color:#fff;line-height:1.25;letter-spacing:0.005em}
+  .oc-cat{font-size:11px;color:var(--ink-3);margin-top:2px;font-family:var(--latin);letter-spacing:0.01em}
+  .oc-card-zh .oc-cat{font-family:var(--sans)}
+
+  .oc-pill{
+    flex-shrink:0;
+    font-size:9px;padding:2px 6px;border-radius:3px;
+    font-weight:700;letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-family:var(--latin);
+  }
+  .origin-card.high .oc-pill{background:rgba(255,107,53,0.16);color:var(--hi);border:1px solid rgba(255,107,53,0.35)}
+  .origin-card.med  .oc-pill{background:rgba(255,182,39,0.16);color:var(--md);border:1px solid rgba(255,182,39,0.3)}
+  .origin-card.low  .oc-pill{background:rgba(0,200,150,0.16);color:var(--lo);border:1px solid rgba(0,200,150,0.3)}
+  .oc-card-zh .oc-pill{letter-spacing:0.04em;font-family:var(--sans);text-transform:none}
+
+  .oc-signal{
+    font-size:11.5px;color:var(--ink-2);line-height:1.45;
+    margin-top:8px;padding-top:8px;
+    border-top:1px dashed rgba(255,255,255,0.06);
+  }
+  .oc-signal b{color:#fff;font-weight:600}
+  .oc-signal .delta{
+    display:inline-block;font-family:var(--mono);font-size:11px;font-weight:600;
+    padding:0 4px;border-radius:3px;margin-left:2px;
+    background:rgba(255,255,255,0.04);
+  }
+  .oc-signal .delta.up   {color:var(--hi);background:rgba(255,107,53,0.10)}
+  .oc-signal .delta.down {color:var(--lo);background:rgba(0,200,150,0.10)}
+  .oc-signal .delta.flat {color:var(--ink-3)}
+
+  .oc-meta{
+    display:flex;align-items:center;gap:8px;margin-top:8px;
+    font-size:10px;color:var(--ink-4);font-family:var(--mono);letter-spacing:0.02em;
+  }
+  .oc-meta .src{color:var(--ink-3)}
+  .oc-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--ink-4)}
+
+  /* Tiny live indicator on highest-risk cards */
+  .origin-card.high .oc-live{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:9px;font-family:var(--latin);font-weight:700;
+    color:var(--hi);letter-spacing:0.12em;text-transform:uppercase;
+  }
+  .origin-card.high .oc-live i{
+    width:5px;height:5px;border-radius:50%;background:var(--hi);
+    box-shadow:0 0 0 3px rgba(255,107,53,0.18);
+    animation:pulse-dot-hi 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse-dot-hi{50%{box-shadow:0 0 0 6px rgba(255,107,53,0.06)}}
+
+  .legend-row{
+    display:flex;justify-content:flex-end;gap:18px;font-size:10px;
+    color:var(--ink-3);font-family:var(--latin);letter-spacing:0.04em;
+    margin-top:14px;padding-top:10px;border-top:1px solid var(--line);
+  }
+  .lang-zh .legend-row{font-family:var(--sans);letter-spacing:0.02em;font-size:11px}
+  .legend-row span{display:flex;align-items:center;gap:6px}
+  .legend-row i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+  /* ============ (legacy map styles kept dead) ============ */
+  .legacy-hide{display:none !important}
+  .worldmap-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio: 2 / 1.05;
+    margin:0 auto;
+    overflow:visible;
+  }
+  .worldmap-svg{
+    width:100%;height:100%;display:block;
+    background:radial-gradient(60% 80% at 50% 50%, rgba(60,127,255,0.06) 0%, transparent 70%);
+    border-radius:6px;
+  }
+  .map-grid path,
+  .map-grid line{stroke:rgba(60,127,255,0.06);stroke-width:0.6;fill:none}
+  .continents{
+    fill:rgba(60,127,255,0.10);
+    stroke:rgba(60,127,255,0.55);
+    stroke-width:0.7;
+    stroke-linejoin:round;
+  }
+  .continents .land-fill{fill:url(#landDots)}
+  .map-coord{font-family:var(--latin);font-size:7px;fill:rgba(255,255,255,0.18);letter-spacing:0.16em}
+
+  /* Soft sweep across map */
+  .map-sweep{
+    transform-origin:50% 50%;
+    animation: mapsweep 14s linear infinite;
+    mix-blend-mode:screen;
+    opacity:0.55;
+  }
+  @keyframes mapsweep{
+    0%{transform:translateX(-110%)}
+    100%{transform:translateX(110%)}
+  }
+
+  .signal{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    pointer-events:auto;
+    cursor:pointer;
+    z-index:2;
+  }
+  .signal:hover{z-index:5}
+  .sig-dot{
+    width:10px;height:10px;border-radius:50%;
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  }
+  .sig-dot::before{
+    content:"";position:absolute;inset:-7px;border-radius:50%;
+    border:1px solid currentColor;opacity:0.45;
+  }
+  .signal.high .sig-dot{background:var(--hi);color:var(--hi);box-shadow:0 0 0 4px rgba(255,107,53,0.10), 0 0 18px rgba(255,107,53,0.55);animation:pulse-hi 2.4s ease-in-out infinite}
+  .signal.med  .sig-dot{background:var(--md);color:var(--md);box-shadow:0 0 0 4px rgba(255,182,39,0.10)}
+  .signal.low  .sig-dot{background:var(--lo);color:var(--lo);box-shadow:0 0 0 4px rgba(0,200,150,0.10)}
+  @keyframes pulse-hi{
+    0%,100%{box-shadow:0 0 0 4px rgba(255,107,53,0.10), 0 0 18px rgba(255,107,53,0.55)}
+    50%{box-shadow:0 0 0 9px rgba(255,107,53,0.04), 0 0 26px rgba(255,107,53,0.75)}
+  }
+  /* Connector line dot→label */
+  .sig-line{
+    position:absolute;left:50%;top:50%;
+    width:30px;height:1px;background:rgba(255,255,255,0.25);
+    transform-origin:0 50%;
+  }
+  .signal.place-r .sig-line{transform:translate(0,0) rotate(0deg)}
+  .signal.place-l .sig-line{transform:translate(0,0) rotate(180deg)}
+  .signal.place-tr .sig-line{transform:translate(0,0) rotate(-30deg)}
+  .signal.place-tl .sig-line{transform:translate(0,0) rotate(210deg)}
+  .signal.place-br .sig-line{transform:translate(0,0) rotate(30deg)}
+  .signal.place-bl .sig-line{transform:translate(0,0) rotate(150deg)}
+
+  .sig-card{
+    position:absolute;
+    background:rgba(10,28,46,0.94);
+    border:1px solid var(--line-2);
+    backdrop-filter: blur(8px);
+    border-radius:5px;
+    padding:6px 8px;
+    width:148px;
+    transition: all 180ms ease;
+  }
+  .signal.place-r  .sig-card{left:34px; top:50%; transform:translateY(-50%)}
+  .signal.place-l  .sig-card{right:34px; top:50%; transform:translateY(-50%)}
+  .signal.place-tr .sig-card{left:30px; bottom:18px}
+  .signal.place-tl .sig-card{right:30px; bottom:18px}
+  .signal.place-br .sig-card{left:30px; top:18px}
+  .signal.place-bl .sig-card{right:30px; top:18px}
+  .signal:hover .sig-card{border-color:var(--tech);background:rgba(15,35,60,0.99);box-shadow:0 6px 28px rgba(0,0,0,0.55)}
+
+  .sig-region{font-size:11px;font-weight:600;color:#fff;letter-spacing:0.01em;line-height:1.25}
+  .sig-cat{font-size:10px;color:var(--ink-2);margin-top:1px;font-family:var(--latin);line-height:1.3}
+  .sig-meta{font-size:9px;color:var(--ink-4);margin-top:4px;font-family:var(--mono);letter-spacing:0.02em;line-height:1.35}
+  .sig-pill{
+    display:inline-block;font-size:8px;padding:1px 5px;border-radius:3px;
+    font-family:var(--latin);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    margin-top:4px;
+  }
+  .signal.high .sig-pill{background:rgba(255,107,53,0.16);color:var(--hi)}
+  .signal.med  .sig-pill{background:rgba(255,182,39,0.16);color:var(--md)}
+  .signal.low  .sig-pill{background:rgba(0,200,150,0.16);color:var(--lo)}
+
+  /* Map legend */
+  .radar-legend{
+    display:flex;justify-content:center;gap:18px;font-size:10px;
+    color:var(--ink-3);font-family:var(--latin);letter-spacing:0.04em;
+    margin-top:10px;
+  }
+  .radar-legend span{display:flex;align-items:center;gap:6px}
+  .radar-legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+  /* ============ BRIEFING ============ */
+  .brief-summary{
+    display:flex;gap:18px;margin-bottom:14px;padding:10px 12px;
+    background:rgba(60,127,255,0.06);
+    border:1px solid rgba(60,127,255,0.18);
+    border-radius:6px;
+  }
+  .brief-summary .stat{display:flex;flex-direction:column;line-height:1.1}
+  .brief-summary .stat b{font-size:18px;font-family:var(--mono);color:#fff;font-weight:600}
+  .brief-summary .stat span{font-size:10px;color:var(--ink-3);font-family:var(--latin);letter-spacing:0.08em;text-transform:uppercase;margin-top:3px}
+  .brief-summary .stat .hi{color:var(--hi)}
+
+  .briefs{display:flex;flex-direction:column;gap:10px;max-height:540px;overflow:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+  .briefs::-webkit-scrollbar{width:6px}
+  .briefs::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+
+  .brief{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 14px;
+    background:rgba(255,255,255,0.02);
+    transition:all 160ms ease;
+  }
+  .brief:hover{border-color:var(--line-2);background:rgba(255,255,255,0.035)}
+  .brief-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .prio{
+    font-size:9px;font-family:var(--latin);font-weight:700;letter-spacing:0.14em;
+    padding:2px 6px;border-radius:3px;text-transform:uppercase;
+  }
+  .prio.high{background:rgba(255,107,53,0.16);color:var(--hi);border:1px solid rgba(255,107,53,0.4)}
+  .prio.med {background:rgba(255,182,39,0.16);color:var(--md);border:1px solid rgba(255,182,39,0.35)}
+  .prio.low {background:rgba(0,200,150,0.16);color:var(--lo);border:1px solid rgba(0,200,150,0.35)}
+  .brief-title{font-size:13px;font-weight:600;color:#fff;letter-spacing:0.005em}
+  .brief-src{font-size:10px;color:var(--ink-4);font-family:var(--mono);margin-bottom:6px}
+  .brief-src b{color:var(--ink-2);font-weight:500}
+  .brief-body{font-size:12px;color:var(--ink-2);line-height:1.55}
+  .brief-ref{
+    margin-top:8px;padding:8px 10px;
+    background:rgba(0,0,0,0.25);border-left:2px solid var(--cyan);
+    border-radius:0 4px 4px 0;font-size:11px;color:var(--ink-2);
+  }
+  .brief-ref b{color:var(--cyan);font-family:var(--latin);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:2px}
+  .brief-sug{
+    margin-top:6px;padding:8px 10px;
+    background:rgba(60,127,255,0.06);border-left:2px solid var(--tech);
+    border-radius:0 4px 4px 0;font-size:11px;color:var(--ink-2);
+  }
+  .brief-sug b{color:var(--tech);font-family:var(--latin);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:2px}
+
+  /* ============ PRICES ============ */
+  .prices{
+    grid-column: 1 / -1;
+    margin-top:16px;
+  }
+  .price-row{
+    display:grid; grid-template-columns: repeat(5, 1fr); gap:1px;
+    background:var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .price-cell{
+    background:rgba(14,31,53,0.85);
+    padding:14px 16px;
+    display:flex;flex-direction:column;gap:4px;
+    position:relative;
+  }
+  .price-cell .name{font-size:11px;color:var(--ink-3);font-family:var(--latin);letter-spacing:0.08em;text-transform:uppercase;font-weight:600}
+  .price-cell .nm-sub{font-size:9px;color:var(--ink-4);font-family:var(--latin);margin-top:-1px}
+  .price-cell .val{font-size:22px;font-weight:600;font-family:var(--mono);color:#fff;margin-top:6px;line-height:1}
+  .price-cell .chg{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);margin-top:3px}
+  .price-cell .chg.up   {color:var(--hi)}
+  .price-cell .chg.down {color:var(--lo)}
+  .price-cell .chg.flat {color:var(--ink-3)}
+  .price-cell .chg .arrow{font-size:10px}
+  .price-cell .warn-pill{display:inline-block;font-size:8px;letter-spacing:0.1em;padding:1px 5px;border-radius:3px;background:rgba(255,182,39,0.18);color:var(--md);font-family:var(--latin);font-weight:700;margin-left:4px}
+  .price-cell .src{font-size:9px;color:var(--ink-4);font-family:var(--mono);margin-top:6px;line-height:1.4}
+  .price-cell .src b{color:var(--ink-2);font-weight:500}
+  .price-cell .fut{font-size:10px;color:var(--ink-2);font-family:var(--mono);margin-top:1px}
+  .price-cell svg.spark{margin-top:8px;width:100%;height:30px}
+
+  /* ============ CHAT ============ */
+  .chat-panel{grid-column: 1 / -1;margin-top:16px}
+  .chat-presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .chat-presets button{
+    padding:7px 12px;font-size:12px;
+    background:rgba(60,127,255,0.06);
+    border:1px solid rgba(60,127,255,0.22);
+    color:var(--ink);border-radius:6px;
+    transition:all 160ms ease;
+    display:flex;align-items:center;gap:6px;
+  }
+  .chat-presets button:hover{background:rgba(60,127,255,0.16);border-color:var(--tech)}
+  .chat-presets button svg{width:11px;height:11px;color:var(--tech)}
+
+  .chat-area{
+    background:rgba(0,0,0,0.18);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:14px 16px;
+    min-height:160px;
+    font-size:12.5px;
+    line-height:1.65;
+    color:var(--ink-2);
+  }
+  .chat-msg{margin-bottom:14px}
+  .chat-msg:last-child{margin-bottom:0}
+  .chat-msg .from{
+    font-size:10px;letter-spacing:0.16em;font-weight:700;text-transform:uppercase;
+    color:var(--tech);font-family:var(--latin);margin-bottom:6px;display:flex;align-items:center;gap:6px;
+  }
+  .chat-msg.user .from{color:var(--ink-3)}
+  .chat-msg .from i{width:5px;height:5px;border-radius:50%;background:currentColor;display:inline-block}
+  .chat-msg .body p{margin:0 0 8px}
+  .chat-msg .body p:last-child{margin-bottom:0}
+  .chat-msg .body ul{margin:0 0 6px;padding-left:18px}
+  .chat-msg .body li{margin-bottom:3px}
+  .chat-msg .body b{color:var(--ink);font-weight:600}
+  .chat-msg .body .src-tag{display:inline-block;font-size:10px;font-family:var(--mono);color:var(--cyan);margin-left:4px}
+  .chat-msg .body .you-judge{
+    margin-top:8px;padding:8px 10px;border-radius:4px;
+    background:rgba(255,182,39,0.06);border:1px solid rgba(255,182,39,0.22);
+    color:var(--ink-2);font-size:11.5px;
+  }
+  .chat-msg .body .you-judge b{color:var(--md);font-family:var(--latin);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;display:block;margin-bottom:4px}
+
+  /* Histogram bar for "30%上涨/50%平稳/20%下跌" */
+  .hist{
+    display:flex;align-items:center;gap:8px;margin:8px 0;
+    font-size:11px;color:var(--ink-3);font-family:var(--mono);
+  }
+  .hist .bar{flex:1;height:6px;border-radius:3px;display:flex;overflow:hidden;background:rgba(255,255,255,0.05)}
+  .hist .bar i{display:block;height:100%}
+  .hist .bar i.up   { background:var(--hi)  }
+  .hist .bar i.flat { background:var(--ink-4)}
+  .hist .bar i.down { background:var(--lo)  }
+  .hist-leg{display:flex;gap:10px;font-size:10px;margin-top:2px;color:var(--ink-3);font-family:var(--latin)}
+  .hist-leg span i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:4px;vertical-align:middle}
+
+  .chat-input{
+    display:flex;gap:8px;margin-top:12px;
+    background:rgba(0,0,0,0.3);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:4px 4px 4px 12px;
+  }
+  .chat-input input{
+    flex:1;background:transparent;border:0;outline:none;color:var(--ink);
+    font-size:13px;font-family:var(--sans);padding:8px 0;
+  }
+  .chat-input input::placeholder{color:var(--ink-4)}
+  .chat-input button{
+    padding:7px 14px;border-radius:5px;font-size:12px;
+    background:var(--tech);color:#fff;font-weight:600;
+  }
+  .chat-input button:hover{background:#2566EC}
+
+  /* ============ ABOUT ============ */
+  .about{
+    margin-top:16px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:rgba(0,0,0,0.18);
+  }
+  .about-toggle{
+    width:100%;padding:14px 18px;
+    display:flex;align-items:center;justify-content:space-between;
+    cursor:pointer;
+  }
+  .about-toggle .lhs{display:flex;align-items:center;gap:10px}
+  .about-toggle svg{width:14px;height:14px;color:var(--ink-3);transition:transform 200ms ease}
+  .about-toggle h3{margin:0;font-size:13px;font-weight:600}
+  .about-toggle .sub{font-size:11px;color:var(--ink-3);font-family:var(--latin)}
+  .about[open] .about-toggle svg{transform:rotate(180deg)}
+  .about-body{
+    display:none;padding:0 18px 18px;
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+  .about[open] .about-body{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .about-card h4{
+    margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+    font-family:var(--latin);color:var(--ink);
+    display:flex;align-items:center;gap:6px;
+  }
+  .about-card.can h4   {color:var(--lo)}
+  .about-card.cannot h4{color:var(--hi)}
+  .about-card.src h4   {color:var(--cyan)}
+  .about-card.lag h4   {color:var(--md)}
+  .about-card ul{margin:0;padding:0;list-style:none;font-size:12px;color:var(--ink-2);line-height:1.7}
+  .about-card li{padding:3px 0;border-bottom:1px dashed rgba(255,255,255,0.05)}
+  .about-card li:last-child{border-bottom:none}
+  .about-card li .src-name{font-family:var(--mono);color:var(--ink);font-size:11px}
+  .about-card li .src-desc{font-size:10px;color:var(--ink-3);font-family:var(--latin);margin-left:6px}
+  .about-card li .lag-val{font-family:var(--mono);color:var(--ink);float:right}
+
+  /* Footer */
+  .footer{
+    margin-top:18px;padding:14px 4px;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:10px;color:var(--ink-4);font-family:var(--latin);letter-spacing:0.04em;
+  }
+  .footer .left{display:flex;gap:14px;align-items:center}
+  .disclaimer{
+    color:var(--md);
+    background:rgba(255,182,39,0.06);
+    border:1px solid rgba(255,182,39,0.22);
+    padding:4px 10px;border-radius:4px;font-size:10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3C7FFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path>
+        </svg>
+      </div>
+      <div class="brand-name">
+        <b data-i18n="brand.name">Opple Procurement Intelligence Hub</b>
+        <span data-i18n="brand.sub">采购情报站 · 欧普照明</span>
+      </div>
+    </div>
+
+    <div class="scope-chip" id="industrySwitch">
+      <span class="scope-dot"></span>
+      <span data-i18n="scope.label">SCOPE</span>
+      <b data-i18n="scope.val">All Opple categories · 8 core signals</b>
+    </div>
+
+    <div class="header-meta">
+      <div class="meta-block">
+        <span class="lbl" data-i18n="hdr.today">Today</span>
+        <span class="val" data-i18n="today.val">May 11, 2026 · Mon</span>
+      </div>
+      <div class="meta-block">
+        <span class="lbl" data-i18n="hdr.last">Last Scan</span>
+        <span class="val"><span class="live-dot"></span><span data-i18n="last.val">Today 06:00 CST</span></span>
+      </div>
+      <div class="meta-block">
+        <span class="lbl" data-i18n="hdr.next">Next Scan</span>
+        <span class="val dim" data-i18n="next.val">Tomorrow 06:00 CST</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MAIN GRID ============ -->
+  <div class="main-grid">
+
+    <!-- ============ LEFT: ORIGIN STATUS CARDS ============ -->
+    <section id="map" class="panel origin-panel">
+      <div class="panel-head">
+        <div>
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+            <span data-i18n="map.title">Daily Procurement Intelligence Scan</span>
+          </h2>
+          <div class="sub" data-i18n="map.sub">8 core signals · Refreshed every 24h from public sources</div>
+        </div>
+        <div class="right">
+          <span data-i18n="map.scanLbl">SCAN ID</span> · DGIS-20260511-06<br>
+          <span data-i18n="map.covLbl">COVERAGE</span> · <span data-i18n="map.covVal">8 signals</span>
+        </div>
+      </div>
+
+      <div class="origin-grid" id="originGrid">
+      <article class="origin-card high ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Aluminum futures + spot</div>
+            <div class="oc-cat">Lighting housings · heat sinks</div>
+          </div>
+          <span class="oc-pill">High</span>
+        </div>
+        <div class="oc-signal">LME 3M +3.4% · SHFE +2.8% · stocks -8% over 4 wks <span class="delta up">+3.4%</span></div>
+        <div class="oc-meta">
+          <span class="oc-live"><i></i>LIVE</span>
+          <span class="dot"></span>
+          <span class="src">LME · SHFE · Yangtze Nonferrous</span>
+          <span class="dot"></span>
+          <span>Live · 15-min delay</span>
+        </div>
+      </article>
+    
+      <article class="origin-card high ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Copper futures + spot</div>
+            <div class="oc-cat">Drivers · wiring · lamp caps</div>
+          </div>
+          <span class="oc-pill">High</span>
+        </div>
+        <div class="oc-signal">LME 3M +5.2% · SHFE +4.7% · LME stocks -12% <span class="delta up">+5.2%</span></div>
+        <div class="oc-meta">
+          <span class="oc-live"><i></i>LIVE</span>
+          <span class="dot"></span>
+          <span class="src">LME · SHFE · SMM</span>
+          <span class="dot"></span>
+          <span>Live · 15-min delay</span>
+        </div>
+      </article>
+    
+      <article class="origin-card high ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Core supplier monitoring</div>
+            <div class="oc-cat">Sanan · HC SemiTek · Epistar etc.</div>
+          </div>
+          <span class="oc-pill">High</span>
+        </div>
+        <div class="oc-signal">HC SemiTek received SZSE inquiry (May 8) · Sanan Q1 revenue +12% </div>
+        <div class="oc-meta">
+          <span class="oc-live"><i></i>LIVE</span>
+          <span class="dot"></span>
+          <span class="src">Listcos · NECIPS</span>
+          <span class="dot"></span>
+          <span>Filing-triggered</span>
+        </div>
+      </article>
+    
+      <article class="origin-card med ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">LED chip industry index</div>
+            <div class="oc-cat">Wafer · packaging</div>
+          </div>
+          <span class="oc-pill">Watch</span>
+        </div>
+        <div class="oc-signal">Inventory idx +3.1% MoM · utilisation ~82% · price idx -1.2% <span class="delta down">-1.2%</span></div>
+        <div class="oc-meta">
+          
+          
+          <span class="src">LEDinside · CSA Research</span>
+          <span class="dot"></span>
+          <span>Weekly</span>
+        </div>
+      </article>
+    
+      <article class="origin-card med ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Power management IC</div>
+            <div class="oc-cat">Constant-current · DC-DC · LDO</div>
+          </div>
+          <span class="oc-pill">Watch</span>
+        </div>
+        <div class="oc-signal">Lead time 16-20 wks (was 12-16) · spot premium +8% <span class="delta up">+8%</span></div>
+        <div class="oc-meta">
+          
+          
+          <span class="src">IC Insights · Future · Avnet</span>
+          <span class="dot"></span>
+          <span>Monthly</span>
+        </div>
+      </article>
+    
+      <article class="origin-card med ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Engineering plastics PC/ABS/PP</div>
+            <div class="oc-cat">Diffusers · reflectors · housings</div>
+          </div>
+          <span class="oc-pill">Watch</span>
+        </div>
+        <div class="oc-signal">PC -2.1% · ABS +0.8% · PP -1.5% · cracker spread weak <span class="delta down">-2.1%</span></div>
+        <div class="oc-meta">
+          
+          
+          <span class="src">Sinopec · CCPlas · Longzhong</span>
+          <span class="dot"></span>
+          <span>Daily</span>
+        </div>
+      </article>
+    
+      <article class="origin-card low ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Peer procurement watch</div>
+            <div class="oc-cat">NVC · FSL · Osram</div>
+          </div>
+          <span class="oc-pill">Stable</span>
+        </div>
+        <div class="oc-signal">NVC 2025 LED tender published May 10 · FSL annual report disclosed Al ¥18,420/t </div>
+        <div class="oc-meta">
+          
+          
+          <span class="src">Annual reports · tender bulletins</span>
+          <span class="dot"></span>
+          <span>Weekly</span>
+        </div>
+      </article>
+    
+      <article class="origin-card low ">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">Substitute-tech maturity</div>
+            <div class="oc-cat">SiC drivers · Mini LED</div>
+          </div>
+          <span class="oc-pill">Low confidence</span>
+        </div>
+        <div class="oc-signal">⚠ Showing only well-sourced items: CNIPA SiC-driver patents +14% YoY · Mini LED cost figures from non-authoritative media — withheld </div>
+        <div class="oc-meta">
+          
+          
+          <span class="src">CNIPA · published conference papers</span>
+          <span class="dot"></span>
+          <span>Quarterly</span>
+        </div>
+      </article>
+    </div>
+
+      <div class="legend-row">
+        <span><i style="background:#FF6B35"></i><span data-i18n="legend.high">High Risk</span></span>
+        <span><i style="background:#FFB627"></i><span data-i18n="legend.med">Watch</span></span>
+        <span><i style="background:#00C896"></i><span data-i18n="legend.low">Stable</span></span>
+        <span><i style="background:rgba(160,180,210,0.5);box-shadow:inset 0 0 0 1px rgba(160,180,210,0.7)"></i><span data-i18n="legend.lowconf">Low confidence</span></span>
+      </div>
+    </section>
+
+    <!-- ============ RIGHT: BRIEFING ============ -->
+    <section id="brief" class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="M8 9h8M8 13h8M8 17h5"></path></svg>
+            <span data-i18n="brief.title">Today's Intelligence Briefing</span>
+          </h2>
+          <div class="sub" data-i18n="brief.sub">May 11, 2026 · Curated from 9 public sources</div>
+        </div>
+        <div class="right">
+          <span data-i18n="brief.upd">UPDATE · DAILY 06:00</span><br>
+          <span data-i18n="brief.next">NEXT · 18h 42m</span>
+        </div>
+      </div>
+
+      <div class="brief-summary">
+        <div class="stat"><b>5</b><span data-i18n="brief.today">Today</span></div>
+        <div class="stat"><b>32</b><span data-i18n="brief.30d">Last 30d</span></div>
+        <div class="stat"><b class="hi">3</b><span data-i18n="brief.hi">High Priority</span></div>
+        <div class="stat" style="margin-left:auto"><b style="color:var(--lo)">9</b><span data-i18n="brief.src">Sources</span></div>
+      </div>
+
+      <div class="briefs" id="briefsList">
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio high">high</span>
+          <span class="brief-title">LME Cu + SHFE Cu rally · stocks down 4 wks straight</span>
+        </div>
+        <div class="brief-src">Source · <b>LME daily + SHFE weekly stocks, May 11</b></div>
+        <div class="brief-body">LME 3-month copper +5.2% over 30 days; SHFE front-month +4.7%. LME warehouse stocks down -12% over the past 30 days (4 consecutive weekly draws). SMM spot premium widened from +¥120/t to +¥280/t.</div>
+        
+      <div class="brief-ref">
+        <b>Historical reference (not a prediction)</b>
+        In 11 prior instances since 2015 of '4-wk stock draw + widening spot premium', LME Cu rose +5% to +12% within 30-60 days in 7 cases (64%), flat in 3 (27%), declined in 1 (9%).
+        
+          <div class="hist" style="margin:8px 0 0">
+            <div class="bar">
+              <i class="up" style="flex:64"></i>
+              <i class="flat" style="flex:27"></i>
+              <i class="down" style="flex:9"></i>
+            </div>
+            <span>64 / 27 / 9</span>
+          </div>
+      </div>
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        If your quarterly Cu coverage &lt;40%, this is worth an internal discussion on staged fixing. Cross-check with: (1) secondary-Cu rod liquidity; (2) latest verbal read from your primary Cu rod suppliers. <b>Not a recommendation — just a 'worth-a-meeting' signal.</b>
+      </div>
+      </article>
+    
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio high">high</span>
+          <span class="brief-title">HC SemiTek receives SZSE annual-report inquiry letter</span>
+        </div>
+        <div class="brief-src">Source · <b>SZSE disclosure · CNINFO, May 8</b></div>
+        <div class="brief-body">SZSE issued an inquiry on HC SemiTek's 2025 annual report concerning goodwill impairment, related-party transactions, and receivables aging. This is a routine inquiry, not an investigation. Meanwhile, Sanan Optoelectronics Q1 pre-announcement: revenue +12% YoY, debt-to-asset down 58% → 54%.</div>
+        
+      <div class="brief-ref">
+        <b>Historical reference (not a prediction)</b>
+        Among 14 SZSE inquiries to LED-chip listcos over the past 5 years, 3 (21%) preceded delivery delay or contract re-negotiation within 6 months; 11 (79%) had no observable supply impact.
+        
+          <div class="hist" style="margin:8px 0 0">
+            <div class="bar">
+              <i class="up" style="flex:21"></i>
+              <i class="flat" style="flex:0"></i>
+              <i class="down" style="flex:79"></i>
+            </div>
+            <span>21 / 0 / 79</span>
+          </div>
+      </div>
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        No immediate action. Recommended: (1) SQA team to confirm current WIP status of HC SemiTek orders; (2) if single-source exposure to HC SemiTek &gt;25%, add a backup-supplier qualification track; (3) revisit cash flow and payables next quarterly (July).
+      </div>
+      </article>
+    
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio high">high</span>
+          <span class="brief-title">PMIC lead times extend further · spot premium up</span>
+        </div>
+        <div class="brief-src">Source · <b>Future Electronics / Avnet spot quotes + IC Insights monthly</b></div>
+        <div class="brief-body">Lead times for mainstream LED-driver PMICs lengthened from <b>12-16 wks</b> to <b>16-20 wks</b>. Spot premium at Future/Avnet up +8% over 30 days. Per monthly report, the bottleneck is concentrated in 8-inch BCD process capacity.</div>
+        
+      <div class="brief-ref">
+        <b>Historical reference (not a prediction)</b>
+        Of 6 prior occurrences since 2020 of 'lead-time +4wks + spot premium &gt;5%' combinations, 4 (67%) saw real shortage persist &gt;2 quarters, 1 (17%) eased within 90 days, 1 (17%) escalated to line-stop risk.
+        
+          <div class="hist" style="margin:8px 0 0">
+            <div class="bar">
+              <i class="up" style="flex:83"></i>
+              <i class="flat" style="flex:0"></i>
+              <i class="down" style="flex:17"></i>
+            </div>
+            <span>83 / 0 / 17</span>
+          </div>
+      </div>
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        Recommended: (1) lift PMIC safety stock from 8 wks to 12 wks (for top-20 BOM SKUs); (2) ask R&amp;D to assess second-source / alternate PN design compatibility — medium-term protection, not this-week action; (3) if you compressed PMIC unit prices low in the Q2 RFQ, consider reviewing your negotiation cadence.
+      </div>
+      </article>
+    
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio med">med</span>
+          <span class="brief-title">Engineering plastics PC/ABS/PP diverge · cracker spread weak</span>
+        </div>
+        <div class="brief-src">Source · <b>Sinopec EPEC · CCPlas · Longzhong, May 11</b></div>
+        <div class="brief-body">PC spot -2.1% over 30 days (supply increase + softer exports), ABS +0.8%, PP -1.5%. Asian ethylene-naphtha cracker spread fell to $145/t (30-day average $172/t).</div>
+        
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        Mild tailwind for diffusers/reflectors. Recommended: use the PC weakness window to renegotiate Q3 frame pricing with current suppliers, but avoid over-extending beyond a single quarter — cracker spread is volatile.
+      </div>
+      </article>
+    
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio med">med</span>
+          <span class="brief-title">NVC 2025 LED framework tender · FSL annual disclosure</span>
+        </div>
+        <div class="brief-src">Source · <b>Tender bulletin + annual reports</b></div>
+        <div class="brief-body">NVC published its 2025 LED package/module framework RFQ on May 10. Same week, FSL disclosed in its 2025 annual report a centralised Al procurement average of ¥18,420/t (-3.2% YoY). No public tender signal from Osram China.</div>
+        
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        This signal doesn't trigger action by itself, but it gives you <b>two negotiation anchors</b>: (1) the peer's centralised Al unit price is a real and citable benchmark; (2) NVC's tender terms, once public, will disclose spec changes — usable as market intel in your next supplier negotiation.
+      </div>
+      </article>
+    
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio low">low</span>
+          <span class="brief-title">SiC lighting-driver patent filings accelerating (low confidence)</span>
+        </div>
+        <div class="brief-src">Source · <b>CNIPA public records (preliminary)</b></div>
+        <div class="brief-body">CNIPA SiC lighting-driver patent filings up <b>+14% YoY</b> over the past 30 days. <b>Trend signal only</b> — cannot verify applicants' actual mass-production capability.</div>
+        
+      <div class="brief-ref">
+        <b>Historical reference (not a prediction)</b>
+        Patent-to-product cycle is typically 18-36 months with weak historical correlation. <b>This system does not publish Mini-LED unit-cost estimates because sources (industry media) are not authoritative.</b>
+        
+      </div>
+        
+      <div class="brief-sug">
+        <b>AI Suggestion — observe, don't decide</b>
+        No action. To evaluate SiC substitution, request engineering samples + datasheets directly from 2-3 vendors with publicly announced SiC-driver offerings — first-hand data beats secondary reporting.
+      </div>
+      </article>
+    </div>
+    </section>
+
+    <!-- ============ PRICES (FULL WIDTH) ============ -->
+    <section id="prices" class="panel prices">
+      <div class="panel-head">
+        <div>
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg>
+            <span data-i18n="price.title">Key Prices &amp; Indices</span>
+          </h2>
+          <div class="sub" data-i18n="price.sub">Spot, futures &amp; industry indices from exchanges and trade bodies</div>
+        </div>
+        <div class="right">
+          <span data-i18n="price.right">5 items · Mixed frequency</span><br>
+          <span data-i18n="price.sync">Last sync · May 11, 06:00</span>
+        </div>
+      </div>
+
+      <div class="price-row" id="priceRow">
+      <div class="price-cell">
+        <div class="name">LME Copper 3M</div>
+        <div class="nm-sub">Drivers · wire · lamp caps</div>
+        <div class="val">$9,420/t</div>
+        <div class="chg up"><span class="arrow">▲</span>+5.2% (30d)<span class="warn-pill">Watch</span></div>
+        <div class="src">Futures · LME · live (15-min)<br>Spot · SMM ¥77,800/t · premium +¥280</div>
+        <svg class="spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--hi)" stroke-width="1.4" points="0.0,22.0 8.7,20.2 17.5,18.3 26.2,18.3 34.9,14.7 43.6,12.8 52.4,11.0 61.1,9.2 69.8,7.3 78.5,5.5 87.3,3.7 96.0,0.0"></polyline></svg>
+      </div>
+    
+      <div class="price-cell">
+        <div class="name">LME Aluminum 3M</div>
+        <div class="nm-sub">Housings · heat sinks</div>
+        <div class="val">$2,580/t</div>
+        <div class="chg up"><span class="arrow">▲</span>+3.4% (30d)<span class="warn-pill">Watch</span></div>
+        <div class="src">Futures · LME · live (15-min)<br>Spot · Yangtze Nonferrous ¥20,640/t</div>
+        <svg class="spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--hi)" stroke-width="1.4" points="0.0,22.0 8.7,22.0 17.5,18.3 26.2,18.3 34.9,14.7 43.6,14.7 52.4,11.0 61.1,11.0 69.8,7.3 78.5,7.3 87.3,3.7 96.0,0.0"></polyline></svg>
+      </div>
+    
+      <div class="price-cell">
+        <div class="name">PC engineering plastic</div>
+        <div class="nm-sub">Diffusers · reflectors</div>
+        <div class="val">¥16,800/t</div>
+        <div class="chg down"><span class="arrow">▼</span>-2.1% (30d)</div>
+        <div class="src">Spot · CCPlas · daily<br>Upstream: Asia ethylene-naphtha cracker spread $145/t</div>
+        <svg class="spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--lo)" stroke-width="1.4" points="0.0,0.0 8.7,0.0 17.5,4.4 26.2,4.4 34.9,8.8 43.6,8.8 52.4,13.2 61.1,13.2 69.8,17.6 78.5,17.6 87.3,22.0 96.0,22.0"></polyline></svg>
+      </div>
+    
+      <div class="price-cell">
+        <div class="name">LED chip price index</div>
+        <div class="nm-sub">General lighting chips</div>
+        <div class="val">98.4</div>
+        <div class="chg down"><span class="arrow">▼</span>-1.2% (30d)</div>
+        <div class="src">Index · CSA Research · weekly<br>Inventory idx +3.1% MoM · utilisation ~82%</div>
+        <svg class="spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--lo)" stroke-width="1.4" points="0.0,0.0 8.7,0.0 17.5,11.0 26.2,0.0 34.9,11.0 43.6,11.0 52.4,22.0 61.1,11.0 69.8,22.0 78.5,11.0 87.3,22.0 96.0,22.0"></polyline></svg>
+      </div>
+    
+      <div class="price-cell">
+        <div class="name">PMIC spot premium</div>
+        <div class="nm-sub">Power mgmt · top SKUs</div>
+        <div class="val">+8.0%</div>
+        <div class="chg up"><span class="arrow">▲</span>+8.0% (30d)<span class="warn-pill">Watch</span></div>
+        <div class="src">Spot · Future / Avnet · monthly<br>Lead time 16-20 wks (was 12-16 wks)</div>
+        <svg class="spark" viewBox="0 0 96 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--hi)" stroke-width="1.4" points="0.0,22.0 8.7,22.0 17.5,18.9 26.2,18.9 34.9,15.7 43.6,15.7 52.4,12.6 61.1,12.6 69.8,9.4 78.5,6.3 87.3,3.1 96.0,0.0"></polyline></svg>
+      </div>
+    </div>
+    </section>
+
+    <!-- ============ CHAT (FULL WIDTH) ============ -->
+    <section id="chat" class="panel chat-panel">
+      <div class="panel-head">
+        <div>
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 1 1-3.2-6.4L21 4v6h-6"></path></svg>
+            <span data-i18n="chat.title">Ask the Hub</span>
+          </h2>
+          <div class="sub" data-i18n="chat.sub">AI integrates public data &amp; historical references — you make the call</div>
+        </div>
+        <div class="right">
+          <span data-i18n="chat.right">MODEL · INTELLIGENCE-AGENT v2.4</span><br>
+          <span data-i18n="chat.cite">Answers cite public sources only</span>
+        </div>
+      </div>
+
+      <div class="chat-presets" id="chatPresets">
+        <button data-q="cu_lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Should we stage-fix Cu this quarter?</button>
+        <button data-q="supplier_risk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.7L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.7a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>Sanan / HC SemiTek / Epistar — which one to watch?</button>
+        <button data-q="peer_tender"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"></path><path d="M14 4v6h6"></path></svg>What did NVC's recent tender reveal?</button>
+        <button data-q="sic_ready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Is SiC driver ready for small-batch switch?</button>
+      </div>
+
+      <div class="chat-area" id="chatArea">
+        <div class="chat-msg ai">
+          <div class="from"><i></i>AI Hub</div>
+          <div class="body" data-greeting="1"><p>Hello. This is the Opple Procurement Intelligence Hub. I integrate <b>public data sources</b> (exchanges, trade bodies, listco disclosures, IP office, etc), surface signals relevant to your BOM, and compare against historical references — the decision is yours.</p>
+         <p style="color:var(--ink-3);font-size:11.5px">Pick a preset above for a worked example, or type your own question below.</p></div>
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input id="chatInput" placeholder="e.g. Any change in LME Cu stocks this week?">
+        <button id="chatSend">Ask</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <details class="about" id="aboutPanel">
+    <summary class="about-toggle">
+      <div class="lhs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
+        <h3 data-i18n="about.title">About this system</h3>
+        <span class="sub" data-i18n="about.sub">— What this AI does, what it doesn't, and where its data comes from</span>
+      </div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+    </summary>
+    <div class="about-body">
+      <div class="about-card can">
+        <h4 data-i18n="about.can">✓ What AI Can Do</h4>
+        <ul><li>24h monitoring across 9 public data sources</li><li>Bilingual integration (Chinese / English)</li><li>Compare signals against historical patterns, not just 'today's price'</li><li>Explicitly flag low-confidence data, do not force quantitative conclusions</li><li>Anomaly detection and alerting</li><li>Plain-language summaries with citations (every claim is traceable)</li></ul>
+      </div>
+      <div class="about-card cannot">
+        <h4 data-i18n="about.cannot">✗ What AI Cannot Do</h4>
+        <ul><li>Predict exact future prices</li><li>Access non-public or proprietary data</li><li>Replace your buyer's professional judgment</li><li>Forecast black-swan events</li><li>Negotiate with suppliers on your behalf</li><li>Guarantee that historical patterns will repeat</li></ul>
+      </div>
+      <div class="about-card src">
+        <h4 data-i18n="about.src">◇ Data Sources</h4>
+        <ul><li><span class="src-name">LME · SHFE</span><span class="src-desc">Metals futures · live (15-min delay)</span></li><li><span class="src-name">SMM · Yangtze Nonferrous</span><span class="src-desc">Cu / Al / Zn spot quotes</span></li><li><span class="src-name">LEDinside · CSA Research · CIE Insight</span><span class="src-desc">LED chip inventory + price indices</span></li><li><span class="src-name">Sinopec EPEC · CCPlas · Longzhong</span><span class="src-desc">PC / ABS / PP engineering plastics spot</span></li><li><span class="src-name">IC Insights · Future / Avnet</span><span class="src-desc">PMIC lead times and spot premiums</span></li><li><span class="src-name">CNINFO · NECIPS</span><span class="src-desc">Listco disclosures and corporate registry</span></li><li><span class="src-name">Annual reports · Public tender bulletins</span><span class="src-desc">Peer procurement signals</span></li><li><span class="src-name">CNIPA (China IP Office)</span><span class="src-desc">Public patent filings</span></li><li><span class="src-name">Reuters / Bloomberg public feeds · conference papers</span><span class="src-desc">News, policy, tech-maturity references</span></li></ul>
+      </div>
+      <div class="about-card lag">
+        <h4 data-i18n="about.lag">⏱ Data Freshness</h4>
+        <ul><li>Futures prices (LME / SHFE)<span class="lag-val">Live (15-min delay)</span></li><li>Spot (Cu / Al / plastics)<span class="lag-val">Daily / Weekly</span></li><li>LED chip indices<span class="lag-val">Weekly / Monthly</span></li><li>PMIC lead times<span class="lag-val">Monthly</span></li><li>Listco disclosures<span class="lag-val">Day of filing</span></li><li>Tender bulletins<span class="lag-val">On publication</span></li><li>Patent data<span class="lag-val">Quarterly (CNIPA cadence)</span></li></ul>
+      </div>
+    </div>
+  </details>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="left">
+      <span data-i18n="foot.copy">© 2026 Opple Procurement Intelligence Hub · Built for sourcing decisions, not speculation.</span>
+    </div>
+    <div class="disclaimer" data-i18n="foot.disc">⚠ AI integrates public information. It does not predict prices and does not replace professional judgment.</div>
+  </div>
+
+</div>
+
+<!-- ============ DATA + SCRIPT ============ -->
+<script>
+/* ─────────────────────────────────────────────
+   Origin Status Cards — 6 per industry
+   Each card has bilingual region/cat/signal strings.
+   `signal` = the one most important data point
+   `delta`  = optional numeric chip (with dir)
+   ───────────────────────────────────────────── */
+const ORIGIN_CARDS = {
+  /* 全部 — 8 个信号(欧普采购情报) */
+  nuts: [
+    {level:"high",
+     region:["铝期货 + 铝锭现货",     "Aluminum futures + spot"],
+     cat:   ["灯具结构件 · 散热器主材", "Lighting housings · heat sinks"],
+     pill:  ["高风险",              "High"],
+     signal:["LME 3M +3.4% · 沪铝 +2.8% · 上期所库存连续 4 周 -8%", "LME 3M +3.4% · SHFE +2.8% · stocks -8% over 4 wks"],
+     delta: ["+3.4%", "up"],
+     src:   ["LME · SHFE · 长江有色", "LME · SHFE · Yangtze Nonferrous"],
+     time:  ["实时 · 15 分钟延迟",    "Live · 15-min delay"]},
+    {level:"high",
+     region:["铜期货 + 铜杆现货",     "Copper futures + spot"],
+     cat:   ["驱动电源 · 线材 · 灯头", "Drivers · wiring · lamp caps"],
+     pill:  ["高风险",              "High"],
+     signal:["LME 3M +5.2% · 沪铜 +4.7% · LME 库存 -12%(30天)", "LME 3M +5.2% · SHFE +4.7% · LME stocks -12%"],
+     delta: ["+5.2%", "up"],
+     src:   ["LME · SHFE · 上海有色网", "LME · SHFE · SMM"],
+     time:  ["实时 · 15 分钟延迟",    "Live · 15-min delay"]},
+    {level:"high",
+     region:["核心供应商监控",        "Core supplier monitoring"],
+     cat:   ["三安 · 华灿 · 晶元等",   "Sanan · HC SemiTek · Epistar etc."],
+     pill:  ["高风险",              "High"],
+     signal:["华灿光电收深交所年报问询函(5月8日) · 三安 Q1 营收 +12% / 资产负债率回落", "HC SemiTek received SZSE inquiry (May 8) · Sanan Q1 revenue +12%"],
+     delta: ["—",     "flat"],
+     src:   ["上市公司公告 · 工商系统", "Listcos · NECIPS"],
+     time:  ["公告触发",            "Filing-triggered"]},
+    {level:"med",
+     region:["LED 芯片行业景气",      "LED chip industry index"],
+     cat:   ["上游晶圆 · 中游封装",   "Wafer · packaging"],
+     pill:  ["关注",                "Watch"],
+     signal:["行业库存指数环比 +3.1% · 产能利用率约 82% · 通用照明芯片价格指数 -1.2%", "Inventory idx +3.1% MoM · utilisation ~82% · price idx -1.2%"],
+     delta: ["-1.2%", "down"],
+     src:   ["LEDinside · CSA Research · 中商情报", "LEDinside · CSA Research"],
+     time:  ["周度",                "Weekly"]},
+    {level:"med",
+     region:["电源管理芯片(PMIC)",   "Power management IC"],
+     cat:   ["恒流驱动 · DC-DC · LDO", "Constant-current · DC-DC · LDO"],
+     pill:  ["关注",                "Watch"],
+     signal:["主流料号官方交期 16-20 周(前期 12-16 周) · 现货分销溢价 +8%", "Lead time 16-20 wks (was 12-16) · spot premium +8%"],
+     delta: ["+8%",  "up"],
+     src:   ["IC Insights · 富昌 / 安富利现货", "IC Insights · Future · Avnet"],
+     time:  ["月度",                "Monthly"]},
+    {level:"med",
+     region:["工程塑料 PC / ABS / PP", "Engineering plastics PC/ABS/PP"],
+     cat:   ["灯罩 · 反光杯 · 外壳",  "Diffusers · reflectors · housings"],
+     pill:  ["关注",                "Watch"],
+     signal:["PC 现货 -2.1% · ABS +0.8% · PP -1.5% · 上游石化裂解价差走弱", "PC -2.1% · ABS +0.8% · PP -1.5% · cracker spread weak"],
+     delta: ["-2.1%", "down"],
+     src:   ["石化盈科 · 中塑在线 · 隆众", "Sinopec · CCPlas · Longzhong"],
+     time:  ["每日",                "Daily"]},
+    {level:"low",
+     region:["同行采购动态",          "Peer procurement watch"],
+     cat:   ["雷士 · 佛山照明 · 欧司朗", "NVC · FSL · Osram"],
+     pill:  ["平稳",                "Stable"],
+     signal:["雷士照明发布 2025 LED 框架招标(5月10日) · 佛山照明年报披露铝材集采均价 ¥18,420/t", "NVC 2025 LED tender published May 10 · FSL annual report disclosed Al ¥18,420/t"],
+     delta: ["—",    "flat"],
+     src:   ["上市公司年报 · 招标公告", "Annual reports · tender bulletins"],
+     time:  ["周度",                "Weekly"]},
+    {level:"low",
+     region:["替代材料技术成熟度",    "Substitute-tech maturity"],
+     cat:   ["SiC 驱动 · Mini LED",   "SiC drivers · Mini LED"],
+     pill:  ["数据置信度低",          "Low confidence"],
+     signal:["⚠ 仅展示有公开来源的部分:CNIPA 公开的 SiC 照明驱动相关专利 30 日 +14% YoY · Mini LED 成本数据来自非权威媒体,本期不给出量化结论", "⚠ Showing only well-sourced items: CNIPA SiC-driver patents +14% YoY · Mini LED cost figures from non-authoritative media — withheld"],
+     delta: ["—",    "flat"],
+     src:   ["CNIPA 公开数据 · 行业会议公开报告", "CNIPA · published conference papers"],
+     time:  ["季度",                "Quarterly"]},
+  ],
+};
+
+/* ─────────────────────────────────────────────
+   Briefings — daily intel items
+   ───────────────────────────────────────────── */
+ORIGIN_CARDS.coffee = ORIGIN_CARDS.nuts;
+ORIGIN_CARDS.cocoa  = ORIGIN_CARDS.nuts;
+ORIGIN_CARDS.oil    = ORIGIN_CARDS.nuts;
+
+const BRIEFINGS = {
+  nuts: [
+    {prio:"high",
+     title:["LME 铜 / 沪铜同步上行 + 库存连降 4 周",
+            "LME Cu + SHFE Cu rally · stocks down 4 wks straight"],
+     src:  ["LME 每日报价 + SHFE 周度库存,5月11日",
+            "LME daily + SHFE weekly stocks, May 11"],
+     body: ["LME 三个月铜过去 30 天 <b>+5.2%</b>,沪铜主力 <b>+4.7%</b>。LME 注册仓单库存连续 4 周回落,30 日 <b>-12%</b>。 上海有色现货升水从 +120 元/吨升至 +280 元/吨。",
+            "LME 3-month copper +5.2% over 30 days; SHFE front-month +4.7%. LME warehouse stocks down -12% over the past 30 days (4 consecutive weekly draws). SMM spot premium widened from +¥120/t to +¥280/t."],
+     ref:  ["过去 10 年里出现「LME 库存连续 4 周回落 + 现货升水扩大」的组合 11 次,其中 7 次(64%)在随后 30-60 天内 LME 铜 +5% 至 +12%,3 次(27%)走平,1 次(9%)回落。",
+            "In 11 prior instances since 2015 of '4-wk stock draw + widening spot premium', LME Cu rose +5% to +12% within 30-60 days in 7 cases (64%), flat in 3 (27%), declined in 1 (9%)."],
+     refDist:[64,27,9],
+     sug:  ["如果你这季度铜采购覆盖率 <40%,值得做一次分批锁仓的内部讨论。但请同时核对:(1)再生铜电解杆现货流通情况;(2)你最近一次和主要铜杆供应商对话的口径。<b>这不是建议,只是「值得开会」的信号</b>。",
+            "If your quarterly Cu coverage <40%, this is worth an internal discussion on staged fixing. Cross-check with: (1) secondary-Cu rod liquidity; (2) latest verbal read from your primary Cu rod suppliers. <b>Not a recommendation — just a 'worth-a-meeting' signal.</b>"]},
+
+    {prio:"high",
+     title:["华灿光电收深交所年报问询函",
+            "HC SemiTek receives SZSE annual-report inquiry letter"],
+     src:  ["深交所信息披露 · 巨潮资讯,5月8日",
+            "SZSE disclosure · CNINFO, May 8"],
+     body: ["深交所就华灿 2025 年报对其商誉减值、关联交易、应收账款账龄做出问询。属常规问询,非立案调查。同期三安光电 Q1 业绩预告营收 +12% YoY、资产负债率从 58% 回落至 54%。",
+            "SZSE issued an inquiry on HC SemiTek's 2025 annual report concerning goodwill impairment, related-party transactions, and receivables aging. This is a routine inquiry, not an investigation. Meanwhile, Sanan Optoelectronics Q1 pre-announcement: revenue +12% YoY, debt-to-asset down 58% → 54%."],
+     ref:  ["近 5 年深交所对 LED 芯片厂的问询函共 14 例,其中 3 例(21%)在 6 个月内出现交付延迟或合同重谈,11 例(79%)未对供应造成可观察影响。",
+            "Among 14 SZSE inquiries to LED-chip listcos over the past 5 years, 3 (21%) preceded delivery delay or contract re-negotiation within 6 months; 11 (79%) had no observable supply impact."],
+     refDist:[21,0,79],
+     sug:  ["不构成立即动作。建议:(1)请 SQA 同步华灿在欧普订单中的当前在制状态;(2)如果你对华灿单一来源依赖 >25%,补一个备份供应商资格认证议程;(3)关注下次季报(7 月),把华灿现金流与应付账款放进观察。",
+            "No immediate action. Recommended: (1) SQA team to confirm current WIP status of HC SemiTek orders; (2) if single-source exposure to HC SemiTek >25%, add a backup-supplier qualification track; (3) revisit cash flow and payables next quarterly (July)."]},
+
+    {prio:"high",
+     title:["电源管理芯片(PMIC)交期再延长 + 现货溢价",
+            "PMIC lead times extend further · spot premium up"],
+     src:  ["富昌 / 安富利现货报价 + IC Insights 月报",
+            "Future Electronics / Avnet spot quotes + IC Insights monthly"],
+     body: ["主流 LED 驱动 PMIC 料号官方交期从 <b>12-16 周</b> 延长至 <b>16-20 周</b>。富昌、安富利等分销现货溢价 30 日 +8%。月报口径下,产能瓶颈集中在 8 寸 BCD 工艺。",
+            "Lead times for mainstream LED-driver PMICs lengthened from <b>12-16 wks</b> to <b>16-20 wks</b>. Spot premium at Future/Avnet up +8% over 30 days. Per monthly report, the bottleneck is concentrated in 8-inch BCD process capacity."],
+     ref:  ["2020 年以来 6 次「交期 +4 周 + 现货溢价 >5%」的组合中,4 次(67%)实际供货紧张维持 2 个季度以上,1 次(17%)在 90 天内缓解,1 次(17%)恶化为停产风险。",
+            "Of 6 prior occurrences since 2020 of 'lead-time +4wks + spot premium >5%' combinations, 4 (67%) saw real shortage persist >2 quarters, 1 (17%) eased within 90 days, 1 (17%) escalated to line-stop risk."],
+     refDist:[83,0,17],
+     sug:  ["建议:(1)将 PMIC 安全库存从 8 周提升到 12 周(对你 BOM 占比 Top-20 料号);(2)请研发评估二供 / 替代料号的设计兼容性 — 这是中期保护,不是本周动作;(3)如果你已经在 Q2 招标里把 PMIC 单价压到偏低水平,建议复盘谈判节奏。",
+            "Recommended: (1) lift PMIC safety stock from 8 wks to 12 wks (for top-20 BOM SKUs); (2) ask R&D to assess second-source / alternate PN design compatibility — medium-term protection, not this-week action; (3) if you compressed PMIC unit prices low in the Q2 RFQ, consider reviewing your negotiation cadence."]},
+
+    {prio:"med",
+     title:["工程塑料 PC / ABS / PP 价格分化 + 裂解价差走弱",
+            "Engineering plastics PC/ABS/PP diverge · cracker spread weak"],
+     src:  ["石化盈科 · 中塑在线 · 隆众,5月11日",
+            "Sinopec EPEC · CCPlas · Longzhong, May 11"],
+     body: ["PC 现货 30 日 <b>-2.1%</b>(供应增加 + 出口转弱),ABS <b>+0.8%</b>,PP <b>-1.5%</b>。亚洲乙烯-石脑油裂解价差跌至 $145/t(30 日均值 $172/t)。",
+            "PC spot -2.1% over 30 days (supply increase + softer exports), ABS +0.8%, PP -1.5%. Asian ethylene-naphtha cracker spread fell to $145/t (30-day average $172/t)."],
+     ref:  ["—","—"],
+     refDist:null,
+     sug:  ["对灯罩、反光杯采购为温和顺风。建议:用 PC 走弱的窗口和现有供应商谈一次 Q3 框架价格更新,但不要做超过 1 个季度的过度延伸 — 上游石化裂解价差波动很大。",
+            "Mild tailwind for diffusers/reflectors. Recommended: use the PC weakness window to renegotiate Q3 frame pricing with current suppliers, but avoid over-extending beyond a single quarter — cracker spread is volatile."]},
+
+    {prio:"med",
+     title:["雷士 2025 LED 框架招标公告 + 佛山照明年报披露",
+            "NVC 2025 LED framework tender · FSL annual disclosure"],
+     src:  ["招标公告 + 上市公司年报",
+            "Tender bulletin + annual reports"],
+     body: ["雷士照明 5月10日发布 2025 年 LED 灯珠 / 模组框架协议招标。同周佛山照明在 2025 年报中披露铝材集采均价 ¥18,420/t,同比 -3.2%。欧司朗中国区未见公开招标信号。",
+            "NVC published its 2025 LED package/module framework RFQ on May 10. Same week, FSL disclosed in its 2025 annual report a centralised Al procurement average of ¥18,420/t (-3.2% YoY). No public tender signal from Osram China."],
+     ref:  ["—","—"],
+     refDist:null,
+     sug:  ["这条信号本身不引发动作,但<b>给你两个谈判锚点</b>:(1)同行铝材集采均价是真实可引用的对比;(2)雷士的招标条款一旦公开会披露技术规格变化,可纳入你下一轮供应商谈判的市场情报。",
+            "This signal doesn't trigger action by itself, but it gives you <b>two negotiation anchors</b>: (1) the peer's centralised Al unit price is a real and citable benchmark; (2) NVC's tender terms, once public, will disclose spec changes — usable as market intel in your next supplier negotiation."]},
+
+    {prio:"low",
+     title:["SiC 照明驱动相关专利申请加速(数据置信度低)",
+            "SiC lighting-driver patent filings accelerating (low confidence)"],
+     src:  ["CNIPA 公开数据(初步统计)",
+            "CNIPA public records (preliminary)"],
+     body: ["CNIPA 公开的 SiC 照明驱动相关专利申请数 30 日 <b>+14% YoY</b>。<b>仅做趋势观察用</b>,无法验证申请方实际量产能力。",
+            "CNIPA SiC lighting-driver patent filings up <b>+14% YoY</b> over the past 30 days. <b>Trend signal only</b> — cannot verify applicants' actual mass-production capability."],
+     ref:  ["专利申请数与实际产品上市的转化率通常需要 18-36 个月,且历史相关性较弱。<b>本系统不展示 Mini LED 量产成本估算,因为来源(行业媒体)不权威。</b>",
+            "Patent-to-product cycle is typically 18-36 months with weak historical correlation. <b>This system does not publish Mini-LED unit-cost estimates because sources (industry media) are not authoritative.</b>"],
+     refDist:null,
+     sug:  ["不构成动作。如需评估 SiC 替代,建议直接与 2-3 家公开宣布 SiC 驱动方案的厂商索要工程样品 + Datasheet,以一手数据替代二手报道。",
+            "No action. To evaluate SiC substitution, request engineering samples + datasheets directly from 2-3 vendors with publicly announced SiC-driver offerings — first-hand data beats secondary reporting."]},
+  ],
+};
+BRIEFINGS.coffee = BRIEFINGS.nuts;
+BRIEFINGS.cocoa  = BRIEFINGS.nuts;
+BRIEFINGS.oil    = BRIEFINGS.nuts;
+
+/* ─────────────────────────────────────────────
+   Prices — bilingual tuples
+   ───────────────────────────────────────────── */
+const PRICES = {
+  nuts: [
+    {key:"lme_cu",
+     name:["LME 铜 3M",          "LME Copper 3M"],
+     sub: ["驱动 · 线材 · 灯头",   "Drivers · wire · lamp caps"],
+     val: ["$9,420/t",            "$9,420/t"],
+     chg:"+5.2%", dir:"up", warn:true,
+     src: ["期货 · LME · 实时(15分钟延迟)", "Futures · LME · live (15-min)"],
+     fut: ["现货 · 上海有色 ¥77,800/t · 升水 +¥280",
+           "Spot · SMM ¥77,800/t · premium +¥280"],
+     spark:[26,27,28,28,30,31,32,33,34,35,36,38]},
+
+    {key:"lme_al",
+     name:["LME 铝 3M",          "LME Aluminum 3M"],
+     sub: ["结构件 · 散热器",     "Housings · heat sinks"],
+     val: ["$2,580/t",            "$2,580/t"],
+     chg:"+3.4%", dir:"up", warn:true,
+     src: ["期货 · LME · 实时(15分钟延迟)", "Futures · LME · live (15-min)"],
+     fut: ["现货 · 长江有色 ¥20,640/t",
+           "Spot · Yangtze Nonferrous ¥20,640/t"],
+     spark:[30,30,31,31,32,32,33,33,34,34,35,36]},
+
+    {key:"pc",
+     name:["PC 现货",            "PC engineering plastic"],
+     sub: ["灯罩 · 反光杯",       "Diffusers · reflectors"],
+     val: ["¥16,800/t",           "¥16,800/t"],
+     chg:"-2.1%", dir:"down", warn:false,
+     src: ["现货 · 中塑在线 · 每日", "Spot · CCPlas · daily"],
+     fut: ["上游:亚洲乙烯-石脑油裂解价差 $145/t",
+           "Upstream: Asia ethylene-naphtha cracker spread $145/t"],
+     spark:[36,36,35,35,34,34,33,33,32,32,31,31]},
+
+    {key:"led_idx",
+     name:["LED 芯片价格指数",    "LED chip price index"],
+     sub: ["通用照明芯片",         "General lighting chips"],
+     val: ["98.4",                "98.4"],
+     chg:"-1.2%", dir:"down", warn:false,
+     src: ["指数 · CSA Research · 周度", "Index · CSA Research · weekly"],
+     fut: ["库存指数 +3.1% MoM · 产能利用率 ~82%",
+           "Inventory idx +3.1% MoM · utilisation ~82%"],
+     spark:[34,34,33,34,33,33,32,33,32,33,32,32]},
+
+    {key:"pmic",
+     name:["PMIC 现货溢价",        "PMIC spot premium"],
+     sub: ["电源管理 · 主流料号",  "Power mgmt · top SKUs"],
+     val: ["+8.0%",               "+8.0%"],
+     chg:"+8.0%", dir:"up", warn:true,
+     src: ["现货 · 富昌 / 安富利 · 月度", "Spot · Future / Avnet · monthly"],
+     fut: ["官方交期 16-20 周(前期 12-16 周)",
+           "Lead time 16-20 wks (was 12-16 wks)"],
+     spark:[30,30,31,31,32,32,33,33,34,35,36,37]},
+  ],
+};
+PRICES.coffee = PRICES.nuts;
+PRICES.cocoa  = PRICES.nuts;
+PRICES.oil    = PRICES.nuts;
+
+/* ─────────────────────────────────────────────
+   Chat presets — pre-written AI answers
+   ───────────────────────────────────────────── */
+const CHAT_ANSWERS = {
+  cu_lock: {
+    q: ["本季铜要不要分批锁仓?", "Should we stage-fix Cu this quarter?"],
+    answer:{
+      zh:`
+      <p>这是一个采购决策,我不会替你做。我可以整理目前相关的公开数据信号:</p>
+      <ul>
+        <li><b>LME 三个月铜</b>:$9,420/t,30日 <b style="color:var(--hi)">+5.2%</b>(<span class="src-tag">来源 LME, 实时</span>)。</li>
+        <li><b>沪铜主力</b>:¥77,800/t,30日 <b style="color:var(--hi)">+4.7%</b>(<span class="src-tag">来源 SHFE, 实时</span>);上海有色现货升水 +¥280/t(前期 +¥120)。</li>
+        <li><b>LME 库存</b>:30日 <b style="color:var(--lo)">-12%</b>,连续 4 周回落(<span class="src-tag">来源 LME 仓单</span>)。</li>
+        <li><b>欧普口径</b>:铜在你的 BOM 里主要进入驱动电源 + 线材 + 灯头,占总采购金额约 9-11%(请以财务最近一次成本拆解为准)。</li>
+      </ul>
+      <p><b>历史相似情况(过去 10 年 11 例):</b>「LME 库存连续 4 周回落 + 现货升水扩大」组合</p>
+      <div class="hist">
+        <div class="bar">
+          <i class="up"   style="flex:64"></i>
+          <i class="flat" style="flex:27"></i>
+          <i class="down" style="flex:9"></i>
+        </div>
+        <span>11 cases · 64 / 27 / 9</span>
+      </div>
+      <p style="color:var(--ink-3);font-size:11.5px;margin-top:6px">即:64% 在随后 30-60 天内 LME 铜继续 +5% 至 +12%,27% 走平,9% 回落。<b>这不构成预测。</b></p>
+      <div class="you-judge">
+        <b>需要你自己判断的</b>
+        你本季铜的覆盖率是多少?如果你已经覆盖 70%+,这条信号不足以触发紧急加仓。如果覆盖率 <40%,可以做一次<b>分批锁仓</b>的内部讨论 — 比如分 3 次进入,每次 1/3,跨 4 周。<br>
+        同时建议:(1)和铜杆主供货商索要本月再生铜实际供应比例;(2)对照雷士 / 佛山照明已披露的铝材集采均价,看是否能给到铜杆类似的市场参考。
+      </div>`,
+      en:`
+      <p>This is a procurement decision — I won't make it for you. Public-data signals I can compile:</p>
+      <ul>
+        <li><b>LME 3M Cu</b>: $9,420/t, +5.2% (30d) (<span class="src-tag">LME, live</span>).</li>
+        <li><b>SHFE front-month</b>: ¥77,800/t, +4.7% (30d) (<span class="src-tag">SHFE, live</span>); SMM spot premium +¥280/t (prev +¥120).</li>
+        <li><b>LME stocks</b>: -12% over 30 days, 4 consecutive weekly draws (<span class="src-tag">LME warrants</span>).</li>
+        <li><b>Opple context</b>: Cu enters drivers + wiring + lamp caps in your BOM (~9-11% of total spend; verify with finance's latest cost build).</li>
+      </ul>
+      <p><b>Historical reference (11 cases, past 10 yrs):</b> '4-wk LME stock draw + widening spot premium' combination</p>
+      <div class="hist">
+        <div class="bar">
+          <i class="up"   style="flex:64"></i>
+          <i class="flat" style="flex:27"></i>
+          <i class="down" style="flex:9"></i>
+        </div>
+        <span>11 cases · 64 / 27 / 9</span>
+      </div>
+      <p style="color:var(--ink-3);font-size:11.5px;margin-top:6px">64% saw LME Cu +5% to +12% over 30-60 days; 27% flat; 9% declined. <b>This is not a prediction.</b></p>
+      <div class="you-judge">
+        <b>For your judgment</b>
+        What's your Cu coverage this quarter? If >70%, this signal alone doesn't justify topping up. If <40%, worth an internal discussion on staged fixing — e.g. 3 tranches at 1/3 each over 4 wks.<br>
+        Also: (1) ask your primary Cu rod supplier for this month's secondary-Cu supply share; (2) cross-reference NVC / FSL's disclosed Al unit price for a similar peer benchmark on Cu rod.
+      </div>`
+    }
+  },
+  supplier_risk: {
+    q: ["三安 / 华灿 / 晶元谁更需要盯紧?", "Sanan / HC SemiTek / Epistar — which one to watch?"],
+    answer:{
+      zh:`
+      <p>仅基于<b>公开披露数据</b>,不构成对供应商财务能力的最终判断:</p>
+      <ul>
+        <li><b>华灿光电</b>:深交所 5月8日发出年报问询函(商誉减值 + 关联交易 + 应收账款账龄)。属常规问询,非立案调查。但放进观察清单。</li>
+        <li><b>三安光电</b>:Q1 业绩预告营收 +12% YoY,资产负债率 58% → 54%。Q1 经营性现金流转正。<b>当前披露口径下健康。</b></li>
+        <li><b>晶元光电 Epistar</b>(台股):Q1 营收同比 -3.4%,毛利率 18.2%。无重大公告。Mini LED 营收占比从 26% 升至 31%。</li>
+      </ul>
+      <p><b>历史参考:</b>近 5 年深交所对 LED 芯片厂的问询函共 14 例,其中 3 例(21%)在 6 个月内出现交付延迟或合同重谈。21% 是不低的概率,但不构成立即动作。</p>
+      <div class="hist">
+        <div class="bar">
+          <i class="up"   style="flex:21"></i>
+          <i class="flat" style="flex:0"></i>
+          <i class="down" style="flex:79"></i>
+        </div>
+        <span>14 cases · 21% 出现影响</span>
+      </div>
+      <div class="you-judge">
+        <b>需要你自己判断的</b>
+        你的单一来源依赖度是关键变量。如果华灿在某些 SKU 上你超过 25%,建议同步 SQA 加一个 backup 资格认证议程 — 这是<b>中期保护</b>,不是本周需要决定的事。下季报(7月)看华灿现金流是否恢复;在那之前不需要切换路线,但需要有 B 方案在手。
+      </div>`,
+      en:`
+      <p>Based on <b>public disclosure only</b> — not a final judgment on supplier financial health:</p>
+      <ul>
+        <li><b>HC SemiTek</b>: SZSE inquiry letter on May 8 (goodwill impairment + related-party transactions + receivables aging). Routine inquiry, not an investigation. Add to watchlist.</li>
+        <li><b>Sanan Optoelectronics</b>: Q1 pre-announcement: revenue +12% YoY, debt-to-asset 58% → 54%. Q1 operating cash flow turned positive. <b>Healthy at current disclosure.</b></li>
+        <li><b>Epistar</b> (TWSE): Q1 revenue -3.4% YoY, gross margin 18.2%. No material announcements. Mini-LED revenue share rose 26% → 31%.</li>
+      </ul>
+      <p><b>Historical ref:</b> 14 SZSE inquiries to LED-chip listcos in 5 years — 3 (21%) preceded delivery delay or contract renegotiation within 6 months. Not negligible, but not immediate-action territory.</p>
+      <div class="hist">
+        <div class="bar">
+          <i class="up"   style="flex:21"></i>
+          <i class="flat" style="flex:0"></i>
+          <i class="down" style="flex:79"></i>
+        </div>
+        <span>14 cases · 21% had impact</span>
+      </div>
+      <div class="you-judge">
+        <b>For your judgment</b>
+        Single-source dependency is the key variable. If your HC SemiTek share on certain SKUs exceeds 25%, recommend SQA add a backup-qualification track — <b>medium-term protection</b>, not a this-week decision. Watch HC SemiTek's next quarterly (July) for cash-flow recovery. Until then, no need to switch — but have Plan B ready.
+      </div>`
+    }
+  },
+  peer_tender: {
+    q: ["雷士最近的招标透露了什么?", "What did NVC's recent tender reveal?"],
+    answer:{
+      zh:`
+      <p>雷士照明 5月10日发布 2025 年 LED 灯珠 / 模组框架协议招标公告。可观察的要点:</p>
+      <ul>
+        <li><b>技术规格</b>:CRI 要求从 80 提升至 ≥85(灯珠类);驱动电源效率要求 ≥88%(前期 ≥85%)。说明<b>同行在向中高端切换</b>。</li>
+        <li><b>付款条款</b>:从 30 天承兑改为 60 天承兑。表明雷士在拉长账期、改善自身现金流。</li>
+        <li><b>同期佛山照明年报</b>:披露 2024 年铝材集采均价 ¥18,420/t(<span class="src-tag">来源 FSL 2024 年报, p.42</span>),同比 -3.2%。</li>
+        <li><b>欧司朗中国区</b>:本季度无公开招标信号,但 4 月披露与某 SiC 驱动方案厂商签订框架(具体未披露)。</li>
+      </ul>
+      <p style="color:var(--ink-3);font-size:11.5px">这些都是<b>已公开</b>的信息 — 任何同行的采购同事也都能拿到。差别在于你<b>用不用</b>。</p>
+      <div class="you-judge">
+        <b>需要你自己判断的</b>
+        三个动作可考虑:(1)CRI ≥85 + 驱动 ≥88% 是不是欧普高端线已经在用的标准?如果是,这条情报对你价值有限;如果不是,你需要确认研发是否准备就绪。(2)¥18,420/t 是一个<b>可引用的</b>谈判锚点。(3)欧司朗的 SiC 信号还很弱 — 关注,不行动。
+      </div>`,
+      en:`
+      <p>NVC published its 2025 LED package/module framework RFQ on May 10. Observable points:</p>
+      <ul>
+        <li><b>Tech spec</b>: CRI requirement raised 80 → ≥85 (packages); driver efficiency ≥88% (prev ≥85%). Signals <b>peer movement to mid-high tier</b>.</li>
+        <li><b>Payment terms</b>: 30-day acceptance bill → 60-day. Indicates NVC stretching DPO for cash-flow optimisation.</li>
+        <li><b>FSL 2024 annual report</b>: disclosed centralised Al procurement avg ¥18,420/t (<span class="src-tag">FSL FY24 annual, p.42</span>), -3.2% YoY.</li>
+        <li><b>Osram China</b>: no public tender this quarter; April disclosure of a framework with an undisclosed SiC-driver vendor.</li>
+      </ul>
+      <p style="color:var(--ink-3);font-size:11.5px">All of this is <b>already public</b> — any peer's procurement team can access it. The difference is whether you <b>use</b> it.</p>
+      <div class="you-judge">
+        <b>For your judgment</b>
+        Three actions to consider: (1) Are CRI ≥85 + driver ≥88% already standard on Opple's premium lines? If yes, limited intel value; if no, confirm R&D readiness. (2) ¥18,420/t is a <b>citable</b> negotiation anchor. (3) Osram's SiC signal is still weak — observe, don't act.
+      </div>`
+    }
+  },
+  sic_ready: {
+    q: ["SiC 驱动现在能不能小批量切换?", "Is SiC driver ready for small-batch switch?"],
+    answer:{
+      zh:`
+      <p><b>本系统对 SiC 量产成本的数据置信度低 — 公开来源不权威,以下仅做趋势观察用。</b></p>
+      <ul>
+        <li><b>专利申请</b>:CNIPA 公开的 SiC 照明驱动相关专利 30日 <b>+14% YoY</b>(<span class="src-tag">来源 CNIPA 公开数据</span>)。趋势信号,与产品上市无强相关。</li>
+        <li><b>产业链信号</b>:欧司朗 4月披露 SiC 驱动框架(未披露具体厂商);三安光电 Q1 财报提及 SiC 衬底产能,但未单独披露照明应用占比。</li>
+        <li><b>价格</b>:<b>本系统不展示 SiC vs 硅基驱动的成本对比,因为来源(行业媒体)不权威。</b>建议直接向供应商索要工程样品 + Datasheet 报价。</li>
+      </ul>
+      <p><b>历史参考(替代材料采纳曲线):</b>从专利申请加速到照明客户小批量切换,通常需要 18-36 个月。LED 替代 CFL 用了 4-5 年。</p>
+      <div class="you-judge">
+        <b>需要你自己判断的</b>
+        建议路径:(1)与 2-3 家公开宣布 SiC 驱动方案的厂商索要工程样品 + Datasheet,以一手数据替代二手报道;(2)选 1-2 个 SKU(中高端、销量适中)做小批量切换测试,周期建议 6 个月;(3)<b>不要把 SiC 替代作为本年度成本目标</b> — 它是一个 2027-2028 年才有意义的议题。
+      </div>`,
+      en:`
+      <p><b>This system has low confidence on SiC unit-cost data — public sources are not authoritative. The following is trend-only observation.</b></p>
+      <ul>
+        <li><b>Patent filings</b>: CNIPA SiC lighting-driver filings +14% YoY (30d) (<span class="src-tag">CNIPA public</span>). Trend signal — weak correlation with product launch.</li>
+        <li><b>Supply chain signals</b>: Osram April disclosed an SiC-driver framework (vendor undisclosed); Sanan's Q1 report mentions SiC substrate capacity but does not break out lighting share.</li>
+        <li><b>Pricing</b>: <b>This system does not publish SiC-vs-Si cost comparisons because sources (industry media) are not authoritative.</b> Recommend requesting engineering samples + datasheet quotes directly from vendors.</li>
+      </ul>
+      <p><b>Historical ref (substitute-material adoption curves):</b> patent acceleration → lighting customer small-batch switch typically takes 18-36 months. LED replacing CFL took 4-5 years.</p>
+      <div class="you-judge">
+        <b>For your judgment</b>
+        Recommended path: (1) Request engineering samples + datasheets from 2-3 publicly-announced SiC-driver vendors — first-hand data beats secondary reporting. (2) Pick 1-2 SKUs (mid-high tier, moderate volume) for a 6-month small-batch switch trial. (3) <b>Don't put SiC substitution in this year's cost target</b> — this is a 2027-2028 conversation.
+      </div>`
+    }
+  }
+};
+
+/* ─────────────────────────────────────────────
+   i18n + Tweaks (language switch)
+   ───────────────────────────────────────────── */
+let CUR_LANG = (function(){
+  try { return localStorage.getItem('rmi_lang') || 'zh'; } catch(e){ return 'zh'; }
+})();
+const I18N = {
+  zh: {
+    "brand.name":"采购情报站 · 欧普照明",
+    "brand.sub":"Opple Procurement Intelligence Hub",
+    "scope.label":"监控范围",
+    "scope.val":"欧普全品类 · 8 个核心信号",
+    "hdr.today":"今日", "hdr.last":"上次扫描", "hdr.next":"下次扫描",
+    "today.val":"2026 年 5 月 11 日 · 周一",
+    "last.val":"今日 06:00 CST", "next.val":"明日 06:00 CST",
+    "map.title":"每日采购情报扫描",
+    "map.sub":"8 个核心信号 · 每 24 小时基于公开数据源刷新",
+    "map.scanLbl":"扫描编号", "map.covLbl":"覆盖", "map.covVal":"8 个信号",
+    "legend.high":"高风险", "legend.med":"关注", "legend.low":"平稳", "legend.lowconf":"数据置信度低",
+    "brief.title":"今日情报简报",
+    "brief.sub":"2026 年 5 月 11 日 · 整合 9 个公开数据源",
+    "brief.upd":"更新 · 每日 06:00", "brief.next":"下次 · 18h 42m",
+    "brief.today":"今日", "brief.30d":"近 30 天", "brief.hi":"高优先级", "brief.src":"数据源",
+    "price.title":"关键品种价格 + 指数",
+    "price.sub":"现货 + 期货 + 行业指数 · 来自交易所与行业协会",
+    "price.right":"5 个品种 · 频率不一", "price.sync":"上次同步 · 5月11日 06:00",
+    "chat.title":"向情报站提问",
+    "chat.sub":"AI 整合公开数据与历史参考 · 决策由你做",
+    "chat.right":"模型 · INTELLIGENCE-AGENT v2.4",
+    "chat.cite":"所有回答仅引用公开数据",
+    "chat.placeholder":"比如:这周 LME 铜库存有什么变化?",
+    "chat.send":"提问",
+    "about.title":"关于本系统",
+    "about.sub":"— AI 能做什么、不能做什么、数据从哪里来",
+    "about.can":"✓ AI 能做的", "about.cannot":"✗ AI 不能做的",
+    "about.src":"◇ 数据源", "about.lag":"⏱ 数据时效",
+    "foot.copy":"© 2026 欧普照明采购情报站 · 服务采购决策,不做价格投机。",
+    "foot.disc":"⚠ AI 整合公开信息。不预测价格,不替代专业判断。",
+    "tw.title":"显示设置",
+    "tw.lang":"显示语言",
+  },
+  en: {
+    "brand.name":"Opple Procurement Intelligence Hub",
+    "brand.sub":"采购情报站 · 欧普照明",
+    "scope.label":"SCOPE",
+    "scope.val":"All Opple categories · 8 core signals",
+    "hdr.today":"Today", "hdr.last":"Last Scan", "hdr.next":"Next Scan",
+    "today.val":"May 11, 2026 · Mon",
+    "last.val":"Today 06:00 CST", "next.val":"Tomorrow 06:00 CST",
+    "map.title":"Daily Procurement Intelligence Scan",
+    "map.sub":"8 core signals · Refreshed every 24h from public sources",
+    "map.scanLbl":"SCAN ID", "map.covLbl":"COVERAGE", "map.covVal":"8 signals",
+    "legend.high":"High Risk", "legend.med":"Watch", "legend.low":"Stable", "legend.lowconf":"Low confidence",
+    "brief.title":"Today's Intelligence Briefing",
+    "brief.sub":"May 11, 2026 · Curated from 9 public sources",
+    "brief.upd":"UPDATE · DAILY 06:00", "brief.next":"NEXT · 18h 42m",
+    "brief.today":"Today", "brief.30d":"Last 30d", "brief.hi":"High Priority", "brief.src":"Sources",
+    "price.title":"Key Prices & Indices",
+    "price.sub":"Spot, futures & industry indices from exchanges and trade bodies",
+    "price.right":"5 items · Mixed frequency", "price.sync":"Last sync · May 11, 06:00",
+    "chat.title":"Ask the Hub",
+    "chat.sub":"AI integrates public data & historical references — you make the call",
+    "chat.right":"MODEL · INTELLIGENCE-AGENT v2.4",
+    "chat.cite":"Answers cite public sources only",
+    "chat.placeholder":"e.g. Any change in LME Cu stocks this week?",
+    "chat.send":"Ask",
+    "about.title":"About this system",
+    "about.sub":"— What this AI does, what it doesn't, and where its data comes from",
+    "about.can":"✓ What AI Can Do", "about.cannot":"✗ What AI Cannot Do",
+    "about.src":"◇ Data Sources", "about.lag":"⏱ Data Freshness",
+    "foot.copy":"© 2026 Opple Procurement Intelligence Hub · Built for sourcing decisions, not speculation.",
+    "foot.disc":"⚠ AI integrates public information. It does not predict prices and does not replace professional judgment.",
+    "tw.title":"Display Settings",
+    "tw.lang":"Language",
+  }
+};
+function t(key, fb){
+  const tab = I18N[CUR_LANG] || I18N.zh;
+  return tab[key] ?? (I18N.zh[key]) ?? fb ?? key;
+}
+function applyI18n(){
+  // text nodes via data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent = t(el.dataset.i18n);
+  });
+  // industry buttons
+  document.querySelectorAll('#industrySwitch button').forEach(b=>{
+    b.textContent = t('ind.'+b.dataset.ind);
+  });
+  // chat input placeholder
+  const inp = document.getElementById('chatInput');
+  if(inp) inp.placeholder = t('chat.placeholder');
+  const send = document.getElementById('chatSend');
+  if(send) send.textContent = t('chat.send');
+  // brand
+  const bn = document.querySelector('.brand-name b');
+  if(bn) bn.textContent = t('brand.name');
+  // today/last/next labels + values
+  document.querySelectorAll('[data-i18n-attr]').forEach(el=>{
+    const k = el.dataset.i18nAttr;
+    el.textContent = t(k);
+  });
+}
+
+/* Build Tweaks panel (uses host edit-mode protocol) */
+function buildTweaksPanel(){
+  if(document.getElementById('tweaksPanel')) return;
+  const panel = document.createElement('div');
+  panel.id = 'tweaksPanel';
+  panel.style.cssText = `position:fixed;right:18px;bottom:18px;width:240px;
+    background:rgba(10,28,46,0.96);border:1px solid var(--line-2);
+    border-radius:10px;padding:14px;z-index:9999;
+    box-shadow:0 12px 40px rgba(0,0,0,0.5);display:none;
+    backdrop-filter: blur(12px);font-family:var(--sans);color:var(--ink);`;
+  panel.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:0.04em" id="tw-title">${t('tw.title')}</div>
+      <button id="tw-close" style="background:transparent;border:0;color:var(--ink-3);cursor:pointer;font-size:14px;line-height:1">×</button>
+    </div>
+    <div style="font-size:10px;color:var(--ink-3);font-family:var(--latin);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px" id="tw-lang-lbl">${t('tw.lang')}</div>
+    <div style="display:flex;gap:4px;background:rgba(255,255,255,0.04);padding:3px;border-radius:6px;border:1px solid var(--line)">
+      <button data-lang="zh" class="tw-langbtn" style="flex:1;padding:7px 0;border-radius:4px;background:transparent;color:var(--ink-2);font-size:12px;cursor:pointer;border:0">中文</button>
+      <button data-lang="en" class="tw-langbtn" style="flex:1;padding:7px 0;border-radius:4px;background:transparent;color:var(--ink-2);font-size:12px;cursor:pointer;border:0">English</button>
+    </div>
+  `;
+  document.body.appendChild(panel);
+  function paintLang(){
+    panel.querySelectorAll('.tw-langbtn').forEach(b=>{
+      const active = b.dataset.lang === CUR_LANG;
+      b.style.background = active ? 'rgba(60,127,255,0.22)' : 'transparent';
+      b.style.color = active ? '#fff' : 'var(--ink-2)';
+      b.style.boxShadow = active ? 'inset 0 0 0 1px rgba(60,127,255,0.4)' : 'none';
+    });
+    document.getElementById('tw-title').textContent = t('tw.title');
+    document.getElementById('tw-lang-lbl').textContent = t('tw.lang');
+  }
+  paintLang();
+  panel.addEventListener('click', e=>{
+    const b = e.target.closest('.tw-langbtn');
+    if(b){
+      CUR_LANG = b.dataset.lang;
+      try{ localStorage.setItem('rmi_lang', CUR_LANG); }catch(e){}
+      try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{lang: CUR_LANG}}, '*'); }catch(e){}
+      document.documentElement.classList.toggle('lang-zh', CUR_LANG==='zh');
+      applyI18n();
+      renderOriginCards(currentInd);
+      renderBriefs(currentInd);
+      renderPrices(currentInd);
+      paintAbout();
+      paintChatPresets();
+      paintLang();
+    }
+    if(e.target.id === 'tw-close'){
+      panel.style.display = 'none';
+      try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); }catch(e){}
+    }
+  });
+  return panel;
+}
+
+window.addEventListener('message', e=>{
+  const d = e.data || {};
+  if(d.type === '__activate_edit_mode'){
+    const p = buildTweaksPanel();
+    p.style.display = 'block';
+  } else if(d.type === '__deactivate_edit_mode'){
+    const p = document.getElementById('tweaksPanel');
+    if(p) p.style.display = 'none';
+  }
+});
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+let currentInd = 'nuts';
+
+/* ─────────────────────────────────────────────
+   Render
+   ───────────────────────────────────────────── */
+/* pick zh/en from a [zh,en] tuple */
+function pick(tuple){
+  if(!Array.isArray(tuple)) return tuple ?? '';
+  return CUR_LANG === 'zh' ? tuple[0] : tuple[1];
+}
+function renderOriginCards(ind){
+  const root = document.getElementById('originGrid');
+  if(!root) return;
+  root.innerHTML = "";
+  const isZh = CUR_LANG === 'zh';
+  ORIGIN_CARDS[ind].forEach(c=>{
+    const deltaVal = c.delta && c.delta[0];
+    const deltaDir = c.delta && c.delta[1];
+    const deltaHTML = (deltaVal && deltaVal !== '—')
+      ? `<span class="delta ${deltaDir}">${deltaVal}</span>`
+      : '';
+    const liveHTML = c.level === 'high'
+      ? `<span class="oc-live"><i></i>${isZh ? '实时' : 'LIVE'}</span>`
+      : '';
+    root.insertAdjacentHTML('beforeend', `
+      <article class="origin-card ${c.level} ${isZh ? 'oc-card-zh' : ''}">
+        <div class="oc-top">
+          <div>
+            <div class="oc-region">${pick(c.region)}</div>
+            <div class="oc-cat">${pick(c.cat)}</div>
+          </div>
+          <span class="oc-pill">${pick(c.pill)}</span>
+        </div>
+        <div class="oc-signal">${pick(c.signal)} ${deltaHTML}</div>
+        <div class="oc-meta">
+          ${liveHTML}
+          ${liveHTML ? '<span class="dot"></span>' : ''}
+          <span class="src">${pick(c.src)}</span>
+          <span class="dot"></span>
+          <span>${pick(c.time)}</span>
+        </div>
+      </article>
+    `);
+  });
+}
+
+/* Render briefings (bilingual tuples) */
+function renderBriefs(ind){
+  const root = document.getElementById('briefsList');
+  root.innerHTML = "";
+  const isZh = CUR_LANG === 'zh';
+  BRIEFINGS[ind].forEach(b=>{
+    const title = pick(b.title);
+    const sourceTxt = pick(b.src);
+    const body = pick(b.body);
+    const refTxt = pick(b.ref);
+    const sugTxt = pick(b.sug);
+    const refTitle = isZh ? '历史参考(不构成预测)' : 'Historical reference (not a prediction)';
+    const sugTitle = isZh ? 'AI 建议 — 观察,不做决定' : "AI Suggestion — observe, don't decide";
+    const srcLbl   = isZh ? '来源 · ' : 'Source · ';
+    const prioTxt  = isZh ? (b.prio==='high'?'高':b.prio==='med'?'中':'低') : b.prio;
+    const distBar = b.refDist ? `
+          <div class="hist" style="margin:8px 0 0">
+            <div class="bar">
+              <i class="up"   style="flex:${b.refDist[0]}"></i>
+              <i class="flat" style="flex:${b.refDist[1]}"></i>
+              <i class="down" style="flex:${b.refDist[2]}"></i>
+            </div>
+            <span>${b.refDist[0]} / ${b.refDist[1]} / ${b.refDist[2]}</span>
+          </div>` : '';
+    const refHTML = (refTxt && refTxt !== "—") ? `
+      <div class="brief-ref">
+        <b>${refTitle}</b>
+        ${refTxt}
+        ${distBar}
+      </div>` : '';
+    const sugHTML = sugTxt ? `
+      <div class="brief-sug">
+        <b>${sugTitle}</b>
+        ${sugTxt}
+      </div>` : '';
+    root.insertAdjacentHTML('beforeend', `
+      <article class="brief">
+        <div class="brief-head">
+          <span class="prio ${b.prio}">${prioTxt}</span>
+          <span class="brief-title">${title}</span>
+        </div>
+        <div class="brief-src">${srcLbl}<b>${sourceTxt}</b></div>
+        <div class="brief-body">${body}</div>
+        ${refHTML}
+        ${sugHTML}
+      </article>
+    `);
+  });
+}
+
+function makeSpark(arr, dir){
+  if(!arr || !arr.length) return '';
+  const w = 96, h = 22, min = Math.min(...arr), max = Math.max(...arr);
+  const rng = (max - min) || 1;
+  const pts = arr.map((v,i)=>{
+    const x = (i/(arr.length-1)) * w;
+    const y = h - ((v - min)/rng) * h;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const stroke = dir==='up' ? 'var(--hi)' : dir==='down' ? 'var(--lo)' : 'var(--ink-3)';
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="${stroke}" stroke-width="1.4" points="${pts}"/></svg>`;
+}
+
+function renderPrices(ind){
+  const root = document.getElementById('priceRow');
+  root.innerHTML = "";
+  const isZh = CUR_LANG === 'zh';
+  PRICES[ind].forEach(p=>{
+    const arrow = p.dir==='up'?'▲':p.dir==='down'?'▼':'▬';
+    const name = pick(p.name);
+    const sub  = pick(p.sub);
+    const val  = pick(p.val);
+    const src  = pick(p.src);
+    const fut  = pick(p.fut);
+    const warn = isZh ? '关注' : 'Watch';
+    const period = isZh ? '近 30 天' : '30d';
+    root.insertAdjacentHTML('beforeend',`
+      <div class="price-cell">
+        <div class="name">${name}</div>
+        <div class="nm-sub">${sub}</div>
+        <div class="val">${val}</div>
+        <div class="chg ${p.dir}"><span class="arrow">${arrow}</span>${p.chg} (${period})${p.warn?`<span class="warn-pill">${warn}</span>`:''}</div>
+        <div class="src">${src}${fut?`<br>${fut}`:''}</div>
+        ${makeSpark(p.spark, p.dir)}
+      </div>
+    `);
+  });
+}
+
+
+/* About panel + chat presets — bilingual paint */
+const ABOUT_ZH = {
+  can: ["跨 9 个公开数据源 24 小时持续监测",
+        "中文 / 英文 双语整合",
+        "把信号与历史相似情况做对比,而不只是「报今天的价」",
+        "对低置信度的数据明确标注,不强行给量化结论",
+        "异常变化自动提示",
+        "通俗摘要 + 数据来源标注(每条都能溯源)"],
+  cannot: ["精确预测未来价格",
+           "访问非公开或专有数据",
+           "替代你的采购员的专业判断",
+           "预测黑天鹅事件",
+           "替你与供应商谈判",
+           "保证历史模式会重演"],
+  src: [["LME · SHFE", "金属期货 · 实时(15 分钟延迟)"],
+        ["上海有色网 · 长江有色金属网", "铜 / 铝 / 锌现货报价"],
+        ["LEDinside · CSA Research · 中商情报", "LED 芯片库存指数 + 价格指数"],
+        ["石化盈科 · 中塑在线 · 隆众", "PC / ABS / PP 等工程塑料现货"],
+        ["IC Insights · 富昌 / 安富利", "电源管理芯片(PMIC)交期与现货"],
+        ["巨潮资讯 · 国家企业信用信息公示系统", "上市公司公告与工商信息"],
+        ["上市公司年报 · 招标公告(政府采购网等)", "同行采购动态与公开招标"],
+        ["CNIPA(国家知识产权局)", "公开专利申请数据"],
+        ["Reuters / Bloomberg 公开版 · 行业会议公开报告", "新闻、政策、技术成熟度参考"]],
+  lag: [["期货价格(LME / SHFE)", "实时(延时 15 分钟)"],
+        ["现货价格(铜 / 铝 / 塑料)", "每日 / 每周"],
+        ["LED 芯片指数", "周度 / 月度"],
+        ["电源芯片交期", "月度"],
+        ["上市公司公告", "披露当日"],
+        ["招标公告", "公告发布即收录"],
+        ["专利数据", "季度(CNIPA 公开节奏)"]],
+};
+const ABOUT_EN = {
+  can: ["24h monitoring across 9 public data sources",
+        "Bilingual integration (Chinese / English)",
+        "Compare signals against historical patterns, not just 'today's price'",
+        "Explicitly flag low-confidence data, do not force quantitative conclusions",
+        "Anomaly detection and alerting",
+        "Plain-language summaries with citations (every claim is traceable)"],
+  cannot: ["Predict exact future prices",
+           "Access non-public or proprietary data",
+           "Replace your buyer's professional judgment",
+           "Forecast black-swan events",
+           "Negotiate with suppliers on your behalf",
+           "Guarantee that historical patterns will repeat"],
+  src: [["LME · SHFE", "Metals futures · live (15-min delay)"],
+        ["SMM · Yangtze Nonferrous", "Cu / Al / Zn spot quotes"],
+        ["LEDinside · CSA Research · CIE Insight", "LED chip inventory + price indices"],
+        ["Sinopec EPEC · CCPlas · Longzhong", "PC / ABS / PP engineering plastics spot"],
+        ["IC Insights · Future / Avnet", "PMIC lead times and spot premiums"],
+        ["CNINFO · NECIPS", "Listco disclosures and corporate registry"],
+        ["Annual reports · Public tender bulletins", "Peer procurement signals"],
+        ["CNIPA (China IP Office)", "Public patent filings"],
+        ["Reuters / Bloomberg public feeds · conference papers", "News, policy, tech-maturity references"]],
+  lag: [["Futures prices (LME / SHFE)", "Live (15-min delay)"],
+        ["Spot (Cu / Al / plastics)", "Daily / Weekly"],
+        ["LED chip indices", "Weekly / Monthly"],
+        ["PMIC lead times", "Monthly"],
+        ["Listco disclosures", "Day of filing"],
+        ["Tender bulletins", "On publication"],
+        ["Patent data", "Quarterly (CNIPA cadence)"]],
+};
+function paintAbout(){
+  const isZh = CUR_LANG === 'zh';
+  const A = isZh ? ABOUT_ZH : ABOUT_EN;
+  const setList = (sel, items) => {
+    const ul = document.querySelector(sel);
+    if(!ul) return;
+    ul.innerHTML = items.map(x => Array.isArray(x)
+      ? `<li><span class="src-name">${x[0]}</span><span class="src-desc">${x[1]}</span></li>`
+      : `<li>${x}</li>`).join('');
+  };
+  setList('.about-card.can ul',    A.can);
+  setList('.about-card.cannot ul', A.cannot);
+  setList('.about-card.src ul',    A.src);
+  const lagUl = document.querySelector('.about-card.lag ul');
+  if(lagUl){
+    lagUl.innerHTML = A.lag.map(([k,v]) =>
+      `<li>${k}<span class="lag-val">${v}</span></li>`).join('');
+  }
+}
+
+const PRESETS_ZH = [
+  ["cu_lock",        "本季铜要不要分批锁仓?"],
+  ["supplier_risk",  "三安 / 华灿 / 晶元谁更需要盯紧?"],
+  ["peer_tender",    "雷士最近的招标透露了什么?"],
+  ["sic_ready",      "SiC 驱动现在能不能小批量切换?"],
+];
+const PRESETS_EN = [
+  ["cu_lock",        "Should we stage-fix Cu this quarter?"],
+  ["supplier_risk",  "Sanan / HC SemiTek / Epistar — which one to watch?"],
+  ["peer_tender",    "What did NVC's recent tender reveal?"],
+  ["sic_ready",      "Is SiC driver ready for small-batch switch?"],
+];
+
+function paintChatPresets(){
+  const isZh = CUR_LANG === 'zh';
+  const list = isZh ? PRESETS_ZH : PRESETS_EN;
+  document.querySelectorAll('#chatPresets button').forEach(btn=>{
+    const q = btn.dataset.q;
+    const found = list.find(x=>x[0]===q);
+    if(!found) return;
+    // keep the leading icon SVG, swap trailing text
+    const svg = btn.querySelector('svg');
+    btn.textContent = '';
+    if(svg) btn.appendChild(svg);
+    btn.insertAdjacentText('beforeend', found[1]);
+  });
+  // initial greeting in chat area (only first AI message)
+  const greet = document.querySelector('#chatArea .chat-msg.ai .body');
+  if(greet && greet.dataset.greeting !== '1'){
+    greet.dataset.greeting = '1';
+  }
+  const initGreet = document.querySelector('#chatArea .chat-msg.ai:first-child .body');
+  if(initGreet){
+    initGreet.innerHTML = isZh
+      ? `<p>你好。这里是欧普采购情报站。我可以基于<b>公开数据源</b>(交易所 / 行业协会 / 上市公司公告 / 知识产权局等)整理与你 BOM 相关的信号、对比历史相似情况,把判断留给你。</p>
+         <p style="color:var(--ink-3);font-size:11.5px">选择上方任意预设问题查看示例,或在下方输入你的问题。</p>`
+      : `<p>Hello. This is the Opple Procurement Intelligence Hub. I integrate <b>public data sources</b> (exchanges, trade bodies, listco disclosures, IP office, etc), surface signals relevant to your BOM, and compare against historical references — the decision is yours.</p>
+         <p style="color:var(--ink-3);font-size:11.5px">Pick a preset above for a worked example, or type your own question below.</p>`;
+  }
+  // "AI Hub" / "You" labels
+  document.querySelectorAll('#chatArea .chat-msg.ai .from').forEach(el=>{
+    el.innerHTML = `<i></i>${isZh ? 'AI 情报站' : 'AI Hub'}`;
+  });
+  document.querySelectorAll('#chatArea .chat-msg.user .from').forEach(el=>{
+    el.innerHTML = `<i></i>${isZh ? '你' : 'You'}`;
+  });
+}
+
+function setIndustry(ind){
+  currentInd = ind;
+  document.querySelectorAll('#industrySwitch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.ind===ind);
+  });
+  renderOriginCards(ind);
+  renderBriefs(ind);
+  renderPrices(ind);
+}
+
+document.getElementById('industrySwitch').addEventListener('click', e=>{
+  const b = e.target.closest('button[data-ind]');
+  if(!b) return;
+  setIndustry(b.dataset.ind);
+});
+
+/* Chat */
+const chatArea = document.getElementById('chatArea');
+function pushAi(html){
+  chatArea.insertAdjacentHTML('beforeend', `
+    <div class="chat-msg ai">
+      <div class="from"><i></i>${CUR_LANG==='zh'?'AI 情报站':'AI Hub'}</div>
+      <div class="body">${html}</div>
+    </div>`);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+function pushUser(text){
+  chatArea.insertAdjacentHTML('beforeend',`
+    <div class="chat-msg user">
+      <div class="from"><i></i>${CUR_LANG==='zh'?'你':'You'}</div>
+      <div class="body"><p>${text}</p></div>
+    </div>`);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+document.getElementById('chatPresets').addEventListener('click', e=>{
+  const b = e.target.closest('button[data-q]');
+  if(!b) return;
+  const key = b.dataset.q;
+  const data = CHAT_ANSWERS[key];
+  if(!data) return;
+  const qText = Array.isArray(data.q) ? (CUR_LANG==='zh' ? data.q[0] : data.q[1]) : data.q;
+  const aHtml = (data.answer && typeof data.answer === 'object') ? (data.answer[CUR_LANG] || data.answer.zh) : data.answer;
+  pushUser(qText);
+  setTimeout(()=>pushAi(aHtml), 220);
+});
+document.getElementById('chatSend').addEventListener('click', sendCustom);
+document.getElementById('chatInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter') sendCustom();
+});
+function sendCustom(){
+  const inp = document.getElementById('chatInput');
+  const v = inp.value.trim();
+  if(!v) return;
+  pushUser(v);
+  inp.value = "";
+  const fallback = CUR_LANG === 'zh' ? `
+    <p>已收到。在演示版本中,我只能完整回答上方四个预设问题。<b>对于自由问题</b>,真实产品会按以下结构回答:</p>
+    <ul>
+      <li>① 列出与你问题相关的<b>公开数据信号</b> + 数据源</li>
+      <li>② 找出<b>历史上的相似情况</b>,用概率分布展示结果</li>
+      <li>③ 标注<b>需要你自己判断的部分</b></li>
+    </ul>
+    <p style="color:var(--ink-3);font-size:11.5px">不预测价格,不替你做决定。</p>
+  ` : `
+    <p>Received. In this demo, I can only fully answer the four preset questions above. <b>For free-form questions</b>, the production system would respond in this structure:</p>
+    <ul>
+      <li>① List <b>relevant public-data signals</b> + sources for your question</li>
+      <li>② Find <b>historical comparables</b> and show outcome distributions</li>
+      <li>③ Flag <b>what requires your own judgment</b></li>
+    </ul>
+    <p style="color:var(--ink-3);font-size:11.5px">No price predictions. No decisions made for you.</p>
+  `;
+  setTimeout(()=>pushAi(fallback), 240);
+}
+
+/* Default about open */
+document.getElementById('aboutPanel').open = false;
+
+/* Init */
+document.documentElement.classList.toggle('lang-zh', CUR_LANG==='zh');
+applyI18n();
+paintAbout();
+paintChatPresets();
+setIndustry('nuts');
+</script>
+
+<script>
+/* Auto-trigger preset click from URL ?auto=<key> — used by deck slide 17
+   so each page-turn into slide 17 fires the 铜锁仓 demo and scrolls the
+   iframe down so the full AI answer is in view. */
+(function(){
+  const key = new URLSearchParams(location.search).get('auto');
+  if(!key) return;
+  const btn = document.querySelector(`#chatPresets button[data-q="${key}"]`);
+  if(!btn) return;
+  setTimeout(()=>{
+    btn.click();
+    setTimeout(()=>{
+      const msgs = document.querySelectorAll('#chatArea .chat-msg');
+      const last = msgs[msgs.length-1];
+      if(last) last.scrollIntoView({ behavior:'smooth', block:'end' });
+      else window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth' });
+    }, 520);
+  }, 480);
+})();
+</script>
+
+
+</body></html>

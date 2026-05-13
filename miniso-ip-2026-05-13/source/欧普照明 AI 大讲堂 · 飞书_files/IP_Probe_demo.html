@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<!-- saved from url=(0087)https://fuqiang.github.io/feishusolution/OPPLE-AI-Lecture/prototypes/IP_Probe_demo.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IP 合作机会探针 · 原型 Demo</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg-page: #0A0B0D;
+  --bg-frame: #141618;
+  --bg-card: #1A1D22;
+  --bg-card-hover: #20242B;
+  --bg-elevated: #232830;
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.12);
+  --text-primary: #F5F6F8;
+  --text-secondary: #9BA1AC;
+  --text-tertiary: #6B7280;
+  --accent: #3B82F6;
+  --accent-bg: rgba(59,130,246,0.12);
+  --rising: #22C55E;
+  --rising-bg: rgba(34,197,94,0.12);
+  --stable: #F59E0B;
+  --stable-bg: rgba(245,158,11,0.12);
+  --declining: #6B7280;
+  --declining-bg: rgba(107,114,128,0.12);
+  --s-tier: #EF4444;
+  --s-tier-bg: rgba(239,68,68,0.12);
+  --a-tier: #F59E0B;
+  --a-tier-bg: rgba(245,158,11,0.12);
+  --b-tier: #6B7280;
+  --b-tier-bg: rgba(107,114,128,0.12);
+  --resonance: #A855F7;
+  --resonance-bg: rgba(168,85,247,0.12);
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: radial-gradient(ellipse at top left, rgba(59,130,246,0.05), transparent 40%),
+              radial-gradient(ellipse at bottom right, rgba(168,85,247,0.05), transparent 40%),
+              var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+  font-feature-settings: "tnum";
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  min-height: 100vh;
+}
+
+.desktop-label {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  z-index: 100;
+}
+
+/* phone-scale-wrapper 用来做缩放，保持内部 390x844 布局不变 */
+.phone-scale-wrapper {
+  width: 390px;
+  height: 844px;
+  flex-shrink: 0;
+  transform-origin: center center;
+  position: relative;
+}
+
+.phone-frame {
+  width: 390px;
+  height: 844px;
+  background: var(--bg-frame);
+  border-radius: 40px;
+  padding: 10px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 40px 80px -20px rgba(0,0,0,0.5), 0 0 120px -40px rgba(59,130,246,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 窄屏（手机）时撑满宽度，使用响应式布局 */
+@media (max-width: 450px) {
+  body { padding: 0; align-items: flex-start; }
+  .phone-scale-wrapper {
+    width: 100%;
+    height: 100vh;
+    transform: none !important;
+  }
+  .phone-frame {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    padding: 0;
+  }
+  .phone-screen {
+    border-radius: 0;
+  }
+  .bottom-nav {
+    border-radius: 0 !important;
+  }
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-page);
+  border-radius: 32px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar {
+  height: 44px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.status-right { display: flex; gap: 6px; align-items: center; }
+.status-icon { width: 16px; height: 10px; border: 1.5px solid var(--text-primary); border-radius: 2px; position: relative; }
+.status-icon::after { content: ''; position: absolute; top: 1.5px; left: 1.5px; bottom: 1.5px; width: 60%; background: var(--text-primary); border-radius: 1px; }
+
+.app-header {
+  padding: 8px 20px 16px;
+  flex-shrink: 0;
+}
+
+.app-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.app-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rising);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px 100px;
+  scroll-behavior: smooth;
+}
+.content::-webkit-scrollbar { display: none; }
+
+.page { display: none; animation: fadeIn 0.3s ease; }
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card.highlight { border-color: rgba(239,68,68,0.3); background: linear-gradient(135deg, rgba(239,68,68,0.08), transparent 60%), var(--bg-card); }
+
+.metric-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.02em;
+}
+
+.metric-value {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.metric-delta {
+  font-size: 11px;
+  color: var(--rising);
+  margin-top: 4px;
+}
+.metric-delta.down { color: var(--declining); }
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 20px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  letter-spacing: -0.01em;
+}
+.section-title .hint { font-size: 11px; color: var(--text-tertiary); font-weight: 400; }
+
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.tier-badge.s { background: var(--s-tier-bg); color: var(--s-tier); }
+.tier-badge.a { background: var(--a-tier-bg); color: var(--a-tier); }
+.tier-badge.b { background: var(--b-tier-bg); color: var(--b-tier); }
+.tier-badge.resonance { background: var(--resonance-bg); color: var(--resonance); }
+
+.opp-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.opp-card:active { transform: scale(0.98); }
+.opp-card.s-featured { border-color: rgba(239,68,68,0.25); background: linear-gradient(180deg, rgba(239,68,68,0.04), transparent 40%), var(--bg-card); }
+
+.opp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.opp-meta { display: flex; gap: 6px; align-items: center; }
+.opp-id { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+
+.opp-title {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.opp-signal {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.opp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.opp-tag {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+.opp-tag.emotion { background: rgba(168,85,247,0.1); color: #C084FC; }
+.opp-tag.element { background: rgba(59,130,246,0.1); color: #60A5FA; }
+.opp-tag.window { background: rgba(245,158,11,0.1); color: #FCD34D; }
+
+.opp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 0.5px solid var(--border);
+}
+.opp-brand { font-size: 11px; color: var(--text-secondary); }
+.opp-cta { font-size: 11px; color: var(--accent); font-weight: 500; }
+
+.layer-card {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.layer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.layer-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.layer-code {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.layer-code.l1 { background: rgba(168,85,247,0.12); color: #C084FC; }
+.layer-code.l2 { background: rgba(59,130,246,0.12); color: #60A5FA; }
+.layer-code.l3 { background: rgba(34,197,94,0.12); color: #4ADE80; }
+.layer-code.l4 { background: rgba(245,158,11,0.12); color: #FCD34D; }
+
+.layer-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.layer-desc {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.tag-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag-chip {
+  font-size: 11px;
+  padding: 5px 9px;
+  background: var(--bg-elevated);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+.emotion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.emotion-item:last-child { border-bottom: none; }
+
+.emotion-info { flex: 1; min-width: 0; }
+.emotion-name {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.emotion-meta {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+.emotion-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.status-pill {
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.status-pill.rising { background: var(--rising-bg); color: var(--rising); }
+.status-pill.stable { background: var(--stable-bg); color: var(--stable); }
+.status-pill.declining { background: var(--declining-bg); color: var(--declining); }
+.status-pill.emerging { background: rgba(168,85,247,0.12); color: #C084FC; }
+
+.spark {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 18px;
+  margin-top: 4px;
+}
+.spark-bar {
+  width: 3px;
+  background: var(--rising);
+  border-radius: 1px;
+  opacity: 0.6;
+}
+
+.l3-topic {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.l3-topic:last-child { border-bottom: none; }
+
+.l3-rank {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+  width: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.l3-rank.hot { color: var(--s-tier); }
+
+.l3-info { flex: 1; min-width: 0; }
+.l3-text {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.l3-source {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  display: flex;
+  gap: 8px;
+}
+
+.momentum-badge {
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--rising-bg);
+  color: var(--rising);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.momentum-badge.stable { background: var(--stable-bg); color: var(--stable); }
+
+.trigger-item {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.trigger-item.fresh::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: var(--rising);
+  border-radius: 0 2px 2px 0;
+}
+
+.trigger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.trigger-type {
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.trigger-time {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.trigger-title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.trigger-elements {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.trigger-elements strong { color: #60A5FA; font-weight: 500; }
+
+.filter-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 14px;
+}
+
+.filter-tab {
+  flex: 1;
+  text-align: center;
+  padding: 7px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  border-radius: 7px;
+  transition: all 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.filter-tab.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.funnel-viz {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 14px;
+  margin-bottom: 20px;
+}
+
+.funnel-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+
+.funnel-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.funnel-step:last-child { margin-bottom: 0; }
+
+.funnel-bar {
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.funnel-bar.b1 { width: 100%; background: rgba(59,130,246,0.15); color: #93C5FD; }
+.funnel-bar.b2 { width: 78%; background: rgba(59,130,246,0.22); color: #93C5FD; }
+.funnel-bar.b3 { width: 52%; background: rgba(168,85,247,0.22); color: #D8B4FE; }
+.funnel-bar.b4 { width: 30%; background: rgba(245,158,11,0.25); color: #FCD34D; }
+.funnel-bar.b5 { width: 14%; background: rgba(239,68,68,0.28); color: #FCA5A5; }
+
+.funnel-count {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  min-width: 44px;
+  text-align: right;
+}
+
+.resonance-banner {
+  background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(59,130,246,0.1));
+  border: 0.5px solid rgba(168,85,247,0.25);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.resonance-label {
+  font-size: 10px;
+  color: #C084FC;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.resonance-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.resonance-sources {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  align-items: center;
+}
+
+.source-pill {
+  padding: 3px 7px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+.detail-section { margin-bottom: 18px; }
+.detail-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.detail-list {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 4px 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--border);
+  font-size: 12px;
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-key { color: var(--text-secondary); }
+.detail-val { color: var(--text-primary); font-weight: 500; text-align: right; max-width: 60%; }
+
+.ip-choice {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.ip-choice.best { border-color: rgba(59,130,246,0.3); }
+.ip-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ip-recommend {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 4px;
+  font-weight: 500;
+}
+.ip-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.ip-ref {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(20,22,24,0.92);
+  backdrop-filter: blur(20px);
+  border-top: 0.5px solid var(--border);
+  border-radius: 0 0 32px 32px;
+  padding: 10px 8px 18px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: color 0.2s;
+}
+.nav-item.active { color: var(--text-primary); }
+
+.nav-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-icon svg { width: 100%; height: 100%; }
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.back-btn {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.arrow-icon { width: 14px; height: 14px; }
+
+.flow-chain {
+  background: var(--bg-card);
+  border: 0.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 14px;
+  margin-bottom: 16px;
+}
+.flow-step {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  align-items: flex-start;
+}
+.flow-mark {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.flow-content { flex: 1; }
+.flow-layer {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+.flow-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.flow-text strong { color: #60A5FA; font-weight: 500; }
+.flow-arrow {
+  margin-left: 1px;
+  color: var(--text-tertiary);
+  font-size: 12px;
+  line-height: 0.8;
+  padding: 2px 0;
+}
+
+.legend-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.legend-dot { width: 7px; height: 7px; border-radius: 2px; display: inline-block; margin-right: 4px; vertical-align: middle; }
+
+</style>
+</head>
+<body>
+
+
+
+<div class="phone-scale-wrapper" id="phone-scale-wrapper">
+<div class="phone-frame">
+<div class="phone-screen">
+
+<div class="status-bar">
+  <span>9:41</span>
+  <div class="status-right">
+    <span style="font-size:11px;">5G</span>
+    <div class="status-icon"></div>
+  </div>
+</div>
+
+<div class="app-header">
+  <div class="app-title">IP 合作机会探针</div>
+  <div class="app-subtitle">
+    <span class="live-dot"></span>
+    <span>实时监测中 · 4 月 21 日</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Page 1: Overview -->
+  <div class="page active" id="page-overview">
+    <div class="metric-grid">
+      <div class="metric-card highlight">
+        <div class="metric-label">S 级机会</div>
+        <div class="metric-value" style="color:var(--s-tier);">3</div>
+        <div class="metric-delta">较昨日 +2</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">A 级机会</div>
+        <div class="metric-value" style="color:var(--a-tier);">8</div>
+        <div class="metric-delta">较昨日 +1</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">双源共振</div>
+        <div class="metric-value" style="color:#C084FC;">5</div>
+        <div class="metric-delta">本周累计 18</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">信号源覆盖</div>
+        <div class="metric-value">156</div>
+        <div class="metric-delta">健康度 98%</div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span>今日核心推荐</span>
+      <span class="hint">S 级 · 双源共振</span>
+    </div>
+
+    <div class="resonance-banner">
+      <div class="resonance-label">双源共振触发</div>
+      <div class="resonance-title">疗愈经济 × 东方禅意：敦煌飞天中秋礼盒窗口</div>
+      <div class="resonance-sources">
+        <span class="source-pill">需求侧：祈福情绪 75 天在线</span>
+        <span class="source-pill">供给侧：敦煌研究院特展预告</span>
+      </div>
+    </div>
+
+    <div class="opp-card s-featured" onclick="showDetail()">
+      <div class="opp-header">
+        <div class="opp-meta">
+          <span class="tier-badge s">● S 级</span>
+          <span class="tier-badge resonance">双源共振</span>
+        </div>
+        <span class="opp-id">#0421-01</span>
+      </div>
+      <div class="opp-title">敦煌飞天 × 中秋礼盒 · 茶饮品类合作窗口</div>
+      <div class="opp-signal">今日"寺庙游/上香式旅游"话题跨 3 平台共振升级，L2 情绪"祈福/疗愈"进入黄金窗口期；同步敦煌研究院公告新展"壁画修复 20 周年特展"。</div>
+      <div class="opp-tags">
+        <span class="opp-tag emotion">L2-08 祈福</span>
+        <span class="opp-tag element">敦煌飞天</span>
+        <span class="opp-tag element">九色鹿</span>
+        <span class="opp-tag window">标准窗口 60-90 天</span>
+      </div>
+      <div class="opp-footer">
+        <span class="opp-brand">匹配品牌 3 / 5</span>
+        <span class="opp-cta">查看完整机会卡 →</span>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span>今日 A 级机会</span>
+      <span class="hint">共 8 条</span>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-meta">
+          <span class="tier-badge a">● A 级</span>
+          <span class="tier-badge" style="background:rgba(59,130,246,0.12);color:#60A5FA;">供给侧触发</span>
+        </div>
+        <span class="opp-id">#0421-02</span>
+      </div>
+      <div class="opp-title">国博凤冠爆款延续 · 悦己女性礼赠方向</div>
+      <div class="opp-signal">国博凤冠冰箱贴热度持续，相关二创内容小红书周环比 +142%。</div>
+      <div class="opp-tags">
+        <span class="opp-tag emotion">L2-03 悦己</span>
+        <span class="opp-tag element">凤冠</span>
+        <span class="opp-tag window">紧急窗口 &lt;30 天</span>
+      </div>
+      <div class="opp-footer">
+        <span class="opp-brand">匹配品牌 2 / 5</span>
+        <span class="opp-cta">详情 →</span>
+      </div>
+    </div>
+
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="opp-meta">
+          <span class="tier-badge a">● A 级</span>
+          <span class="tier-badge" style="background:rgba(34,197,94,0.12);color:#4ADE80;">主动唤醒</span>
+        </div>
+        <span class="opp-id">#0421-03</span>
+      </div>
+      <div class="opp-title">班味自嘲 × 故宫"冷宫"文案 · 职场营销切入</div>
+      <div class="opp-signal">"打工人精神状态"话题周度热度 +38%，故宫情绪载体类元素适配度高。</div>
+      <div class="opp-tags">
+        <span class="opp-tag emotion">L2-01 班味</span>
+        <span class="opp-tag element">冷宫文案</span>
+        <span class="opp-tag element">御批字体</span>
+        <span class="opp-tag window">标准 30-60 天</span>
+      </div>
+      <div class="opp-footer">
+        <span class="opp-brand">匹配品牌 4 / 5</span>
+        <span class="opp-cta">详情 →</span>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span>今日信号漏斗</span>
+      <span class="hint">从采集到输出</span>
+    </div>
+
+    <div class="funnel-viz">
+      <div class="funnel-title">探针每日转化链路</div>
+      <div class="funnel-step">
+        <div class="funnel-bar b1">L3 原始热点</div>
+        <span class="funnel-count">412 条</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-bar b2">降噪后高信号</div>
+        <span class="funnel-count">54 条</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-bar b3">L2 情绪命中</div>
+        <span class="funnel-count">28 条</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-bar b4">元素库激活</div>
+        <span class="funnel-count">19 组</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-bar b5">最终机会卡</div>
+        <span class="funnel-count">11 张</span>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span>推导链路示例</span>
+      <span class="hint">#0421-01</span>
+    </div>
+
+    <div class="flow-chain">
+      <div class="flow-step">
+        <div class="flow-mark" style="background:#4ADE80;"></div>
+        <div class="flow-content">
+          <div class="flow-layer">L3 每日热点</div>
+          <div class="flow-text">"00 后整顿寺庙"、"寺庙咖啡"、"雍和宫打卡" 跨 3 平台共振</div>
+        </div>
+      </div>
+      <div class="flow-arrow" style="margin-left:2px;">↓</div>
+      <div class="flow-step">
+        <div class="flow-mark" style="background:#60A5FA;"></div>
+        <div class="flow-content">
+          <div class="flow-layer">L2 情绪归因</div>
+          <div class="flow-text">祈福 / 疗愈 / 反内卷 · <strong>上升期 75 天</strong></div>
+        </div>
+      </div>
+      <div class="flow-arrow" style="margin-left:2px;">↓</div>
+      <div class="flow-step">
+        <div class="flow-mark" style="background:#C084FC;"></div>
+        <div class="flow-content">
+          <div class="flow-layer">元素库召回 + L4 审美过滤</div>
+          <div class="flow-text"><strong>敦煌飞天</strong>、<strong>九色鹿</strong>、龙门石窟、养心殿书房（素雅留白审美兼容）</div>
+        </div>
+      </div>
+      <div class="flow-arrow" style="margin-left:2px;">↓</div>
+      <div class="flow-step">
+        <div class="flow-mark" style="background:#FCD34D;"></div>
+        <div class="flow-content">
+          <div class="flow-layer">IP 载体 + 品牌匹配</div>
+          <div class="flow-text">敦煌研究院（中秋礼盒方向）→ 匹配品牌 3 个</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:20px;"></div>
+  </div>
+
+  <!-- Page 2: Demand Side -->
+  <div class="page" id="page-demand">
+    <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px;padding:12px 14px;background:var(--bg-card);border:0.5px solid var(--border);border-radius:10px;">
+      <div style="font-size:10px;color:var(--accent);letter-spacing:0.12em;margin-bottom:6px;font-weight:500;">推导逻辑</div>
+      <span style="color:#4ADE80;font-weight:500;">L3 每日热点</span> → 聚合为 <span style="color:#60A5FA;font-weight:500;">L2 季度情绪</span> → 归因至 <span style="color:#C084FC;font-weight:500;">L1 时代底色</span>，最终结合品牌调性用 <span style="color:#FCD34D;font-weight:500;">L4 审美语言</span> 表达
+    </div>
+    <div class="layer-card">
+      <div style="font-size:10px;color:#4ADE80;letter-spacing:0.1em;margin-bottom:10px;font-weight:500;">▸ 输入层 · 信号源头</div>
+      <div class="layer-header">
+        <div class="layer-label">
+          <span class="layer-code l3">L3</span>
+          <div>
+            <div class="layer-name">今日热点</div>
+            <div class="layer-desc">经降噪筛选 · 54 / 412 条</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank hot">1</span>
+        <div class="l3-info">
+          <div class="l3-text">00 后整顿寺庙 · 雍和宫年轻人扎堆</div>
+          <div class="l3-source">
+            <span>抖音 · 小红书 · 微博</span>
+            <span>→ L2-08 祈福</span>
+          </div>
+        </div>
+        <span class="momentum-badge">↑ 3.2×</span>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank hot">2</span>
+        <div class="l3-info">
+          <div class="l3-text">国博凤冠冰箱贴断货</div>
+          <div class="l3-source">
+            <span>小红书 · 微博</span>
+            <span>→ L2-03 悦己</span>
+          </div>
+        </div>
+        <span class="momentum-badge">↑ 2.8×</span>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank hot">3</span>
+        <div class="l3-info">
+          <div class="l3-text">寺庙咖啡打卡周度 +180%</div>
+          <div class="l3-source">
+            <span>小红书 · 抖音</span>
+            <span>→ L2-08 祈福 / L2-04 反内卷</span>
+          </div>
+        </div>
+        <span class="momentum-badge">↑ 2.5×</span>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank">4</span>
+        <div class="l3-info">
+          <div class="l3-text">打工人精神状态 · 冷宫梗再爆</div>
+          <div class="l3-source">
+            <span>微博 · B 站</span>
+            <span>→ L2-01 班味</span>
+          </div>
+        </div>
+        <span class="momentum-badge stable">↑ 1.8×</span>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank">5</span>
+        <div class="l3-info">
+          <div class="l3-text">黑神话悟空取景地 · 山西古建</div>
+          <div class="l3-source">
+            <span>B 站 · 抖音</span>
+            <span>→ L2-18 考古风</span>
+          </div>
+        </div>
+        <span class="momentum-badge stable">↑ 1.6×</span>
+      </div>
+
+      <div class="l3-topic">
+        <span class="l3-rank">6</span>
+        <div class="l3-info">
+          <div class="l3-text">甘博马踏飞燕毛绒玩具</div>
+          <div class="l3-source">
+            <span>小红书 · 抖音</span>
+            <span>→ L2-11 毛绒经济</span>
+          </div>
+        </div>
+        <span class="momentum-badge">↑ 2.1×</span>
+      </div>
+    </div>
+    <div class="layer-card">
+      <div style="font-size:10px;color:#60A5FA;letter-spacing:0.1em;margin-bottom:10px;font-weight:500;">▸ 聚合层 · 核心决策依据</div>
+      <div class="layer-header">
+        <div class="layer-label">
+          <span class="layer-code l2">L2</span>
+          <div>
+            <div class="layer-name">季度情绪</div>
+            <div class="layer-desc">机会决策核心 · 30 个种子标签</div>
+          </div>
+        </div>
+      </div>
+      <div class="legend-row">
+        <span><span class="legend-dot" style="background:var(--rising);"></span>上升期</span>
+        <span><span class="legend-dot" style="background:var(--stable);"></span>稳定期</span>
+        <span><span class="legend-dot" style="background:#C084FC;"></span>萌芽</span>
+        <span><span class="legend-dot" style="background:var(--declining);"></span>衰退</span>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">祈福 / 上香式生活 <span style="font-size:10px;color:var(--text-tertiary);">L2-08</span></div>
+          <div class="emotion-meta">跨 3 平台 · 75 天在线 · 命中元素 12</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill rising">上升 +38%</span>
+          <div class="spark">
+            <div class="spark-bar" style="height:30%;"></div>
+            <div class="spark-bar" style="height:35%;"></div>
+            <div class="spark-bar" style="height:45%;"></div>
+            <div class="spark-bar" style="height:55%;"></div>
+            <div class="spark-bar" style="height:70%;"></div>
+            <div class="spark-bar" style="height:85%;"></div>
+            <div class="spark-bar" style="height:100%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">班味 / 打工人自嘲 <span style="font-size:10px;color:var(--text-tertiary);">L2-01</span></div>
+          <div class="emotion-meta">跨 4 平台 · 120 天在线 · 命中元素 8</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill rising">上升 +12%</span>
+          <div class="spark">
+            <div class="spark-bar" style="height:60%;"></div>
+            <div class="spark-bar" style="height:55%;"></div>
+            <div class="spark-bar" style="height:65%;"></div>
+            <div class="spark-bar" style="height:70%;"></div>
+            <div class="spark-bar" style="height:75%;"></div>
+            <div class="spark-bar" style="height:78%;"></div>
+            <div class="spark-bar" style="height:85%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">悦己 / 为自己买单 <span style="font-size:10px;color:var(--text-tertiary);">L2-03</span></div>
+          <div class="emotion-meta">跨 3 平台 · 45 天在线 · 命中元素 15</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill rising">上升 +24%</span>
+          <div class="spark">
+            <div class="spark-bar" style="height:40%;"></div>
+            <div class="spark-bar" style="height:45%;"></div>
+            <div class="spark-bar" style="height:50%;"></div>
+            <div class="spark-bar" style="height:60%;"></div>
+            <div class="spark-bar" style="height:70%;"></div>
+            <div class="spark-bar" style="height:75%;"></div>
+            <div class="spark-bar" style="height:82%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">东方美学 / 新中式 <span style="font-size:10px;color:var(--text-tertiary);">L2-13</span></div>
+          <div class="emotion-meta">跨 4 平台 · 180 天在线 · 命中元素 22</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill stable">稳定 +3%</span>
+          <div class="spark">
+            <div class="spark-bar" style="background:var(--stable);height:70%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:75%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:72%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:78%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:75%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:78%;"></div>
+            <div class="spark-bar" style="background:var(--stable);height:80%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">毛绒经济 / 宠物拟人 <span style="font-size:10px;color:var(--text-tertiary);">L2-11</span></div>
+          <div class="emotion-meta">跨 3 平台 · 50 天在线 · 命中元素 7</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill rising">上升 +52%</span>
+          <div class="spark">
+            <div class="spark-bar" style="height:20%;"></div>
+            <div class="spark-bar" style="height:30%;"></div>
+            <div class="spark-bar" style="height:40%;"></div>
+            <div class="spark-bar" style="height:50%;"></div>
+            <div class="spark-bar" style="height:65%;"></div>
+            <div class="spark-bar" style="height:80%;"></div>
+            <div class="spark-bar" style="height:95%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">搭子文化 / 轻社交 <span style="font-size:10px;color:var(--text-tertiary);">L2-19</span></div>
+          <div class="emotion-meta">跨 2 平台 · 20 天在线 · 候选升级</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill emerging">萌芽期</span>
+          <div class="spark">
+            <div class="spark-bar" style="background:#C084FC;height:10%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:15%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:18%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:22%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:28%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:35%;"></div>
+            <div class="spark-bar" style="background:#C084FC;height:42%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-item">
+        <div class="emotion-info">
+          <div class="emotion-name">多巴胺 / 高饱和 <span style="font-size:10px;color:var(--text-tertiary);">L2-14</span></div>
+          <div class="emotion-meta">跨 3 平台 · 210 天在线 · 热度回落</div>
+        </div>
+        <div class="emotion-status">
+          <span class="status-pill declining">衰退 -15%</span>
+          <div class="spark">
+            <div class="spark-bar" style="background:var(--declining);height:95%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:90%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:80%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:75%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:68%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:60%;"></div>
+            <div class="spark-bar" style="background:var(--declining);height:55%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="layer-card">
+      <div style="font-size:10px;color:#C084FC;letter-spacing:0.1em;margin-bottom:10px;font-weight:500;">▸ 归因层 · 时代叙事背书</div>
+      <div class="layer-header">
+        <div class="layer-label">
+          <span class="layer-code l1">L1</span>
+          <div>
+            <div class="layer-name">时代底色</div>
+            <div class="layer-desc">5-10 年周期 · 当前在线 8 个</div>
+          </div>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag-chip">文化自信</span>
+        <span class="tag-chip">疗愈经济</span>
+        <span class="tag-chip">悦己主义</span>
+        <span class="tag-chip">反内卷</span>
+        <span class="tag-chip">银发审美</span>
+        <span class="tag-chip">下沉觉醒</span>
+        <span class="tag-chip">Z世代话语</span>
+        <span class="tag-chip">单身经济</span>
+      </div>
+    </div>
+    <div class="layer-card">
+      <div style="font-size:10px;color:#FCD34D;letter-spacing:0.1em;margin-bottom:10px;font-weight:500;">▸ 表达层 · 结合品牌调性落地</div>
+      <div class="layer-header">
+        <div class="layer-label">
+          <span class="layer-code l4">L4</span>
+          <div>
+            <div class="layer-name">当前审美语言</div>
+            <div class="layer-desc">5 维度 · 季度更新</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px;letter-spacing:0.05em;">色彩</div>
+        <div class="tag-row">
+          <span class="tag-chip">敦煌色系</span>
+          <span class="tag-chip">素雅留白</span>
+          <span class="tag-chip">美拉德</span>
+          <span class="tag-chip">莫兰迪</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px;letter-spacing:0.05em;">材质</div>
+        <div class="tag-row">
+          <span class="tag-chip">手作感</span>
+          <span class="tag-chip">哑光</span>
+          <span class="tag-chip">毛绒感 ↑</span>
+          <span class="tag-chip">做旧</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px;">
+        <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px;letter-spacing:0.05em;">场景</div>
+        <div class="tag-row">
+          <span class="tag-chip">寺庙禅意</span>
+          <span class="tag-chip">园林</span>
+          <span class="tag-chip">考古现场</span>
+          <span class="tag-chip">书房</span>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:6px;letter-spacing:0.05em;">IP 形态</div>
+        <div class="tag-row">
+          <span class="tag-chip">拟人化</span>
+          <span class="tag-chip">毛绒化 ↑</span>
+          <span class="tag-chip">盲盒化</span>
+          <span class="tag-chip">出土感</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:20px;"></div>
+  </div>
+  <!-- Page 3: Supply Side -->
+  <div class="page" id="page-supply">
+    <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px;">
+      11 类 IP 供给侧触发信号实时监测，与需求侧信号双源共振时为最高优先级
+    </div>
+
+    <div class="metric-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+      <div class="metric-card" style="padding:12px;">
+        <div class="metric-label">今日信号</div>
+        <div class="metric-value" style="font-size:22px;">32</div>
+      </div>
+      <div class="metric-card" style="padding:12px;">
+        <div class="metric-label">新元素候选</div>
+        <div class="metric-value" style="font-size:22px;color:#C084FC;">4</div>
+      </div>
+      <div class="metric-card" style="padding:12px;">
+        <div class="metric-label">激活元素</div>
+        <div class="metric-value" style="font-size:22px;color:#60A5FA;">19</div>
+      </div>
+    </div>
+
+    <div class="section-title">
+      <span>11 类触发信号实时流</span>
+      <span class="hint">按时间排序</span>
+    </div>
+
+    <div class="trigger-item fresh">
+      <div class="trigger-header">
+        <span class="trigger-type">T1 · 新展开幕</span>
+        <span class="trigger-time">2 小时前</span>
+      </div>
+      <div class="trigger-title">敦煌研究院公告"壁画修复 20 周年特展"定档 5 月 18 日</div>
+      <div class="trigger-elements">激活元素：<strong>飞天</strong>、<strong>九色鹿</strong>、<strong>藻井</strong>、壁画色谱 · 窗口 120 天</div>
+    </div>
+
+    <div class="trigger-item fresh">
+      <div class="trigger-header">
+        <span class="trigger-type">T3 · 爆款文创</span>
+        <span class="trigger-time">5 小时前</span>
+      </div>
+      <div class="trigger-title">国博凤冠冰箱贴 15 天销量破 30 万件，二创内容爆发</div>
+      <div class="trigger-elements">激活元素：<strong>凤冠</strong>、宫廷色 · 紧急窗口 30 天</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T4 · 影视带火</span>
+        <span class="trigger-time">今日</span>
+      </div>
+      <div class="trigger-title">黑神话悟空热度延续，山西古建文旅访问量同比 +380%</div>
+      <div class="trigger-elements">激活元素：<strong>二十八星宿</strong>、晋城玉皇庙、古建彩塑 · 标准窗口 90 天</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T5 · 周年节点</span>
+        <span class="trigger-time">日历扫描</span>
+      </div>
+      <div class="trigger-title">2027 年香港回归 30 周年 · 距启动窗口 14 个月</div>
+      <div class="trigger-elements">关联 IP：<strong>香港故宫文化博物馆</strong>、岭南文化、粤语非遗 · 储备窗口</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T2 · 考古发现</span>
+        <span class="trigger-time">昨日</span>
+      </div>
+      <div class="trigger-title">三星堆八号坑新出土青铜神坛完成拼接</div>
+      <div class="trigger-elements">激活元素：<strong>青铜神坛</strong>、<strong>巫族世界</strong>衍生 · 标准窗口 90 天</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T9 · 拟人化</span>
+        <span class="trigger-time">本周</span>
+      </div>
+      <div class="trigger-title">三星堆乐队新专辑 MV 发布，拟人 IP 授权通道开放</div>
+      <div class="trigger-elements">激活元素：<strong>三星堆乐队</strong>·低合作门槛 · 标准窗口</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T11 · 新晋 IP</span>
+        <span class="trigger-time">3 天前</span>
+      </div>
+      <div class="trigger-title">甘肃省博物馆"马踏飞燕"毛绒玩具现象级出圈</div>
+      <div class="trigger-elements">新晋元素候选：<strong>马踏飞燕毛绒</strong> · 进入三道门审查</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T6 · 申遗评定</span>
+        <span class="trigger-time">上周</span>
+      </div>
+      <div class="trigger-title">春节申遗成功周年 · 传统节庆元素获国际背书</div>
+      <div class="trigger-elements">激活元素：春节民俗、生肖、花馍 · 长尾窗口 180 天</div>
+    </div>
+
+    <div class="trigger-item">
+      <div class="trigger-header">
+        <span class="trigger-type">T8 · 战略合作</span>
+        <span class="trigger-time">本周</span>
+      </div>
+      <div class="trigger-title">故宫博物院 × 华为签约深度 AR 合作</div>
+      <div class="trigger-elements">衍生合作机会开放：<strong>故宫宫廷文化</strong>子 IP · 储备窗口</div>
+    </div>
+
+    <div class="section-title">
+      <span>新 IP 识别模块</span>
+      <span class="hint">4 类观察中</span>
+    </div>
+
+    <div style="background:var(--bg-card);border:0.5px solid var(--border);border-radius:14px;padding:14px;">
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:12px;">
+        从小红书博物馆月榜、抖音文博垂类、游戏/影视取景捕捉新晋 IP，经三道门（授权可行性/元素可拆解/标签完整性）后合并主库
+      </div>
+      <div class="detail-list" style="padding:0 14px;background:transparent;border:none;">
+        <div class="detail-row"><span class="detail-key">A · 新晋文博机构</span><span class="detail-val" style="color:#4ADE80;">3 个观察中</span></div>
+        <div class="detail-row"><span class="detail-key">B · 现象级非遗</span><span class="detail-val" style="color:#4ADE80;">2 个观察中</span></div>
+        <div class="detail-row"><span class="detail-key">C · 传统 IP 新符号</span><span class="detail-val" style="color:#FCD34D;">1 个待审</span></div>
+        <div class="detail-row"><span class="detail-key">D · 跨媒介走红</span><span class="detail-val" style="color:#4ADE80;">2 个观察中</span></div>
+      </div>
+    </div>
+
+    <div style="height:20px;"></div>
+  </div>
+
+  <!-- Page 4: Opportunities -->
+  <div class="page" id="page-opportunities">
+    <div class="filter-tabs">
+      <div class="filter-tab active" onclick="filterOpp(this, &#39;all&#39;)">全部 <span style="color:var(--text-tertiary);">23</span></div>
+      <div class="filter-tab" onclick="filterOpp(this, &#39;s&#39;)">S 级 <span style="color:var(--s-tier);">3</span></div>
+      <div class="filter-tab" onclick="filterOpp(this, &#39;a&#39;)">A 级 <span style="color:var(--a-tier);">8</span></div>
+      <div class="filter-tab" onclick="filterOpp(this, &#39;b&#39;)">B 级 <span style="color:var(--b-tier);">12</span></div>
+    </div>
+
+    <div id="opp-list">
+      <div class="opp-card s-featured" data-tier="s" onclick="showDetail()">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge s">● S 级</span>
+            <span class="tier-badge resonance">双源共振</span>
+          </div>
+          <span class="opp-id">#0421-01</span>
+        </div>
+        <div class="opp-title">敦煌飞天 × 中秋礼盒 · 茶饮品类</div>
+        <div class="opp-signal">疗愈经济 × 东方禅意黄金窗口，敦煌特展预告加持</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">祈福</span>
+          <span class="opp-tag element">敦煌飞天</span>
+          <span class="opp-tag window">60-90 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">3 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card s-featured" data-tier="s">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge s">● S 级</span>
+            <span class="tier-badge resonance">双源共振</span>
+          </div>
+          <span class="opp-id">#0421-04</span>
+        </div>
+        <div class="opp-title">甘博马踏飞燕毛绒 × 悦己礼品线</div>
+        <div class="opp-signal">毛绒经济 L2 上升 52%，甘博 IP 授权通道开放</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">毛绒经济</span>
+          <span class="opp-tag element">马踏飞燕</span>
+          <span class="opp-tag window">紧急 &lt;30 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">4 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card s-featured" data-tier="s">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge s">● S 级</span>
+            <span class="tier-badge resonance">双源共振</span>
+          </div>
+          <span class="opp-id">#0421-05</span>
+        </div>
+        <div class="opp-title">黑神话 × 山西古建 · 游戏联名延伸</div>
+        <div class="opp-signal">考古风 L2 + 游戏 IP 跨媒介带火，二十八星宿元素激活</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">考古风</span>
+          <span class="opp-tag element">二十八星宿</span>
+          <span class="opp-tag window">标准 90 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">2 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="a">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge a">● A 级</span>
+            <span class="tier-badge" style="background:rgba(59,130,246,0.12);color:#60A5FA;">供给侧</span>
+          </div>
+          <span class="opp-id">#0421-02</span>
+        </div>
+        <div class="opp-title">国博凤冠 · 悦己女性礼赠方向</div>
+        <div class="opp-signal">凤冠爆款延续，二创内容周环比 +142%</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">悦己</span>
+          <span class="opp-tag element">凤冠</span>
+          <span class="opp-tag window">紧急 &lt;30 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">2 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="a">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge a">● A 级</span>
+            <span class="tier-badge" style="background:rgba(34,197,94,0.12);color:#4ADE80;">需求侧</span>
+          </div>
+          <span class="opp-id">#0421-03</span>
+        </div>
+        <div class="opp-title">班味 × 故宫冷宫文案 · 职场营销</div>
+        <div class="opp-signal">打工人精神状态话题周度热度 +38%</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">班味</span>
+          <span class="opp-tag element">冷宫</span>
+          <span class="opp-tag window">标准 30-60 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">4 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="a">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge a">● A 级</span>
+            <span class="tier-badge" style="background:rgba(59,130,246,0.12);color:#60A5FA;">供给侧</span>
+          </div>
+          <span class="opp-id">#0421-06</span>
+        </div>
+        <div class="opp-title">三星堆八号坑新文物 · 盲盒联名</div>
+        <div class="opp-signal">考古发现供给侧触发，巫族世界衍生 IP 激活</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">考古风</span>
+          <span class="opp-tag element">青铜神坛</span>
+          <span class="opp-tag window">标准 90 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">3 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="a">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge a">● A 级</span>
+            <span class="tier-badge" style="background:rgba(34,197,94,0.12);color:#4ADE80;">需求侧</span>
+          </div>
+          <span class="opp-id">#0421-07</span>
+        </div>
+        <div class="opp-title">景德镇青瓷莲纹 × 中秋高端线</div>
+        <div class="opp-signal">静奢风 + 祈福情绪双重支撑</div>
+        <div class="opp-tags">
+          <span class="opp-tag emotion">祈福</span>
+          <span class="opp-tag element">青瓷莲纹</span>
+          <span class="opp-tag window">标准 60-90 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">2 个品牌匹配</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="b">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge b">● B 级</span>
+            <span class="tier-badge" style="background:rgba(59,130,246,0.12);color:#60A5FA;">供给侧</span>
+          </div>
+          <span class="opp-id">#0421-09</span>
+        </div>
+        <div class="opp-title">故宫 × 华为战略合作 · 衍生机会观察</div>
+        <div class="opp-signal">故宫宫廷文化子 IP 授权通道开放</div>
+        <div class="opp-tags">
+          <span class="opp-tag window">储备 &gt;90 天</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">储备观察</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+
+      <div class="opp-card" data-tier="b">
+        <div class="opp-header">
+          <div class="opp-meta">
+            <span class="tier-badge b">● B 级</span>
+            <span class="tier-badge" style="background:rgba(168,85,247,0.12);color:#C084FC;">周年节点</span>
+          </div>
+          <span class="opp-id">#0421-12</span>
+        </div>
+        <div class="opp-title">香港回归 30 周年 · 岭南文化储备</div>
+        <div class="opp-signal">距启动窗口 14 个月，适合年度规划</div>
+        <div class="opp-tags">
+          <span class="opp-tag element">粤语非遗</span>
+          <span class="opp-tag window">储备 &gt;12 个月</span>
+        </div>
+        <div class="opp-footer">
+          <span class="opp-brand">储备观察</span>
+          <span class="opp-cta">详情 →</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:20px;"></div>
+  </div>
+
+  <!-- Page 5: Opportunity Detail -->
+  <div class="page" id="page-detail">
+    <div class="back-btn" onclick="hideDetail()">
+      <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"></path></svg>
+      返回
+    </div>
+
+    <div style="display:flex;gap:6px;margin-bottom:10px;">
+      <span class="tier-badge s">● S 级</span>
+      <span class="tier-badge resonance">双源共振</span>
+      <span class="tier-badge" style="background:rgba(245,158,11,0.12);color:#FCD34D;">标准窗口</span>
+    </div>
+
+    <div style="font-size:20px;font-weight:500;line-height:1.3;letter-spacing:-0.01em;margin-bottom:8px;">
+      敦煌飞天 × 中秋礼盒<br>茶饮品类合作窗口
+    </div>
+    <div style="font-size:11px;color:var(--text-tertiary);margin-bottom:18px;">机会编号 #0421-01 · 生成于 09:12</div>
+
+    <div class="detail-section">
+      <div class="detail-label">核心信号</div>
+      <div style="font-size:13px;line-height:1.6;color:var(--text-primary);background:var(--bg-card);border:0.5px solid var(--border);border-radius:12px;padding:14px;">
+        今日"寺庙游/上香式旅游"话题跨 3 平台共振升级，L2"祈福/疗愈"进入黄金窗口期；同步敦煌研究院公告"壁画修复 20 周年特展"定档 5 月 18 日。需求涌动 × 供给放料 双源共振。
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">L2 情绪支撑</div>
+      <div class="detail-list">
+        <div class="detail-row"><span class="detail-key">主情绪</span><span class="detail-val">祈福 / 上香式生活（L2-08）</span></div>
+        <div class="detail-row"><span class="detail-key">辅情绪</span><span class="detail-val">疗愈经济（L2-09）</span></div>
+        <div class="detail-row"><span class="detail-key">生命周期</span><span class="detail-val" style="color:#4ADE80;">上升期 75 天</span></div>
+        <div class="detail-row"><span class="detail-key">跨平台</span><span class="detail-val">抖音 · 小红书 · 微博</span></div>
+        <div class="detail-row"><span class="detail-key">剩余窗口预估</span><span class="detail-val">3-4 个月</span></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">IP × 元素推荐 Top 3</div>
+
+      <div class="ip-choice best">
+        <div class="ip-title">
+          <span>敦煌研究院 × 飞天</span>
+          <span class="ip-recommend">首选</span>
+        </div>
+        <div class="ip-desc">中秋礼盒方向 · 飞天纹样 + 敦煌色系 + 壁画质感；祈福叙事最适配</div>
+        <div class="ip-ref">参考案例：金典 2022 敦煌联名 · 檀台酒 · 三联中读</div>
+      </div>
+
+      <div class="ip-choice">
+        <div class="ip-title">
+          <span>景德镇陶瓷博物馆 × 青瓷莲纹</span>
+        </div>
+        <div class="ip-desc">高端线中秋礼 · 静奢+禅意双重定位</div>
+        <div class="ip-ref">参考案例：金典 CHINA 瓷 · 2023</div>
+      </div>
+
+      <div class="ip-choice">
+        <div class="ip-title">
+          <span>故宫博物院 × 养心殿书房</span>
+        </div>
+        <div class="ip-desc">慢生活茶饮副线 · 可做限定空间 / 书房周边</div>
+        <div class="ip-ref">参考案例：暂无直接先例 · 差异化切入</div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">执行窗口</div>
+      <div class="detail-list">
+        <div class="detail-row"><span class="detail-key">窗口长度</span><span class="detail-val" style="color:#FCD34D;">60-90 天</span></div>
+        <div class="detail-row"><span class="detail-key">建议启动</span><span class="detail-val">6 月前</span></div>
+        <div class="detail-row"><span class="detail-key">目标上市档</span><span class="detail-val">中秋（9 月中）</span></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">匹配品牌（已过硬约束）</div>
+      <div class="detail-list">
+        <div class="detail-row"><span class="detail-key">品牌 A</span><span class="detail-val" style="color:#4ADE80;">★★★ 高适配</span></div>
+        <div class="detail-row"><span class="detail-key">品牌 B</span><span class="detail-val" style="color:#4ADE80;">★★★ 高适配</span></div>
+        <div class="detail-row"><span class="detail-key">品牌 C</span><span class="detail-val" style="color:#FCD34D;">★★ 中适配</span></div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-label">关键风险</div>
+      <div style="background:var(--bg-card);border:0.5px solid var(--border);border-radius:12px;padding:14px;">
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:12px;line-height:1.5;">
+          <span style="color:var(--s-tier);flex-shrink:0;">●</span>
+          <div><strong style="font-weight:500;">竞品速度</strong><div style="color:var(--text-secondary);margin-top:2px;">霸王茶姬 · 喜茶监测到已接触敦煌，速度是关键</div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:12px;line-height:1.5;">
+          <span style="color:var(--a-tier);flex-shrink:0;">●</span>
+          <div><strong style="font-weight:500;">授权门槛</strong><div style="color:var(--text-secondary);margin-top:2px;">敦煌研究院授权流程约 4-6 周</div></div>
+        </div>
+        <div style="display:flex;gap:10px;font-size:12px;line-height:1.5;">
+          <span style="color:var(--declining);flex-shrink:0;">●</span>
+          <div><strong style="font-weight:500;">舆情</strong><div style="color:var(--text-secondary);margin-top:2px;">低风险，文化类合作舆情稳定</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:24px;margin-bottom:20px;">
+      <button style="flex:1;padding:12px;background:var(--accent);border:none;border-radius:10px;color:white;font-size:13px;font-weight:500;cursor:pointer;">立项推进</button>
+      <button style="flex:1;padding:12px;background:var(--bg-card);border:0.5px solid var(--border);border-radius:10px;color:var(--text-primary);font-size:13px;font-weight:500;cursor:pointer;">加入观察</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchPage(&#39;overview&#39;, this)">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12l9-9 9 9M5 10v10h14V10"></path></svg></div>
+    <div class="nav-label">概览</div>
+  </div>
+  <div class="nav-item" onclick="switchPage(&#39;demand&#39;, this)">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="11"></circle></svg></div>
+    <div class="nav-label">需求侧</div>
+  </div>
+  <div class="nav-item" onclick="switchPage(&#39;supply&#39;, this)">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18M3 12h18M3 17h18"></path></svg></div>
+    <div class="nav-label">供给侧</div>
+  </div>
+  <div class="nav-item" onclick="switchPage(&#39;opportunities&#39;, this)">
+    <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"></path></svg></div>
+    <div class="nav-label">机会</div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script>
+// 窗口高度不够时，用 transform scale 等比缩小手机，保持内部布局不变
+function scalePhone() {
+  const wrapper = document.getElementById('phone-scale-wrapper');
+  if (!wrapper || window.innerWidth < 450) {
+    if (wrapper) wrapper.style.transform = '';
+    return;
+  }
+  const availableHeight = window.innerHeight - 48;
+  const availableWidth = window.innerWidth - 48;
+  const scaleByHeight = availableHeight / 844;
+  const scaleByWidth = availableWidth / 390;
+  const scale = Math.min(1, scaleByHeight, scaleByWidth);
+  wrapper.style.transform = scale < 1 ? `scale(${scale})` : '';
+  // 缩放后占用的实际空间变了，需要调整 wrapper 尺寸以避免居中偏移
+  if (scale < 1) {
+    wrapper.style.width = (390 * scale) + 'px';
+    wrapper.style.height = (844 * scale) + 'px';
+  } else {
+    wrapper.style.width = '';
+    wrapper.style.height = '';
+  }
+}
+
+scalePhone();
+window.addEventListener('resize', scalePhone);
+
+function switchPage(pageId, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelector('.content').scrollTop = 0;
+}
+
+function showDetail() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  document.querySelector('.content').scrollTop = 0;
+}
+
+function hideDetail() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-opportunities').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[3].classList.add('active');
+}
+
+function filterOpp(el, tier) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#opp-list .opp-card').forEach(card => {
+    if (tier === 'all' || card.dataset.tier === tier) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+
+
+</body></html>
