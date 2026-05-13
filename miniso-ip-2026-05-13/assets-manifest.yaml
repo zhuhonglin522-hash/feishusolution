@@ -1,0 +1,145 @@
+assets:
+  - path: assets/feishu-deck.css
+    kind: deck-local
+  - path: assets/feishu-deck.js
+    kind: deck-local
+  - path: input/ppt-media/image18.png
+    kind: deck-local
+  - path: input/ppt-media/image19.png
+    kind: deck-local
+  - path: opple/input/AI实战白皮书.jpg
+    kind: deck-local
+  - path: opple/input/image_w1536_h864_罗莱家纺AI仪容检查配图.png
+    kind: deck-local
+  - path: opple/input/image_w1536_h864_飞鹤AI质检配图-卡通版.png
+    kind: deck-local
+  - path: opple/input/会议文档及评论.png
+    kind: deck-local
+  - path: opple/input/白皮书评审.png
+    kind: deck-local
+  - path: opple/input/记忆人设1.png
+    kind: deck-local
+  - path: opple/input/记忆人设2.png
+    kind: deck-local
+  - path: opple/input/近一年周会发言.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/三只松鼠.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/亚朵酒店.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/健力宝.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/元气森林.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/华住酒店集团.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/博士眼镜.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/广东中泰龙家具集团有限公司.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/康师傅.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/思念食品.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/泡泡玛特.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/海底捞.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/物美商业.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/玛丽黛佳_创元集团.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/珀莱雅.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/益禾堂.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/盛泰集团.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/美宜佳.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/胖东来.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/致欧家居.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/茶百道.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/逐本.png
+    kind: deck-local
+  - path: starbucks/assets/clientlogo/首旅集团.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/01_east_asian_woman_white_shirt.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/03_southeast_asian_man_hoodie.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/05_african_man_beard_polo.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/06_latin_woman_wavy_sweater.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/07_middle_eastern_man_white_shirt.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/08_east_asian_man_glasses_sweater.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/09_caucasian_woman_blonde_bob.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/11_east_asian_man_business_casual.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/12_indian_woman_braid_blouse.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/13_caucasian_man_beard_denim.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/14_east_asian_woman_short_bob_vest.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/15_southeast_asian_woman_scarf.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/16_african_woman_braids_turtleneck.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/17_caucasian_woman_red_hair_cardigan.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/18_east_asian_young_man_bangs_hoodie.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/19_latin_man_slick_suit.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/20_middle_eastern_woman_hijab.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/21_east_asian_woman_half_up_cardigan.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/22_african_man_glasses_blazer.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/23_caucasian_man_undercut_polo.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/24_south_asian_man_glasses_shirt.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/25_east_asian_woman_navy_blazer.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/26_caucasian_woman_ponytail_athleisure.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/27_southeast_asian_man_glasses_cardigan.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/28_african_american_man_fade_tshirt.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/29_east_asian_man_mature_vest.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/30_indian_man_beard_kurta.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/31_caucasian_woman_pixie_blouse.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/32_east_asian_woman_glasses_sweater.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/33_latin_woman_curly_dress_shirt.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/34_middle_eastern_man_mature_suit.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/35_african_woman_short_natural_blazer.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/36_caucasian_man_blonde_sweater.png
+    kind: deck-local
+  - path: starbucks/assets/digital_employee_avatars_50/37_east_asian_young_man_headphones.png
+    kind: deck-local
+  - path: starbucks/input/18页知识管理1.png
+    kind: deck-local
+  - path: starbucks/input/19页素材1.png
+    kind: deck-local
+  - path: starbucks/input/29页素材2.png
+    kind: deck-local
+  - path: starbucks/input/冰山.png
+    kind: deck-local

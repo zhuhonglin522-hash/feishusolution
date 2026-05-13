@@ -1,0 +1,3016 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="fs-language" content="zh-only">
+  <title>AI 驱动名创组织能力重构 · 飞书 HTML Deck</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/feishu-deck.css">
+  <style>
+
+/* === assembled Miniso deck additions === */
+.slide.miniso-section .chapter-num {
+  font: 800 160px/1 var(--fs-font-latin);
+  letter-spacing: 0;
+}
+.slide.miniso-section .title {
+  max-width: 1300px;
+}
+.slide.miniso-section .lede {
+  max-width: 1380px;
+  color: #fff;
+}
+.slide.compliance-agent .stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide.compliance-agent .compliance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 44px;
+  align-items: stretch;
+  width: 100%;
+}
+.slide.compliance-agent .compliance-left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+.slide.compliance-agent .agent-chip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.slide.compliance-agent .agent-chip-grid span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 62px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(60,127,255,0.36);
+  background: rgba(60,127,255,0.12);
+  color: #fff;
+  font: 700 22px/1.25 var(--fs-font-cjk);
+}
+.slide.compliance-agent .agent-chip-grid span:nth-child(4),
+.slide.compliance-agent .agent-chip-grid span:nth-child(5) {
+  background: rgba(255,255,255,0.92);
+  color: #0A1B3D;
+}
+.slide.compliance-agent .compliance-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.slide.compliance-agent .cstep {
+  position: relative;
+  padding: 20px 24px 20px 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(8,12,24,0.42);
+  overflow: hidden;
+}
+.slide.compliance-agent .cstep::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--fs-blue);
+}
+.slide.compliance-agent .cstep.is-violet::before { background: var(--fs-violet); }
+.slide.compliance-agent .cstep.is-teal::before { background: var(--fs-teal); }
+.slide.compliance-agent .cstep.is-orange::before { background: var(--fs-orange); }
+.slide.compliance-agent .step-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+.slide.compliance-agent .step-head span {
+  font: 800 18px/1 var(--fs-font-latin);
+  color: var(--fs-blue);
+  letter-spacing: 0.06em;
+}
+.slide.compliance-agent .cstep.is-violet .step-head span { color: var(--fs-violet); }
+.slide.compliance-agent .cstep.is-teal .step-head span { color: var(--fs-teal); }
+.slide.compliance-agent .cstep.is-orange .step-head span { color: var(--fs-orange); }
+.slide.compliance-agent .step-head b {
+  font: 800 28px/1.2 var(--fs-font-cjk);
+  color: #fff;
+}
+.slide.compliance-agent .cstep p {
+  margin: 0;
+  font: 500 22px/1.5 var(--fs-font-cjk);
+  color: #fff;
+}
+.slide.compliance-agent .compliance-right {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) 210px;
+  gap: 18px;
+  min-width: 0;
+  min-height: 0;
+}
+.slide.compliance-agent .evidence-frame,
+.slide.compliance-agent .detail-frame {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background-color: rgba(255,255,255,0.96);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.slide.compliance-agent .evidence-frame {
+  min-height: 560px;
+  background-size: contain;
+}
+.slide.compliance-agent .detail-frame {
+  background-size: cover;
+}
+.slide .pic-cell .img-bg {
+  display: block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 14px;
+}
+.slide[data-page="45"] .pic-cell .img-bg.is-cover {
+  width: 520px;
+  height: 380px;
+}
+.slide[data-page="45"] .pic-cell .img-bg.is-review {
+  width: 786px;
+  height: 800px;
+}
+
+
+/* === selected Starbucks page styles === */
+/* === page 17 === */
+[data-page="17"] /* P17 v2 · 真实冰山照片(input/冰山.png)+ native 文字 overlay */
+
+    .slide[data-layout="content-2col"] .stage { display: block; padding: 0; }
+[data-page="17"] .slide .iceberg-canvas {
+      position: relative;
+      width: 100%;
+      height: 880px;
+      overflow: hidden;
+      border-radius: 22px;
+      background-image: url('starbucks/input/冰山.png');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+[data-page="17"] /* 暗化叠层让文字清晰 */
+    .slide .iceberg-canvas::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0,10,30,0.55) 0%, rgba(0,10,30,0) 28%, rgba(0,10,30,0) 72%, rgba(0,10,30,0.55) 100%),
+        linear-gradient(180deg, rgba(0,10,30,0.45) 0%, rgba(0,10,30,0) 22%, rgba(0,10,30,0) 60%, rgba(0,10,30,0.50) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+[data-page="17"] /* —— 上 above water 区 —— */
+    .slide .above {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      height: 28%;
+      display: flex; align-items: center;
+      padding: 0 64px;
+      z-index: 5;
+    }
+[data-page="17"] .slide .above .hero-block { max-width: 480px; }
+[data-page="17"] /* —— 下 below water 区 · 跟上 20% 镜像对称(下右, [data-page="17"] 与上左呼应) —— */
+    .slide .below {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 72%;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;            /* 内容贴右 */
+      padding: 0 64px 36px;             /* 右 padding 跟 above 的左 padding 同步 */
+      z-index: 5;
+    }
+[data-page="17"] .slide .below .hero-block { max-width: 480px; }
+[data-page="17"] /* 与 above 同宽 */
+
+    .slide .hero-pct {
+      font: 800 100px/1 var(--fs-font-latin);
+      color: #fff;
+      letter-spacing: -0.01em;
+      display: inline-block;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.55);
+    }
+[data-page="17"] .slide .above .hero-pct { color: #FFFFFF; }
+[data-page="17"] .slide .below .hero-pct { color: #6FE0FF; text-shadow: 0 0 32px rgba(120,200,255,0.55); }
+[data-page="17"] .slide .hero-name {
+      font: 800 38px/1.2 var(--fs-font-cjk);
+      color: #fff;
+      padding-top: 6px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.50);
+    }
+[data-page="17"] .slide .hero-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 16px;
+      background: rgba(0,0,0,0.40);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 999px;
+      font: 600 18px/1 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(4px);
+    }
+[data-page="17"] .slide .below .hero-tag {
+      background: rgba(60,127,255,0.40);
+      border-color: rgba(120,200,255,0.85);
+    }
+[data-page="17"] .slide .body-note {
+      margin-top: 14px;
+      font: 600 22px/1.5 var(--fs-font-cjk);
+      color: #fff;
+      max-width: 460px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.55);
+    }
+[data-page="17"] .slide .body-note b { color: #FFD66E; font-weight: 800; }
+[data-page="17"] .slide .points {
+      display: flex; flex-direction: column; gap: 8px;
+      padding-top: 12px;
+      max-width: 480px;
+    }
+[data-page="17"] .slide .pt {
+      display: flex; align-items: flex-start; gap: 10px;
+      font: 600 18px/1.45 var(--fs-font-cjk);
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.55);
+    }
+[data-page="17"] .slide .pt .dot {
+      flex: 0 0 8px;
+      width: 8px; height: 8px;
+      margin-top: 11px;
+      border-radius: 50%;
+      background: #6FE0FF;
+      box-shadow: 0 0 0 4px rgba(120,200,255,0.22);
+    }
+[data-page="17"] .slide .pt b { color: #FFD66E; font-weight: 800; }
+[data-page="17"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="17"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="17"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="17"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="17"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="17"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 18 === */
+[data-page="18"] /* P18 · 左 门店实拍现场(素材1)+痛点 pill / 右 门店运营助手 AI chat demo (沿用 P19 模式) */
+
+    .slide[data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding-top: 4px; }
+[data-page="18"] .slide .pic-twin {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+[data-page="18"] /* —— LEFT · 实拍 + 痛点 pill —— */
+    .slide .pic-cell {
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+    }
+[data-page="18"] .slide .pic-pill {
+      align-self: center;
+      padding: 10px 24px;
+      background: rgba(60,127,255,0.20);
+      border: 1px solid rgba(60,127,255,0.55);
+      border-radius: 999px;
+      font: 700 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+      max-width: 92%;
+      text-align: center;
+    }
+[data-page="18"] .slide .pic-frame {
+      width: 100%;
+      flex: 1; min-height: 720px;
+      background-image: url('starbucks/input/18页知识管理1.png');
+      background-position: center top;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-radius: 12px;
+    }
+[data-page="18"] /* —— RIGHT · phone chat demo —— */
+    .slide .demo-cell {
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+    }
+[data-page="18"] .slide .demo-pill {
+      align-self: center;
+      padding: 10px 24px;
+      background: rgba(51,214,192,0.20);
+      border: 1px solid rgba(51,214,192,0.55);
+      border-radius: 999px;
+      font: 700 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+      max-width: 92%;
+      text-align: center;
+    }
+[data-page="18"] .slide .phone {
+      position: relative;
+      width: 380px; height: 720px;
+      background: #f6f6f6;
+      border-radius: 46px;
+      box-shadow: 0 0 0 10px #11141c, 0 0 0 11px #2c3142, inset 0 0 0 1px rgba(0,0,0,0.04);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", var(--fs-font-cjk);
+      color: #1a1d24;
+    }
+[data-page="18"] .slide .phone::before {
+      content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 110px; height: 32px; background: #11141c; border-radius: 18px; z-index: 20;
+    }
+[data-page="18"] .slide .ph-status {
+      flex: 0 0 50px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px 0;
+      font-size: 14px; font-weight: 700; line-height: 1; color: #1a1d24;
+    }
+[data-page="18"] .slide .ph-status .right { display: flex; gap: 5px; align-items: center; }
+[data-page="18"] .slide .ph-status svg { display: block; }
+[data-page="18"] .slide .ph-bar {
+      flex: 0 0 52px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px;
+      background: #f6f6f6;
+    }
+[data-page="18"] .slide .ph-bar .back {
+      display: flex; align-items: center; gap: 4px;
+      color: #1a1d24; font-size: 22px; font-weight: 400;
+    }
+[data-page="18"] .slide .ph-bar .nav-title {
+      flex: 1;
+      display: flex; align-items: center; gap: 6px; justify-content: center;
+      font-size: 18px; font-weight: 700; color: #1a1d24;
+    }
+[data-page="18"] .slide .ph-bar .robot-tag {
+      padding: 2px 6px;
+      background: #FFE7B0; border-radius: 4px;
+      font-size: 14px; font-weight: 600; line-height: 1;
+      color: #B87600;
+    }
+[data-page="18"] .slide .ph-bar .more {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: #1a1d24;
+    }
+[data-page="18"] .slide .ph-tabs {
+      flex: 0 0 42px;
+      display: flex; align-items: center; gap: 18px;
+      padding: 0 18px;
+      background: #f6f6f6;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+[data-page="18"] .slide .ph-tabs .tab {
+      position: relative;
+      padding: 10px 0;
+      font-size: 14px; font-weight: 500; color: #66707d;
+    }
+[data-page="18"] .slide .ph-tabs .tab.is-active { color: #1a1d24; font-weight: 700; }
+[data-page="18"] .slide .ph-tabs .tab.is-active::after {
+      content: ""; position: absolute;
+      left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 18px; height: 3px;
+      background: #3370FF; border-radius: 2px;
+    }
+[data-page="18"] .slide .ph-divider {
+      flex: 0 0 32px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #f6f6f6;
+    }
+[data-page="18"] .slide .ph-divider .line { flex: 1; max-width: 80px; height: 1px; background: rgba(0,0,0,0.08); }
+[data-page="18"] .slide .ph-divider .label { font-size: 14px; font-weight: 500; color: #99a1ad; line-height: 1; }
+[data-page="18"] .slide .ph-chat {
+      flex: 1;
+      padding: 4px 14px 8px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      background: #f6f6f6;
+    }
+[data-page="18"] .slide .ph-chat-inner {
+      display: flex; flex-direction: column; gap: 12px;
+      animation: scroll-up18 14s linear infinite;
+    }
+@keyframes scroll-up18 {
+      0%, 55%   { transform: translateY(0); }
+      60%, 100% { transform: translateY(-100px); }
+    }
+[data-page="18"] .slide .msg {
+      display: flex; gap: 10px;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+[data-page="18"] .slide .msg.is-user { flex-direction: row-reverse; }
+[data-page="18"] .slide .msg .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+[data-page="18"] .slide .msg.is-bot .avatar {
+      background: linear-gradient(135deg, #6FA8FF 0%, #3370FF 100%);
+      color: #fff;
+      font-family: var(--fs-font-cjk);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      text-align: center;
+    }
+[data-page="18"] .slide .msg.is-user .avatar {
+      background: linear-gradient(135deg, #FFB870 0%, #FF8A30 100%);
+      font-size: 14px; font-weight: 700; line-height: 1;
+      font-family: var(--fs-font-cjk);
+      letter-spacing: -0.06em;
+    }
+[data-page="18"] .slide .msg .bubble {
+      max-width: 240px;
+      padding: 10px 14px;
+      background: #fff;
+      border-radius: 4px 14px 14px 14px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: #1a1d24;
+      letter-spacing: 0.005em;
+      border: 1px solid rgba(0,0,0,0.04);
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="18"] .slide .msg.is-user .bubble {
+      background: #DCEDFF;
+      border-color: rgba(51,112,255,0.10);
+      border-radius: 14px 4px 14px 14px;
+      color: #0A2A66;
+    }
+[data-page="18"] .slide .msg .bubble .lead {
+      display: block;
+      font-size: 18px; font-weight: 700; color: #1a1d24;
+      padding-bottom: 4px;
+    }
+[data-page="18"] .slide .msg .bubble b { color: #3370FF; font-weight: 700; }
+[data-page="18"] .slide .msg.is-typing .bubble {
+      display: flex; gap: 4px; align-items: center;
+      padding: 14px 16px;
+    }
+[data-page="18"] .slide .msg.is-typing .bubble span {
+      width: 6px; height: 6px;
+      background: #99a1ad;
+      border-radius: 50%;
+      animation: dot18 1.1s ease-in-out infinite;
+    }
+[data-page="18"] .slide .msg.is-typing .bubble span:nth-child(2) { animation-delay: .15s; }
+[data-page="18"] .slide .msg.is-typing .bubble span:nth-child(3) { animation-delay: .3s; }
+@keyframes dot18 {
+      0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+      30%           { opacity: 1;  transform: translateY(-3px); }
+    }
+[data-page="18"] /* 紧急调整项 chip 列表 (跟在 bot reply 后) */
+    .slide .fix-list {
+      display: flex; flex-direction: column; gap: 6px;
+      align-self: stretch;
+      padding: 8px 10px;
+      background: rgba(254,127,0,0.10);
+      border: 1px solid rgba(254,127,0,0.42);
+      border-radius: 8px;
+      opacity: 0;
+      animation: msg-in18 .35s ease-out forwards 5.4s;
+    }
+[data-page="18"] .slide .fix-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 6px 10px;
+      background: #fff;
+      border: 1px solid #FFE0B0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #1a1d24;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="18"] .slide .fix-item .num {
+      width: 18px; height: 18px;
+      background: #FE7F00; color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+[data-page="18"] /* msg timing */
+    .slide .msg.welcome { animation: msg-in18 .35s ease-out forwards .3s; }
+[data-page="18"] .slide .msg.m1 { animation: msg-in18 .35s ease-out forwards 1.6s; }
+[data-page="18"] .slide .msg.typing { animation: msg-in18 .3s ease-out forwards 2.8s, msg-out18 .25s ease-in forwards 4.0s; }
+[data-page="18"] .slide .msg.m2 { animation: msg-in18 .35s ease-out forwards 4.0s; }
+@keyframes msg-in18 {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+@keyframes msg-out18 {
+      to { opacity: 0; transform: translateY(-4px); height: 0; padding: 0; margin: 0; }
+    }
+[data-page="18"] /* 底部输入栏 placeholder */
+    .slide .ph-input {
+      flex: 0 0 50px;
+      display: grid; grid-template-columns: 1fr 36px;
+      gap: 10px;
+      padding: 6px 14px 8px;
+      background: #f6f6f6;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+[data-page="18"] .slide .ph-input .field {
+      display: flex; align-items: center;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+      font-size: 14px; font-weight: 500;
+      color: #99a1ad;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="18"] .slide .ph-input .send {
+      align-self: center;
+      width: 32px; height: 32px;
+      background: #3370FF;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 14px; font-weight: 700;
+    }
+[data-page="18"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="18"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="18"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="18"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="18"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="18"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 19 === */
+[data-page="19"] /* P19 · 左 平面图(素材1)+痛点 pill / 右 营建专家 AI chat demo (风格沿用 P20) */
+
+    .slide[data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding-top: 4px; }
+[data-page="19"] .slide .pic-twin {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+[data-page="19"] /* —— LEFT · 平面图 + 痛点 pill —— */
+    .slide .pic-cell {
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+    }
+[data-page="19"] .slide .pic-pill {
+      align-self: center;
+      padding: 10px 24px;
+      background: rgba(254,127,0,0.18);
+      border: 1px solid rgba(254,127,0,0.55);
+      border-radius: 999px;
+      font: 700 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+      max-width: 92%;
+      text-align: center;
+    }
+[data-page="19"] .slide .pic-frame {
+      width: 100%;
+      flex: 1; min-height: 720px;
+      background-image: url('starbucks/input/19页素材1.png');
+      background-position: center top;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-radius: 12px;
+    }
+[data-page="19"] /* —— RIGHT · phone chat demo —— */
+    .slide .demo-cell {
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+    }
+[data-page="19"] .slide .demo-pill {
+      align-self: center;
+      padding: 10px 24px;
+      background: rgba(51,214,192,0.18);
+      border: 1px solid rgba(51,214,192,0.55);
+      border-radius: 999px;
+      font: 700 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+      max-width: 92%;
+      text-align: center;
+    }
+[data-page="19"] .slide .phone {
+      position: relative;
+      width: 380px; height: 720px;
+      background: #f6f6f6;
+      border-radius: 46px;
+      box-shadow: 0 0 0 10px #11141c, 0 0 0 11px #2c3142, inset 0 0 0 1px rgba(0,0,0,0.04);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", var(--fs-font-cjk);
+      color: #1a1d24;
+    }
+[data-page="19"] .slide .phone::before {
+      content: ""; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 110px; height: 32px; background: #11141c; border-radius: 18px; z-index: 20;
+    }
+[data-page="19"] .slide .ph-status {
+      flex: 0 0 50px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px 0;
+      font-size: 14px; font-weight: 700; line-height: 1; color: #1a1d24;
+    }
+[data-page="19"] .slide .ph-status .right { display: flex; gap: 5px; align-items: center; }
+[data-page="19"] .slide .ph-status svg { display: block; }
+[data-page="19"] .slide .ph-bar {
+      flex: 0 0 52px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px;
+      background: #f6f6f6;
+    }
+[data-page="19"] .slide .ph-bar .back {
+      display: flex; align-items: center; gap: 4px;
+      color: #1a1d24; font-size: 22px; font-weight: 400;
+    }
+[data-page="19"] .slide .ph-bar .nav-title {
+      flex: 1;
+      display: flex; align-items: center; gap: 6px; justify-content: center;
+      font-size: 18px; font-weight: 700; color: #1a1d24;
+    }
+[data-page="19"] .slide .ph-bar .robot-tag {
+      padding: 2px 6px;
+      background: #FFE7B0; border-radius: 4px;
+      font-size: 14px; font-weight: 600; line-height: 1;
+      color: #B87600;
+    }
+[data-page="19"] .slide .ph-bar .more {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: #1a1d24;
+    }
+[data-page="19"] .slide .ph-tabs {
+      flex: 0 0 42px;
+      display: flex; align-items: center; gap: 18px;
+      padding: 0 18px;
+      background: #f6f6f6;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+[data-page="19"] .slide .ph-tabs .tab {
+      position: relative;
+      padding: 10px 0;
+      font-size: 14px; font-weight: 500; color: #66707d;
+    }
+[data-page="19"] .slide .ph-tabs .tab.is-active { color: #1a1d24; font-weight: 700; }
+[data-page="19"] .slide .ph-tabs .tab.is-active::after {
+      content: ""; position: absolute;
+      left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 18px; height: 3px;
+      background: #3370FF; border-radius: 2px;
+    }
+[data-page="19"] .slide .ph-divider {
+      flex: 0 0 32px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #f6f6f6;
+    }
+[data-page="19"] .slide .ph-divider .line { flex: 1; max-width: 80px; height: 1px; background: rgba(0,0,0,0.08); }
+[data-page="19"] .slide .ph-divider .label { font-size: 14px; font-weight: 500; color: #99a1ad; line-height: 1; }
+[data-page="19"] .slide .ph-chat {
+      flex: 1;
+      padding: 4px 14px 8px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      background: #f6f6f6;
+    }
+[data-page="19"] .slide .ph-chat-inner {
+      display: flex; flex-direction: column; gap: 12px;
+      animation: scroll-up19 14s linear infinite;
+    }
+@keyframes scroll-up19 {
+      0%, 55%   { transform: translateY(0); }
+      60%, 100% { transform: translateY(-100px); }
+    }
+[data-page="19"] .slide .msg {
+      display: flex; gap: 10px;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+[data-page="19"] .slide .msg.is-user { flex-direction: row-reverse; }
+[data-page="19"] .slide .msg .avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+[data-page="19"] .slide .msg.is-bot .avatar {
+      background: linear-gradient(135deg, #6FE8D8 0%, #16A88F 100%);
+      color: #fff;
+      font-family: var(--fs-font-cjk);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+[data-page="19"] .slide .msg.is-user .avatar {
+      background: linear-gradient(135deg, #FFB870 0%, #FF8A30 100%);
+      font-size: 14px; font-weight: 700; line-height: 1;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="19"] .slide .msg .bubble {
+      max-width: 240px;
+      padding: 10px 14px;
+      background: #fff;
+      border-radius: 4px 14px 14px 14px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: #1a1d24;
+      letter-spacing: 0.005em;
+      border: 1px solid rgba(0,0,0,0.04);
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="19"] .slide .msg.is-user .bubble {
+      background: #DCEDFF;
+      border-color: rgba(51,112,255,0.10);
+      border-radius: 14px 4px 14px 14px;
+      color: #0A2A66;
+    }
+[data-page="19"] .slide .msg .bubble .lead {
+      display: block;
+      font-size: 18px; font-weight: 700; color: #1a1d24;
+      padding-bottom: 4px;
+    }
+[data-page="19"] .slide .msg .bubble b { color: #16A88F; font-weight: 700; }
+[data-page="19"] .slide .msg.is-typing .bubble {
+      display: flex; gap: 4px; align-items: center;
+      padding: 14px 16px;
+    }
+[data-page="19"] .slide .msg.is-typing .bubble span {
+      width: 6px; height: 6px;
+      background: #99a1ad;
+      border-radius: 50%;
+      animation: dot19 1.1s ease-in-out infinite;
+    }
+[data-page="19"] .slide .msg.is-typing .bubble span:nth-child(2) { animation-delay: .15s; }
+[data-page="19"] .slide .msg.is-typing .bubble span:nth-child(3) { animation-delay: .3s; }
+@keyframes dot19 {
+      0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+      30%           { opacity: 1;  transform: translateY(-3px); }
+    }
+[data-page="19"] /* solution chip cluster (跟在 bot reply 后) */
+    .slide .sol-chips {
+      display: flex; flex-direction: column; gap: 6px;
+      align-self: stretch;
+      padding: 8px 10px;
+      background: rgba(51,214,192,0.12);
+      border: 1px solid rgba(51,214,192,0.42);
+      border-radius: 8px;
+      opacity: 0;
+      animation: msg-in19 .35s ease-out forwards 5.4s;
+    }
+[data-page="19"] .slide .sol-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px;
+      background: #fff;
+      border: 1px solid #DCEDFF;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #1a1d24;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="19"] .slide .sol-chip .num {
+      width: 18px; height: 18px;
+      background: #16A88F; color: #fff;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800;
+      flex-shrink: 0;
+    }
+[data-page="19"] /* msg timing */
+    .slide .msg.welcome { animation: msg-in19 .35s ease-out forwards .3s; }
+[data-page="19"] .slide .msg.m1 { animation: msg-in19 .35s ease-out forwards 1.6s; }
+[data-page="19"] .slide .msg.typing { animation: msg-in19 .3s ease-out forwards 2.8s, msg-out19 .25s ease-in forwards 4.0s; }
+[data-page="19"] .slide .msg.m2 { animation: msg-in19 .35s ease-out forwards 4.0s; }
+@keyframes msg-in19 {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+@keyframes msg-out19 {
+      to { opacity: 0; transform: translateY(-4px); height: 0; padding: 0; margin: 0; }
+    }
+[data-page="19"] /* 底部输入栏 placeholder */
+    .slide .ph-input {
+      flex: 0 0 50px;
+      display: grid; grid-template-columns: 1fr 36px;
+      gap: 10px;
+      padding: 6px 14px 8px;
+      background: #f6f6f6;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+[data-page="19"] .slide .ph-input .field {
+      display: flex; align-items: center;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 12px;
+      font-size: 14px; font-weight: 500;
+      color: #99a1ad;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="19"] .slide .ph-input .send {
+      align-self: center;
+      width: 32px; height: 32px;
+      background: #3370FF;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 14px; font-weight: 700;
+    }
+[data-page="19"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="19"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="19"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="19"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="19"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="19"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 20 === */
+[data-page="20"] /* P20 · 海底捞大明白 native H5 demo · 严格对齐 input/参考飞书交互样式.png 视觉规范 */
+
+    .slide[data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+[data-page="20"] .slide .haidi-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;     /* 左右 1:1,phone 在左半屏居中 */
+      gap: 36px;
+      align-items: center;
+    }
+[data-page="20"] .slide .haidi-row > .phone { justify-self: center; }
+[data-page="20"] /* 左半屏居中 */
+    .slide .haidi-row > .haidi-meta { padding-right: 20px; max-width: 720px; }
+[data-page="20"] /* —— 现代手机外壳 · 单层 bezel 光圈, [data-page="20"] 无 chunky 阴影 —— */
+    .slide .phone {
+      position: relative;
+      justify-self: center;
+      width: 380px; height: 780px;
+      background: #f6f6f6;
+      border-radius: 46px;
+      /* ring shadow only — 验证器允许的 0-offset 光圈 */
+      box-shadow: 0 0 0 10px #11141c,
+                  0 0 0 11px #2c3142,
+                  inset 0 0 0 1px rgba(0,0,0,0.04);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", var(--fs-font-cjk);
+      color: #1a1d24;
+    }
+[data-page="20"] /* 顶部 dynamic island / notch */
+    .slide .phone::before {
+      content: "";
+      position: absolute;
+      top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 110px; height: 32px;
+      background: #11141c;
+      border-radius: 18px;
+      z-index: 20;
+    }
+[data-page="20"] /* —— 状态栏 —— */
+    .slide .ph-status {
+      flex: 0 0 50px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px 0;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      color: #1a1d24;
+    }
+[data-page="20"] .slide .ph-status .right { display: flex; gap: 5px; align-items: center; }
+[data-page="20"] .slide .ph-status svg { display: block; }
+[data-page="20"] /* —— 顶部 nav bar —— */
+    .slide .ph-bar {
+      flex: 0 0 52px;
+      display: flex; align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #f6f6f6;
+    }
+[data-page="20"] .slide .ph-bar .back {
+      display: flex; align-items: center; gap: 4px;
+      color: #1a1d24;
+      font-size: 22px;
+      font-weight: 400;
+    }
+[data-page="20"] .slide .ph-bar .badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 20px; height: 20px;
+      padding: 0 5px;
+      background: #ff3b30;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+[data-page="20"] .slide .ph-bar .nav-title {
+      flex: 1;
+      display: flex; align-items: center; gap: 6px;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1d24;
+      letter-spacing: 0.005em;
+    }
+[data-page="20"] .slide .ph-bar .robot-tag {
+      padding: 2px 6px;
+      background: #FFE7B0;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      color: #B87600;
+    }
+[data-page="20"] .slide .ph-bar .more {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      color: #1a1d24;
+    }
+[data-page="20"] /* —— Tab bar 消息 / 文档·资料 —— */
+    .slide .ph-tabs {
+      flex: 0 0 42px;
+      display: flex; align-items: center; gap: 18px;
+      padding: 0 18px;
+      background: #f6f6f6;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+[data-page="20"] .slide .ph-tabs .tab {
+      position: relative;
+      padding: 10px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #66707d;
+    }
+[data-page="20"] .slide .ph-tabs .tab.is-active {
+      color: #1a1d24;
+      font-weight: 700;
+    }
+[data-page="20"] .slide .ph-tabs .tab.is-active::after {
+      content: "";
+      position: absolute;
+      left: 50%; bottom: 0;
+      transform: translateX(-50%);
+      width: 18px; height: 3px;
+      background: #3370FF;
+      border-radius: 2px;
+    }
+[data-page="20"] .slide .ph-tabs .tab-add {
+      margin-left: auto;
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      color: #66707d;
+      font-size: 22px;
+      font-weight: 400;
+    }
+[data-page="20"] /* —— "新话题" 分隔条 —— */
+    .slide .ph-divider {
+      flex: 0 0 36px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      background: #f6f6f6;
+      padding: 4px 0;
+    }
+[data-page="20"] .slide .ph-divider .line {
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+    }
+[data-page="20"] .slide .ph-divider .label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #99a1ad;
+      line-height: 1;
+    }
+[data-page="20"] /* —— Chat 区 —— */
+    .slide .ph-chat {
+      flex: 1;
+      padding: 4px 14px 8px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      background: #f6f6f6;
+      position: relative;
+    }
+[data-page="20"] .slide .ph-chat-inner {
+      display: flex; flex-direction: column; gap: 14px;
+      animation: scroll-up 14s linear infinite;
+    }
+@keyframes scroll-up {
+      0%, 50%   { transform: translateY(0); }
+      60%, 100% { transform: translateY(-200px); }
+    }
+[data-page="20"] /* —— 消息行 —— */
+    .slide .msg {
+      display: flex; gap: 10px;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+[data-page="20"] .slide .msg.is-user { flex-direction: row-reverse; }
+[data-page="20"] .slide .msg .avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-position: center;
+      background-size: cover;
+    }
+[data-page="20"] /* bot 头像 — 渐变圈 + 三字 (font 缩小, [data-page="20"] 加粗压扁) */
+    .slide .msg.is-bot .avatar {
+      background: linear-gradient(135deg, #6FA8FF 0%, #3370FF 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-family: var(--fs-font-cjk);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      text-align: center;
+    }
+[data-page="20"] /* user 头像 — 浅灰 + 字 */
+    .slide .msg.is-user .avatar {
+      background: linear-gradient(135deg, #FFB870 0%, #FF8A30 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+    }
+[data-page="20"] .slide .msg .bubble {
+      max-width: 240px;
+      padding: 10px 14px;
+      background: #fff;
+      border-radius: 4px 14px 14px 14px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: #1a1d24;
+      letter-spacing: 0.005em;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+[data-page="20"] .slide .msg.is-user .bubble {
+      background: #DCEDFF;
+      border-color: rgba(51,112,255,0.10);
+      border-radius: 14px 4px 14px 14px;
+      color: #0A2A66;
+    }
+[data-page="20"] .slide .msg .bubble .em {
+      color: #3370FF; font-weight: 700;
+    }
+[data-page="20"] .slide .msg .bubble b { color: #1a1d24; font-weight: 700; }
+[data-page="20"] .slide .msg .bubble .lead {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1d24;
+      padding-bottom: 4px;
+    }
+[data-page="20"] /* typing dots */
+    .slide .msg.is-typing .bubble {
+      display: flex; gap: 4px; align-items: center;
+      padding: 14px 16px;
+    }
+[data-page="20"] .slide .msg.is-typing .bubble span {
+      width: 6px; height: 6px;
+      background: #99a1ad;
+      border-radius: 50%;
+      animation: dot-pulse 1.1s ease-in-out infinite;
+    }
+[data-page="20"] .slide .msg.is-typing .bubble span:nth-child(2) { animation-delay: .15s; }
+[data-page="20"] .slide .msg.is-typing .bubble span:nth-child(3) { animation-delay: .30s; }
+@keyframes dot-pulse {
+      0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+      30%           { opacity: 1;  transform: translateY(-3px); }
+    }
+[data-page="20"] /* —— msg timing — 14s 一轮 —— */
+    .slide .msg.welcome { animation: msg-in .35s ease-out forwards .3s; }
+[data-page="20"] .slide .msg.m1 { animation: msg-in .35s ease-out forwards 1.4s; }
+[data-page="20"] .slide .msg.m2 { animation: msg-in .35s ease-out forwards 2.6s; }
+[data-page="20"] .slide .msg.typing { animation: msg-in .3s ease-out forwards 3.8s,
+                                     msg-out .25s ease-in forwards 5.0s; }
+[data-page="20"] .slide .msg.m4 { animation: msg-in .35s ease-out forwards 5.0s; }
+[data-page="20"] .slide .msg.m5 { animation: msg-in .35s ease-out forwards 8.4s; }
+[data-page="20"] .slide .msg.typing-2 { animation: msg-in .3s ease-out forwards 9.4s,
+                                     msg-out .25s ease-in forwards 10.8s; }
+[data-page="20"] .slide .msg.m6 { animation: msg-in .35s ease-out forwards 10.8s; }
+@keyframes msg-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+@keyframes msg-out {
+      to { opacity: 0; transform: translateY(-4px); height: 0; padding-top: 0; padding-bottom: 0; margin: 0; }
+    }
+[data-page="20"] /* —— 底部 "新话题" ribbon + input —— */
+    .slide .ph-foot-ribbon {
+      flex: 0 0 36px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 18px;
+      background: #f6f6f6;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+[data-page="20"] .slide .ph-foot-ribbon .new-topic {
+      display: flex; align-items: center; gap: 5px;
+      padding: 6px 12px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1d24;
+    }
+[data-page="20"] .slide .ph-input {
+      flex: 0 0 50px;
+      padding: 6px 14px 8px;
+      background: #f6f6f6;
+      display: flex; align-items: center; gap: 10px;
+    }
+[data-page="20"] .slide .ph-input .field {
+      flex: 1;
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #1a1d24;
+      display: flex; align-items: center;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+[data-page="20"] .slide .ph-input .field .placeholder {
+      color: #99a1ad;
+      animation: ph-fade 14s linear infinite;
+    }
+@keyframes ph-fade {
+      0%, 38% { opacity: 1; }
+      42%, 56% { opacity: 0; }
+      60%, 100% { opacity: 1; }
+    }
+[data-page="20"] .slide .ph-input .field .typed {
+      position: absolute;
+      left: 14px; right: 30px;
+      color: #1a1d24;
+      max-width: 0;
+      overflow: hidden; white-space: nowrap;
+      animation: type-in 1.4s steps(14, end) forwards 6.0s,
+                 type-out .15s steps(1, end) forwards 8.4s;
+    }
+@keyframes type-in { to { max-width: 86%; } }
+@keyframes type-out { to { max-width: 0; } }
+[data-page="20"] .slide .ph-input .field .caret {
+      position: absolute;
+      right: 22px; top: 50%;
+      transform: translateY(-50%);
+      width: 1.5px; height: 16px;
+      background: #3370FF;
+      animation: caret-blink 1s steps(2) infinite;
+      opacity: 0;
+    }
+[data-page="20"] .slide .ph-input .field .caret.is-active {
+      opacity: 1;
+    }
+@keyframes caret-blink { to { opacity: 0; } }
+[data-page="20"] .slide .ph-input .expand {
+      width: 22px; height: 22px;
+      color: #66707d;
+    }
+[data-page="20"] /* —— 底部工具条 emoji / @ / mic / image / Aa / + —— */
+    .slide .ph-tools {
+      flex: 0 0 56px;
+      display: flex; align-items: center; justify-content: space-around;
+      padding: 0 18px;
+      background: #f6f6f6;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      color: #1a1d24;
+    }
+[data-page="20"] .slide .ph-tools .tool {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      color: #66707d;
+    }
+[data-page="20"] /* —— meta 区 (右栏) —— */
+    .slide .haidi-meta {
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 18px;
+    }
+[data-page="20"] .slide .haidi-pill {
+      align-self: flex-start;
+      padding: 10px 22px;
+      background: rgba(51,214,192,0.20);
+      border: 1px solid rgba(51,214,192,0.55);
+      border-radius: 999px;
+      font: 700 22px/1.2 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+    }
+[data-page="20"] .slide .haidi-name {
+      font: 800 44px/1.1 var(--fs-font-cjk);
+      color: var(--fs-teal);
+      letter-spacing: -0.01em;
+    }
+[data-page="20"] .slide .haidi-role {
+      font: 500 22px/1.5 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="20"] .slide .kpi-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+[data-page="20"] .slide .kpi-tile {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 18px 18px;
+      background: rgba(51,214,192,0.10);
+      border: 1px solid rgba(51,214,192,0.45);
+      border-radius: 14px;
+    }
+[data-page="20"] .slide .kpi-num { font: 800 38px/1 var(--fs-font-latin); color: var(--fs-teal); letter-spacing: -0.005em; }
+[data-page="20"] .slide .kpi-label { font: 600 18px/1.4 var(--fs-font-cjk); color: #fff; }
+[data-page="20"] .slide .haidi-foot {
+      font: 500 18px/1.5 var(--fs-font-cjk);
+      color: #fff;
+      opacity: 0.86;
+    }
+[data-page="20"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="20"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="20"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="20"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="20"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="20"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 22 === */
+[data-page="22"] .slide[data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: flex-start; gap: 22px; padding-top: 24px; }
+[data-page="22"] /* —— hero · 卡通 AI 头像 + 角色名 + 引言 —— */
+    .slide .hero-row {
+      display: grid;
+      grid-template-columns: 132px 1fr auto;
+      gap: 22px;
+      align-items: center;
+      padding: 16px 22px;
+      background: linear-gradient(90deg, rgba(60,127,255,0.16) 0%, rgba(60,127,255,0.04) 100%);
+      border: 1px solid rgba(60,127,255,0.32);
+      border-radius: 16px;
+    }
+[data-page="22"] .slide .avatar {
+      width: 132px; height: 132px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 35%, #ffd9c2 0%, #f7b58c 65%, #d99069 100%);
+      border: 3px solid rgba(255,255,255,0.18);
+      position: relative;
+    }
+[data-page="22"] .slide .avatar svg { display: block; width: 100%; height: 100%; }
+[data-page="22"] .slide .role-block {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+[data-page="22"] .slide .role-name {
+      font: 800 28px/1.15 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.005em;
+    }
+[data-page="22"] .slide .role-quote {
+      font: 600 22px/1.4 var(--fs-font-cjk);
+      color: rgba(255,255,255,0.86);
+    }
+[data-page="22"] /* —— 颜色图例 (替代旧的 配套知识库 表头) —— */
+    .slide .legend-row {
+      display: flex; gap: 20px; align-items: center;
+      justify-content: flex-end;
+      font-family: var(--fs-font-cjk);
+    }
+[data-page="22"] .slide .legend-item {
+      display: flex; align-items: center; gap: 8px;
+      font: 600 18px/1 var(--fs-font-cjk);
+      color: rgba(255,255,255,0.92);
+    }
+[data-page="22"] .slide .legend-swatch {
+      width: 22px; height: 14px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+[data-page="22"] .slide .legend-swatch.is-consume {
+      background: rgba(120,210,150,0.55);
+      border-color: rgba(120,210,150,0.85);
+    }
+[data-page="22"] .slide .legend-swatch.is-deposit {
+      background: rgba(176,122,74,0.65);
+      border-color: rgba(196,144,96,0.95);
+    }
+[data-page="22"] /* —— 时间轴 4 时段 —— */
+    .slide .timeline {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+      gap: 18px;
+    }
+[data-page="22"] .slide .timeline > .head {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: subgrid;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      font: 700 22px/1.2 var(--fs-font-cjk);
+      color: #fff;                       /* white,不再灰 */
+      letter-spacing: 0.04em;
+    }
+[data-page="22"] .slide .ts-time {
+      font: 800 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+      align-self: center;
+      padding: 14px 14px;
+      background: rgba(60,127,255,0.20);
+      border: 1px solid rgba(60,127,255,0.45);
+      border-radius: 8px;
+      text-align: center;
+    }
+[data-page="22"] .slide .ts-tasks {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 8px 10px;
+      font: 500 22px/1.5 var(--fs-font-cjk);     /* 正文级别(<=22 退一档容纳更多行) · 白色 */
+      color: #fff;
+    }
+[data-page="22"] .slide .ts-tasks span { display: block; }
+[data-page="22"] .slide .ts-libs {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding: 8px 0;
+      align-content: center;
+    }
+[data-page="22"] /* 默认 chip · 浅绿色 = 知识消费 — chip 是内容标签, [data-page="22"] 字号至少 18 + 白字 */
+    .slide .lib-chip {
+      padding: 8px 14px;
+      background: rgba(120,210,150,0.20);
+      border: 1px solid rgba(120,210,150,0.55);
+      border-radius: 6px;
+      font: 600 18px/1.3 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="22"] /* 棕色 chip · 知识沉淀 */
+    .slide .lib-chip.is-deposit {
+      background: rgba(176,122,74,0.28);
+      border-color: rgba(196,144,96,0.70);
+      color: #fff;
+    }
+[data-page="22"] .slide .ts-row { display: contents; }
+[data-page="22"] .slide .ts-divider {
+      grid-column: 1 / -1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+[data-page="22"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="22"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="22"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="22"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="22"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="22"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 29 === */
+[data-page="29"] /* P29 v2 · 一页纸案例 · 左 痛点+价值梳理 / 右 AI 质检平台截图(素材2) */
+
+    .slide[data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 16px; padding-top: 4px; }
+[data-page="29"] .slide .client-mark {
+      position: absolute;
+      top: 61px; right: 308px;
+      width: 110px; height: 50px;
+      background-image: url('starbucks/assets/clientlogo/益禾堂.png');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-color: #fff;
+      border-radius: 6px;
+      padding: 4px;
+      z-index: 4;
+    }
+[data-page="29"] .slide .ttl-row { display: flex; align-items: center; gap: 14px; }
+[data-page="29"] .slide .ttl-eyebrow {
+      padding: 8px 18px;
+      background: linear-gradient(90deg, rgba(254,127,0,0.30) 0%, rgba(254,127,0,0.15) 100%);
+      border: 1px solid rgba(254,127,0,0.55);
+      border-radius: 8px;
+      font: 700 22px/1.2 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="29"] .slide .case-row {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 28px;
+      align-items: start;          /* 顶对齐 — 左文字与右截图同一水平起点 */
+    }
+[data-page="29"] /* —— LEFT · 痛点 + 价值 —— */
+    .slide .left-col {
+      display: flex; flex-direction: column;
+      gap: 14px;
+    }
+[data-page="29"] .slide .sec {
+      padding: 12px 16px;
+      background: rgba(8,12,24,0.45);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+    }
+[data-page="29"] .slide .sec.is-pain { border-left: 4px solid var(--fs-orange); }
+[data-page="29"] .slide .sec.is-fix { border-left: 4px solid var(--fs-blue); }
+[data-page="29"] .slide .sec.is-gain { border-left: 4px solid var(--fs-teal); }
+[data-page="29"] .slide .sec .h {
+      display: flex; align-items: center; gap: 8px;
+      font: 800 22px/1.2 var(--fs-font-cjk);
+      color: #fff;
+      padding-bottom: 6px;
+    }
+[data-page="29"] .slide .sec.is-pain .h { color: var(--fs-orange); }
+[data-page="29"] .slide .sec.is-fix .h { color: var(--fs-blue); }
+[data-page="29"] .slide .sec.is-gain .h { color: var(--fs-teal); }
+[data-page="29"] .slide .sec ul {
+      margin: 0; padding-left: 22px;
+      font: 500 22px/1.5 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="29"] .slide .sec ul li { padding: 1px 0; }
+[data-page="29"] .slide .sec ul li b { color: #fff; font-weight: 800; }
+[data-page="29"] .slide .sec.is-gain ul li b { color: var(--fs-teal); }
+[data-page="29"] .slide .sec.is-fix ul li b { color: var(--fs-blue); }
+[data-page="29"] .slide .sec.is-pain ul li b { color: var(--fs-orange); }
+[data-page="29"] /* KPI · 改纵向 3 行, [data-page="29"] 每行全宽, [data-page="29"] 左大数字 + 右描述 — 横排太挤, [data-page="29"] 3 列容不下 */
+    .slide .kpi-strip {
+      display: flex; flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+[data-page="29"] .slide .kpi-strip .kpi-tile {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px;
+      padding: 12px 18px;
+      background: rgba(51,214,192,0.18);
+      border: 1px solid rgba(51,214,192,0.60);
+      border-radius: 10px;
+    }
+[data-page="29"] .slide .kpi-strip .kpi-tile .num {
+      font: 800 28px/1.1 var(--fs-font-cjk);
+      color: var(--fs-teal);
+      letter-spacing: 0;
+    }
+[data-page="29"] .slide .kpi-strip .kpi-tile .lbl {
+      font: 600 22px/1.3 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="29"] /* RIGHT 截图 · 顶部锚定让首像素 = case-row top, [data-page="29"] 与左侧"现状痛点"卡顶对齐 */
+    .slide .shot {
+      width: 100%;
+      min-height: 720px;
+      background-image: url('starbucks/input/29页素材2.png');
+      background-position: top center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-radius: 14px;
+    }
+[data-page="29"] .slide[data-layout="content-2col"] .stage { justify-content: center; }
+[data-page="29"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="29"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="29"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="29"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="29"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 32 === */
+[data-page="32"] /* P32 v4 · 镜像 LKK 英文版 slide #/9 case-study layout · 中文文本来自 PDF p32 */
+
+    .slide[data-layout="content-2col"] .stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      column-gap: 36px; row-gap: 14px;
+      min-height: 0;
+      /* override 全局 .stage 的 flex 余孽,确保 grid 真生效 */
+      align-items: stretch; justify-items: stretch;
+    }
+[data-page="32"] .slide .ttl-row { display: flex; align-items: center; gap: 14px; grid-column: 1 / -1; grid-row: 1; }
+[data-page="32"] .slide .ttl-eyebrow {
+      padding: 8px 18px;
+      background: linear-gradient(90deg, rgba(60,127,255,0.30) 0%, rgba(60,127,255,0.15) 100%);
+      border: 1px solid rgba(60,127,255,0.55);
+      border-radius: 8px;
+      font: 700 22px/1.2 var(--fs-font-cjk);
+      color: #fff;
+    }
+[data-page="32"] /* —— ROW 2 ·LEFT — persona pill | RIGHT — lede ——
+       both cells share row 2 height (auto = max of two children), [data-page="32"] so doc-stage and report-mock in row 3 will share the SAME top edge */
+
+    .slide .persona-pill {
+      grid-column: 1; grid-row: 2;
+      display: flex; gap: 18px; align-items: flex-start;
+      padding: 16px 20px; border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%), rgba(10,18,48,0.62);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+[data-page="32"] .slide .persona-avatar {
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #FFE0AC 0%, #FFB257 60%, #E68A1C 100%);
+      display: flex; align-items: center; justify-content: center;
+      font: 800 28px/1 var(--fs-font-cjk);
+      color: #6B3E0E;
+      letter-spacing: -0.02em;
+    }
+[data-page="32"] .slide .persona-meta { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+[data-page="32"] .slide .persona-meta h3 {
+      font: 800 28px/1.2 var(--fs-font-cjk);   /* col-title 档 (rule 5) */
+      color: #fff; margin: 0;
+      letter-spacing: -0.005em;
+    }
+[data-page="32"] .slide .persona-meta dl {
+      margin: 0; padding: 0;
+      display: grid; grid-template-columns: 130px 1fr; gap: 4px 14px;
+      font: 600 18px/1.4 var(--fs-font-cjk);   /* pill 档 (rule 5) */
+      color: #fff;
+    }
+[data-page="32"] .slide .persona-meta dt { color: #fff; opacity: 0.65; font-weight: 600; }
+[data-page="32"] .slide .persona-meta dd { margin: 0; color: #fff; }
+[data-page="32"] /* doc-stage · ROW 3 LEFT — 强制 stretch + height:100% 让它真填满 row3 */
+    .slide .doc-stage {
+      grid-column: 1; grid-row: 3;
+      align-self: stretch; justify-self: stretch;
+      position: relative; min-height: 0; height: 100%;
+      display: flex; align-items: stretch;
+    }
+[data-page="32"] .slide .doc-grid {
+      flex: 1; min-width: 0; min-height: 0;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+[data-page="32"] .slide .doc-card {
+      background: #fff;
+      border-radius: 6px;
+      padding: 9px 8px;
+      display: flex; flex-direction: column; gap: 3px;
+      overflow: hidden; min-width: 0; min-height: 0;
+    }
+[data-page="32"] .slide .doc-card .doc-h {
+      font: 700 10px/1.2 var(--fs-font-cjk);   /* allow:typescale — Lark Doc preview h (rung 8) */
+      color: #1F2329; margin: 0 0 2px;
+    }
+[data-page="32"] .slide .doc-card .doc-line {
+      height: 2px;
+      background: rgba(31,35,41,0.16);
+      border-radius: 1px;
+    }
+[data-page="32"] .slide .doc-card .doc-line.short { width: 55%; }
+[data-page="32"] .slide .doc-card .doc-line.med { width: 78%; }
+[data-page="32"] .slide .doc-card .doc-line.full { width: 100%; }
+[data-page="32"] .slide .doc-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0) 100%);
+      pointer-events: none; z-index: 3; gap: 4px;
+    }
+[data-page="32"] .slide .doc-overlay .x-num {
+      font: 800 56px/1 var(--fs-font-latin);
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+[data-page="32"] .slide .doc-overlay .x-label {
+      font: 800 18px/1 var(--fs-font-cjk);
+      color: #fff;
+      letter-spacing: 0.18em;
+    }
+[data-page="32"] .slide .doc-arrow {
+      position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+      z-index: 4;
+      color: var(--fs-teal);
+    }
+[data-page="32"] .slide .doc-arrow svg { width: 44px; height: 36px; }
+[data-page="32"] /* —— ROW 2 RIGHT · lede —— */
+    .slide h3.lede {
+      grid-column: 2; grid-row: 2;
+      align-self: stretch;
+      display: flex; align-items: center;
+      font: 800 28px/1.3 var(--fs-font-cjk);   /* col-title 档 (rule 5) */
+      color: #fff; margin: 0;
+      letter-spacing: -0.005em;
+    }
+[data-page="32"] .slide h3.lede strong { color: var(--fs-teal); }
+[data-page="32"] /* —— ROW 3 RIGHT · report-mock — 同样兜底 —— */
+    .slide .report-mock {
+      grid-column: 2; grid-row: 3;
+      align-self: stretch; justify-self: stretch;
+      min-height: 0; height: 100%;
+      background: #F5F6F7; color: #1F2329;
+      border-radius: 12px;
+      display: grid; grid-template-columns: 192px 1fr;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+[data-page="32"] .slide .report-toc {
+      background: rgba(31,35,41,0.04);
+      padding: 16px 12px;
+      border-right: 1px solid rgba(31,35,41,0.06);
+      overflow: hidden;
+      font: 600 14px/1.4 var(--fs-font-cjk);
+      color: #51565D;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+[data-page="32"] .slide .report-toc .toc-h {
+      font: 700 14px/1.4 var(--fs-font-cjk);
+      color: #1F2329;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(31,35,41,0.10);
+      padding-bottom: 8px;
+    }
+[data-page="32"] .slide .report-toc .l1 { font-weight: 700; color: #1F2329; line-height: 1.5; font-size: 14px; }
+[data-page="32"] .slide .report-toc .l2 {
+      padding-left: 12px; color: #51565D;
+      font-size: 14px; line-height: 1.4;
+    }
+[data-page="32"] .slide .report-body {
+      padding: 14px 18px 12px;
+      overflow: hidden; min-width: 0; min-height: 0;
+    }
+[data-page="32"] .slide .report-body .doc-meta {
+      font: 800 14px/1.35 var(--fs-font-cjk);
+      color: #1F2329; margin: 0;
+    }
+[data-page="32"] .slide .report-body .doc-meta b { color: #3370FF; font-weight: 800; }
+[data-page="32"] .slide .report-body .modified {
+      font: 500 14px/1 var(--fs-font-cjk);
+      color: #8F959E; margin: 4px 0 12px;
+    }
+[data-page="32"] .slide .report-body .callout {
+      background: #FFF7E6;
+      border-left: 2px solid #FAAD14;
+      padding: 9px 12px;
+      border-radius: 3px;
+      font: 500 14px/1.55 var(--fs-font-cjk);
+      color: #1F2329; margin: 0 0 12px;
+    }
+[data-page="32"] .slide .report-body .callout strong { color: #D4380D; font-weight: 700; }
+[data-page="32"] .slide .report-body h4 {
+      font: 700 14px/1.3 var(--fs-font-cjk);
+      color: #1F2329; margin: 0 0 8px;
+    }
+[data-page="32"] .slide .report-body p {
+      font: 500 14px/1.55 var(--fs-font-cjk);
+      color: #1F2329; margin: 0 0 8px; text-align: justify;
+    }
+[data-page="32"] .slide .report-body p strong { font-weight: 700; }
+[data-page="32"] /* —— Bottom CTA pills · ROW 4 ——
+       关键: 内部列比例必须复刻外层 stage (1fr 1.05fr + gap 36)
+       否则两 pill 的分割线 ≠ 上方两列的分割线 → 右 pill 左边线
+       与 lede/report-mock 左边线错位 (rule 2: 96px 起同一左边线) */
+    .slide .bottom-cta {
+      grid-column: 1 / -1; grid-row: 4;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      column-gap: 36px;
+    }
+[data-page="32"] .slide .cta-pill {
+      min-width: 0;       /* 允许 1fr 真等分 — grid item 默认 min-content 会撑破对称 */
+      background: linear-gradient(135deg, #2EBFA8 0%, #3FE0B6 100%);
+      color: #062828;
+      padding: 18px 30px;
+      border-radius: 14px;
+      font: 800 22px/1.2 var(--fs-font-cjk);
+      text-align: center;
+      letter-spacing: -0.005em;
+    }
+[data-page="32"] /* 客户 logo 落右上 */
+    .slide .client-mark {
+      position: absolute;
+      top: 61px; right: 308px;
+      width: 110px; height: 50px;
+      background-image: url('starbucks/assets/clientlogo/康师傅.png');
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-color: #fff;
+      border-radius: 6px;
+      padding: 4px;
+      z-index: 4;
+    }
+[data-page="32"] .slide[data-layout="content-2col"] .stage { justify-content: flex-start; }
+[data-page="32"] .slide[data-layout="content-3up"] .stage { justify-content: center; }
+[data-page="32"] .slide[data-layout="agenda"] .stage { justify-content: center; }
+[data-page="32"] .slide[data-layout="stats"] .stage { justify-content: center; }
+[data-page="32"] .slide[data-layout="big-stat"] .stage { justify-content: center; }
+[data-page="32"] .slide[data-layout="quote"] .stage { justify-content: center; }
+
+/* === page 33 === */
+[data-page="33"] /* P33 v2 · 完整 34 案例 (按 PDF 第 33 页 1:1 还原)
+       4 列布局: 研发生产+供应链 / 销售管理+渠道管理 / 门店管理 / 市场营销
+       数字员工头像统一灰底空圈占位 / 缺 logo 用品牌文字占位 */
+
+    .slide[data-layout="content-2col"] .stage {
+      display: flex; flex-direction: column;
+      gap: 12px; padding-top: 4px;
+    }
+[data-page="33"] .slide .ttl-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+[data-page="33"] .slide .ttl-eyebrow {
+      padding: 8px 18px;
+      background: linear-gradient(90deg, rgba(254,127,0,0.30) 0%, rgba(254,127,0,0.15) 100%);
+      border: 1px solid rgba(254,127,0,0.55);
+      border-radius: 8px;
+      font: 700 22px/1.2 var(--fs-font-cjk);   /* body 档 — section label */
+      color: #fff;
+      flex-shrink: 0;
+    }
+[data-page="33"] .slide .col-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      align-items: start;                      /* 每列顶对齐,row 不被拉伸,跨列 row 高度一致 */
+      flex: 1; min-height: 0;
+    }
+[data-page="33"] .slide .col-card {
+      display: flex; flex-direction: column;
+      gap: 5px;                                /* 统一 row-row 间距,稳定节奏;col 3/4 9 行受空间约束需紧凑 */
+      min-width: 0;
+    }
+[data-page="33"] .slide .col-head {
+      align-self: stretch;
+      padding: 8px 0;
+      background: linear-gradient(90deg, #3370FF 0%, #5C3FFB 100%);
+      border-radius: 8px;
+      text-align: center;
+      font: 800 22px/1.2 var(--fs-font-cjk);   /* body 档 — 列标题 */
+      color: #fff;
+      letter-spacing: 0.005em;
+    }
+[data-page="33"] .slide .col-head.is-sub {
+      background: linear-gradient(90deg, rgba(60,127,255,0.45) 0%, rgba(92,63,251,0.45) 100%);
+      font-size: 18px;                          /* pill 档 — 子分组 */
+      padding: 6px 0;
+      margin-top: 4px;
+    }
+[data-page="33"] /* 每行 row · 头像 60 + 任务 pill 1fr + 客户 logo 100
+       — 头像 60×60 给真数字员工肖像留充裕空间
+       — drop flex:1: 用自然高度 (60 头像 + 4 padding = 64px), [data-page="33"] 所有 cols 的 row 等高 */
+    .slide .row {
+      min-height: 60px;        /* 严格匹配 avatar 直径 — 9 行 col 才能塞下 638px stage 预算 */
+      display: grid;
+      grid-template-columns: 60px minmax(0, 1fr) 100px;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+[data-page="33"] /* 数字员工头像 — 从 assets/digital_employee_avatars_50/ 取 (50 套通用数字员工肖像) */
+    .slide .row .av {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-color: rgba(255,255,255,0.06);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+[data-page="33"] .slide .row .task {
+      height: 40px;                            /* 与 logo 等高 — 视觉统一 */
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 10px;
+      min-width: 0;
+      background: rgba(60,127,255,0.18);
+      border: 1px solid rgba(60,127,255,0.40);
+      border-radius: 7px;
+      font: 600 14px/1.2 var(--fs-font-cjk);   /* chrome 档 — 高密度网格 */
+      color: #fff;
+      text-align: center;
+      letter-spacing: 0;
+      white-space: nowrap;                     /* 防止 6 字名换行成 2 行打乱节奏 */
+      box-sizing: border-box;
+    }
+[data-page="33"] .slide .row .logo {
+      height: 40px;                            /* 与 task pill 等高 */
+      width: 100px;
+      background: #fff;
+      border-radius: 5px;
+      background-position: center;
+      background-size: contain;                /* 保持 logo 原比例,不裁 */
+      background-repeat: no-repeat;
+      padding: 4px 6px;
+      box-sizing: border-box;
+    }
+[data-page="33"] /* 缺 logo 时的文字占位 */
+    .slide .row .logo.is-text {
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+      color: #1F2329;
+      font: 700 12px/1.1 var(--fs-font-cjk);   /* allow:typescale — logo-fallback text inside mockup cell (rung 8) */
+      padding: 0 6px;
+      letter-spacing: 0;
+      text-align: center;
+    }
+[data-page="33"] /* —— 底部 chip 标记 —— */
+    .slide .foot-row {
+      display: flex; gap: 12px;
+      justify-content: flex-end;
+      align-items: center;
+    }
+[data-page="33"] .slide .foot-chip {
+      padding: 8px 16px;
+      background: rgba(60,127,255,0.16);
+      border: 1px solid rgba(60,127,255,0.45);
+      border-radius: 8px;
+      font: 600 18px/1.2 var(--fs-font-cjk);   /* pill 档 */
+      color: #fff;
+    }
+[data-page="33"] .slide .foot-chip.is-active {
+      background: var(--fs-blue);
+      border-color: var(--fs-blue);
+    }
+[data-page="33"] .slide[data-layout="content-2col"] .stage { justify-content: flex-start; }
+
+/* === selected Opple page styles === */
+/* ========================================================================
+       Per-page styles · adapted from boyu-starbucks deck P25 / P26
+       ======================================================================== */
+
+/* === page 25 (案例 · 飞鹤鹤巡 AI 巡检 · 价值在上 · 左字右图) === */
+    .slide.case-slide .stage { display: flex; flex-direction: column; gap: 12px; justify-content: center; }
+    .slide.case-slide .meta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .slide.case-slide .ind-tag { padding: 6px 14px; border-radius: 6px; background: rgba(51,214,192,0.18); border: 1px solid rgba(51,214,192,0.45); color: #33D6C0; font: 700 14px/1.2 var(--fs-font-cjk); letter-spacing: 0.04em; white-space: nowrap; }
+    .slide.case-slide .hook { flex: 1; min-width: 0; margin: 0; font: 500 22px/1.4 var(--fs-font-cjk); color: rgba(255,255,255,0.94); }
+    .slide.case-slide .hook .accent { color: #33D6C0; font-weight: 700; }
+
+    /* 3-up hero KPI strip — 上面的价值,保留 */
+    .slide.case-slide .kpi-strip-feihe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .slide.case-slide .kpi-strip-feihe .kpi { padding: 16px 22px; border-radius: 14px; background: linear-gradient(180deg, rgba(51,214,192,0.18), rgba(51,214,192,0.04)); border: 1px solid rgba(51,214,192,0.30); border-left: 4px solid #33D6C0; display: flex; flex-direction: column; gap: 4px; }
+    .slide.case-slide .kpi-strip-feihe .kpi.is-orange { background: linear-gradient(180deg, rgba(254,127,0,0.18), rgba(254,127,0,0.04)); border-color: rgba(254,127,0,0.30); border-left-color: #FE7F00; }
+    .slide.case-slide .kpi-strip-feihe .kpi.is-violet { background: linear-gradient(180deg, rgba(159,111,241,0.18), rgba(159,111,241,0.04)); border-color: rgba(159,111,241,0.30); border-left-color: #9F6FF1; }
+    .slide.case-slide .kpi-strip-feihe .v { font: 800 52px/1 var(--fs-font-cjk); color: #fff; letter-spacing: -0.01em; }
+    .slide.case-slide .kpi-strip-feihe .v .u { font: 700 22px/1 var(--fs-font-cjk); color: rgba(255,255,255,0.85); margin-left: 6px; }
+    .slide.case-slide .kpi-strip-feihe .l { font: 700 22px/1.2 var(--fs-font-cjk); color: #fff; padding-top: 4px; }
+    .slide.case-slide .kpi-strip-feihe .d { font: 500 14px/1.3 var(--fs-font-cjk); color: rgba(255,255,255,0.75); }
+
+    /* 2-col body — 左:四节叙事(痛点/冲突/解法/价值,行间距更松)· 右:单张大图(无框,撑高) */
+    .slide.case-slide .case-body { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; align-items: stretch; }
+    .slide.case-slide .col-text { display: flex; flex-direction: column; gap: 50px; min-width: 0; justify-content: center; }
+    .slide.case-slide .col-text .row { display: flex; gap: 14px; align-items: flex-start; }
+    .slide.case-slide .col-text .lbl { flex-shrink: 0; padding: 5px 14px; border-radius: 6px; font: 700 18px/1.2 var(--fs-font-cjk); color: #fff; min-width: 56px; text-align: center; align-self: flex-start; }
+    .slide.case-slide .col-text .lbl.is-orange { background: #FE7F00; }
+    .slide.case-slide .col-text .lbl.is-blue   { background: #3C7FFF; }
+    .slide.case-slide .col-text .lbl.is-teal   { background: #33D6C0; color: #0a1418; }
+    .slide.case-slide .col-text .lbl.is-violet { background: #9F6FF1; }
+    .slide.case-slide .col-text .row p { margin: 0; font: 500 22px/1.35 var(--fs-font-cjk); color: #fff; }
+    .slide.case-slide .col-text .row p strong { color: #33D6C0; font-weight: 700; }
+
+    /* 单张大图 — 不加任何框/边/背景,直接显示;占满右列宽高,cover 自动裁切顶/底约 7%(中心场景保留) */
+    .slide.case-slide .col-visual { display: flex; align-items: stretch; min-height: 0; min-width: 0; }
+    .slide.case-slide .case-img { flex: 1; width: 100%; min-height: 0; background-position: center; background-size: cover; background-repeat: no-repeat; }
+    /* slide 25 · 飞鹤 实图 */
+    .slide[data-page="25"] .case-img { background-image: url('opple/input/image_w1536_h864_飞鹤AI质检配图-卡通版.png'); }
+    /* slide 26 · 罗莱家纺 实图 */
+    .slide[data-page="26"] .case-img { background-image: url('opple/input/image_w1536_h864_罗莱家纺AI仪容检查配图.png'); }
+
+/* === page 32 (专家经验萃取 · 四项举措 · 复用 ref slide 12) === */
+    .slide[data-page="32"] .stage { display: flex; flex-direction: column; gap: 18px; padding-top: 0; justify-content: flex-start; }
+    .slide[data-page="32"] .top-quote { margin: 0; text-align: center; align-self: center; max-width: 1620px; font: 700 28px/1.4 var(--fs-font-cjk); color: rgba(255,255,255,0.96); }
+    .slide[data-page="32"] .top-quote .key { color: rgba(255,255,255,0.98); border-bottom: 2px solid rgba(60,127,255,0.55); }
+    .slide[data-page="32"] .grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 18px; flex: 1; align-content: stretch; }
+    .slide[data-page="32"] .knife-card { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 18px; border-radius: 14px; border: 1px solid; background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.012)); }
+    .slide[data-page="32"] .knife-card.kc-1 { border-color: rgba(60,127,255,0.45); background: linear-gradient(180deg, rgba(60,127,255,0.07), rgba(60,127,255,0.02)); }
+    .slide[data-page="32"] .knife-card.kc-2 { border-color: rgba(159,111,241,0.50); background: linear-gradient(180deg, rgba(159,111,241,0.08), rgba(159,111,241,0.022)); }
+    .slide[data-page="32"] .knife-card.kc-3 { border-color: rgba(60,127,255,0.40); background: linear-gradient(180deg, rgba(60,127,255,0.05), rgba(60,127,255,0.015)); }
+    .slide[data-page="32"] .knife-card.kc-4 { border: 1.5px solid rgba(51,214,192,0.55); background: linear-gradient(180deg, rgba(51,214,192,0.10), rgba(51,214,192,0.02)); box-shadow: 0 0 0 1px rgba(51,214,192,0.22); }
+    .slide[data-page="32"] .feat-badge { position: absolute; top: -13px; right: 18px; padding: 5px 12px; border-radius: 999px; font: 700 14px/1 var(--fs-font-cjk); letter-spacing: 0.06em; background: var(--fs-teal); color: #002a26; box-shadow: 0 0 0 4px #080C18; }
+    .slide[data-page="32"] .kc-header { display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .slide[data-page="32"] .kc-icon { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; }
+    .slide[data-page="32"] .kc-1 .kc-icon { background: rgba(60,127,255,0.20); color: var(--fs-blue); }
+    .slide[data-page="32"] .kc-2 .kc-icon { background: rgba(159,111,241,0.22); color: rgba(196,150,255,0.95); }
+    .slide[data-page="32"] .kc-3 .kc-icon { background: rgba(60,127,255,0.20); color: var(--fs-blue); }
+    .slide[data-page="32"] .kc-4 .kc-icon { background: rgba(51,214,192,0.22); color: var(--fs-teal); }
+    .slide[data-page="32"] .kc-icon svg { width: 22px; height: 22px; }
+    .slide[data-page="32"] .kc-num { font: 700 14px/1 var(--fs-font-cjk); letter-spacing: 0.16em; color: rgba(255,255,255,0.55); }
+    .slide[data-page="32"] .kc-1 .kc-num { color: var(--fs-blue); }
+    .slide[data-page="32"] .kc-2 .kc-num { color: rgba(196,150,255,0.95); }
+    .slide[data-page="32"] .kc-3 .kc-num { color: var(--fs-blue); }
+    .slide[data-page="32"] .kc-4 .kc-num { color: var(--fs-teal); }
+    .slide[data-page="32"] .kc-name { margin: 0; font: 700 28px/1.2 var(--fs-font-cjk); color: rgba(255,255,255,0.96); }
+    .slide[data-page="32"] .kc-rows { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .slide[data-page="32"] .kc-row { display: flex; flex-direction: column; gap: 2px; }
+    .slide[data-page="32"] .kc-label { font: 700 14px/1 var(--fs-font-cjk); letter-spacing: 0.14em; color: rgba(255,255,255,0.50); }
+    .slide[data-page="32"] .kc-body { font: 500 22px/1.4 var(--fs-font-cjk); color: rgba(255,255,255,0.92); }
+    .slide[data-page="32"] .kc-4 .kc-body { color: rgba(255,255,255,0.96); }
+    .slide[data-page="32"] .disclaimer { align-self: center; max-width: 1660px; margin: 0; text-align: center; padding: 10px 22px; border-top: 1px dashed rgba(255,255,255,0.16); font: 500 22px/1.5 var(--fs-font-cjk); font-style: italic; color: rgba(255,255,255,0.62); }
+    .slide[data-page="32"] .disclaimer .em { color: rgba(255,255,255,0.85); font-weight: 700; font-style: normal; }
+
+/* === page 43 (案例 · AI 数字分身:记忆与人设) — ported from boyu-starbucks p13 === */
+    .slide[data-page="43"] .pic-twin { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+    .slide[data-page="43"] .pic-cell { display: flex; flex-direction: column; gap: 12px; }
+    .slide[data-page="43"] .pic-frame { width: 100%; flex: 1; min-height: 720px; background-position: center; background-size: contain; background-repeat: no-repeat; border-radius: 12px; }
+    .slide[data-page="43"] .pic-cap { text-align: center; font: 600 22px/1.4 var(--fs-font-cjk); color: rgba(255,255,255,0.86); letter-spacing: 0.005em; }
+
+/* === page 44 (案例 · 从每场会议学懂你) — ported from boyu-starbucks p14 === */
+    .slide[data-page="44"][data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+    .slide[data-page="44"] .src-twin { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: stretch; }
+    .slide[data-page="44"] .src-col { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .slide[data-page="44"] .src-pill { align-self: center; padding: 10px 24px; background: rgba(60,127,255,0.20); border: 1px solid rgba(60,127,255,0.50); border-radius: 999px; font: 700 22px/1.2 var(--fs-font-cjk); color: #fff; letter-spacing: 0.005em; }
+    .slide[data-page="44"] .src-col.is-violet .src-pill { background: rgba(159,111,241,0.20); border-color: rgba(159,111,241,0.50); }
+    .slide[data-page="44"] .src-img { width: 100%; flex: 1; min-height: 720px; background-position: center top; background-size: contain; background-repeat: no-repeat; border-radius: 12px; }
+
+/* === page 45 (案例 · 代我评审) — ported from boyu-starbucks p15 === */
+    .slide[data-page="45"][data-layout="content-2col"] .stage { display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+    .slide[data-page="45"] .pic-flow { display: flex; align-items: center; justify-content: center; gap: 36px; }
+    .slide[data-page="45"] .pic-cell { display: flex; align-items: center; justify-content: center; }
+    .slide[data-page="45"] .pic-cell img { width: auto; height: auto; object-fit: contain; border-radius: 14px; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
+    .slide[data-page="45"] .pic-cell img.is-cover { max-width: 520px; max-height: 380px; }
+    .slide[data-page="45"] .pic-cell img.is-review { max-width: 786px; max-height: 800px; }
+    .slide[data-page="45"] .arrow { width: 96px; height: 96px; flex: 0 0 96px; display: flex; align-items: center; justify-content: center; color: var(--fs-violet, #9F6FF1); filter: drop-shadow(0 0 18px rgba(159,111,241,0.40)); }
+    .slide[data-page="45"] .arrow svg { width: 96px; height: 96px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <div class="slide-frame">
+      <div class="slide miniso-section" data-layout="section" data-accent="blue" data-decor="section-bg"
+           data-screen-label="01 数字员工能力进化" data-slide-key="digital-employee-evolution" id="digital-employee-evolution"
+           data-source-deck="ppt" data-source-page="1">
+        <div class="wordmark"></div>
+        <div class="chapter-num" data-text-id="slide-01.chapter">02.</div>
+        <h2 class="title title-zh" data-text-id="slide-01.title">数字员工能力进化</h2>
+        <p class="lede" data-text-id="slide-01.subtitle">从代操作的小助理到数字世界的管理分身</p>
+      </div>
+    </div>
+<div class="slide-frame" data-page="33">
+      <div class="slide" data-layout="content-2col" data-accent="blue" data-screen-label="02 飞书沉淀了大量数字员工落地的经验" data-slide-key="digital-employee-experience" id="digital-employee-experience" data-source-deck="starbucks" data-source-page="33" data-source-key="digital-employee-experience">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-02.title">飞书沉淀了大量数字员工落地的经验</h2></div>
+        <div class="stage">
+
+          <div class="ttl-row">
+            <span class="ttl-eyebrow" data-text-id="slide-02.eyebrow">更丰富的实践</span>
+          </div>
+
+          <div class="col-grid">
+
+            <!-- ===== 列 1 · 研发生产 (6) + 供应链 (2) ===== -->
+            <div class="col-card">
+              <span class="col-head" data-text-id="slide-02.c1.head">研发生产</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/01_east_asian_woman_white_shirt.png')"></span><span class="task" data-text-id="slide-02.c1.r1.task">合规审核</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/胖东来.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/03_southeast_asian_man_hoodie.png')"></span><span class="task" data-text-id="slide-02.c1.r2.task">安全巡检</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/健力宝.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/05_african_man_beard_polo.png')"></span><span class="task" data-text-id="slide-02.c1.r3.task">生产日报总结</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/盛泰集团.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/06_latin_woman_wavy_sweater.png')"></span><span class="task" data-text-id="slide-02.c1.r4.task">成衣盯款</span><span class="logo is-text" data-text-id="slide-02.c1.r4.logo">éifini</span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/07_middle_eastern_man_white_shirt.png')"></span><span class="task" data-text-id="slide-02.c1.r5.task">新品创意</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/思念食品.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/08_east_asian_man_glasses_sweater.png')"></span><span class="task" data-text-id="slide-02.c1.r6.task">精产管理</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/广东中泰龙家具集团有限公司.png')"></span></div>
+
+              <span class="col-head is-sub" data-text-id="slide-02.c1.sub.head">供应链</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/09_caucasian_woman_blonde_bob.png')"></span><span class="task" data-text-id="slide-02.c1s.r1.task">出清策略</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/物美商业.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/11_east_asian_man_business_casual.png')"></span><span class="task" data-text-id="slide-02.c1s.r2.task">资质审核</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/物美商业.png')"></span></div>
+            </div>
+
+            <!-- ===== 列 2 · 销售管理 (5) + 渠道管理 (3) ===== -->
+            <div class="col-card">
+              <span class="col-head" data-text-id="slide-02.c2.head">销售管理</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/12_indian_woman_braid_blouse.png')"></span><span class="task" data-text-id="slide-02.c2.r1.task">销售助手</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/元气森林.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/13_caucasian_man_beard_denim.png')"></span><span class="task" data-text-id="slide-02.c2.r2.task">会议质检</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/元气森林.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/14_east_asian_woman_short_bob_vest.png')"></span><span class="task" data-text-id="slide-02.c2.r3.task">CRM 管理</span><span class="logo is-text" data-text-id="slide-02.c2.r3.logo">海大集团</span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/15_southeast_asian_woman_scarf.png')"></span><span class="task" data-text-id="slide-02.c2.r4.task">会议洞察</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/康师傅.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/16_african_woman_braids_turtleneck.png')"></span><span class="task" data-text-id="slide-02.c2.r5.task">智能报价</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/玛丽黛佳_创元集团.png')"></span></div>
+
+              <span class="col-head is-sub" data-text-id="slide-02.c2.sub.head">渠道管理</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/17_caucasian_woman_red_hair_cardigan.png')"></span><span class="task" data-text-id="slide-02.c2s.r1.task">网点审核</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/元气森林.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/18_east_asian_young_man_bangs_hoodie.png')"></span><span class="task" data-text-id="slide-02.c2s.r2.task">品牌照片审核</span><span class="logo is-text" data-text-id="slide-02.c2s.r2.logo">J&amp;T 极兔速递</span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/19_latin_man_slick_suit.png')"></span><span class="task" data-text-id="slide-02.c2s.r3.task">陈列费用审核</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/健力宝.png')"></span></div>
+            </div>
+
+            <!-- ===== 列 3 · 门店管理 (9) ===== -->
+            <div class="col-card">
+              <span class="col-head" data-text-id="slide-02.c3.head">门店管理</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/20_middle_eastern_woman_hijab.png')"></span><span class="task" data-text-id="slide-02.c3.r1.task">门店服务</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/海底捞.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/21_east_asian_woman_half_up_cardigan.png')"></span><span class="task" data-text-id="slide-02.c3.r2.task">加盟客服</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/美宜佳.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/22_african_man_glasses_blazer.png')"></span><span class="task" data-text-id="slide-02.c3.r3.task">门店巡检</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/益禾堂.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/23_caucasian_man_undercut_polo.png')"></span><span class="task" data-text-id="slide-02.c3.r4.task">客评管理</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/茶百道.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/24_south_asian_man_glasses_shirt.png')"></span><span class="task" data-text-id="slide-02.c3.r5.task">导购练货</span><span class="logo is-text" data-text-id="slide-02.c3.r5.logo">éifini</span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/25_east_asian_woman_navy_blazer.png')"></span><span class="task" data-text-id="slide-02.c3.r6.task">智能服务</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/华住酒店集团.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/26_caucasian_woman_ponytail_athleisure.png')"></span><span class="task" data-text-id="slide-02.c3.r7.task">差评申诉</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/益禾堂.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/27_southeast_asian_man_glasses_cardigan.png')"></span><span class="task" data-text-id="slide-02.c3.r8.task">客户体验管理</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/亚朵酒店.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/28_african_american_man_fade_tshirt.png')"></span><span class="task" data-text-id="slide-02.c3.r9.task">考试管理</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/博士眼镜.png')"></span></div>
+            </div>
+
+            <!-- ===== 列 4 · 市场营销 (9) ===== -->
+            <div class="col-card">
+              <span class="col-head" data-text-id="slide-02.c4.head">市场营销</span>
+
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/29_east_asian_man_mature_vest.png')"></span><span class="task" data-text-id="slide-02.c4.r1.task">VoC 分析</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/三只松鼠.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/30_indian_man_beard_kurta.png')"></span><span class="task" data-text-id="slide-02.c4.r2.task">舆情监控</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/逐本.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/31_caucasian_woman_pixie_blouse.png')"></span><span class="task" data-text-id="slide-02.c4.r3.task">CMK 调研</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/珀莱雅.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/32_east_asian_woman_glasses_sweater.png')"></span><span class="task" data-text-id="slide-02.c4.r4.task">营销内容生成</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/泡泡玛特.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/33_latin_woman_curly_dress_shirt.png')"></span><span class="task" data-text-id="slide-02.c4.r5.task">跨境数据分析</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/致欧家居.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/34_middle_eastern_man_mature_suit.png')"></span><span class="task" data-text-id="slide-02.c4.r6.task">达人运营</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/亚朵酒店.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/35_african_woman_short_natural_blazer.png')"></span><span class="task" data-text-id="slide-02.c4.r7.task">网评回复</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/首旅集团.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/36_caucasian_man_blonde_sweater.png')"></span><span class="task" data-text-id="slide-02.c4.r8.task">电商控价</span><span class="logo" style="background-image: url('starbucks/assets/clientlogo/元气森林.png')"></span></div>
+              <div class="row"><span class="av" style="background-image: url('starbucks/assets/digital_employee_avatars_50/37_east_asian_young_man_headphones.png')"></span><span class="task" data-text-id="slide-02.c4.r9.task">政府补贴管理</span><span class="logo is-text" data-text-id="slide-02.c4.r9.logo">双胞胎集团</span></div>
+            </div>
+
+          </div>
+
+          <div class="foot-row">
+            <span class="foot-chip" data-text-id="slide-02.foot-1">批量化落地实践</span>
+            <span class="foot-chip is-active" data-text-id="slide-02.foot-2">客户共创试点中</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-layout="quote" data-accent="blue" data-decor="blue-glow"
+           data-screen-label="03 标准守护者"
+           data-slide-key="standard-guardian" id="standard-guardian" data-source-deck="opple" data-source-page="29" data-source-key="quote-standard-guardian">
+        <div class="wordmark"></div>
+        <div class="stack">
+          <hr class="keyline">
+          <blockquote data-text-id="slide-03.quote">标准守护者</blockquote>
+          <div class="attrib" data-text-id="slide-03.attrib">让合规不再依赖人的勤勉执行</div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="29">
+      <div class="slide" data-layout="content-2col" data-accent="blue" data-screen-label="04 利用 AI 解放门店,让门店工作更简单" data-slide-key="yihetang-store-relief" id="yihetang-store-relief" data-source-deck="starbucks" data-source-page="29" data-source-key="yihetang-store-relief">
+        <div class="wordmark"></div>
+        <div class="client-mark" role="img" aria-label="益禾堂"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-04.title">利用 AI 解放门店,让门店工作更简单</h2></div>
+        <div class="stage">
+
+          <div class="ttl-row">
+            <span class="ttl-eyebrow" data-text-id="slide-04.eyebrow">标准规则判断型流程</span>
+          </div>
+
+          <div class="case-row">
+
+            <!-- LEFT · 一页纸案例 -->
+            <div class="left-col">
+
+              <div class="sec is-pain">
+                <p class="h"><span>⚠</span><span data-text-id="slide-04.l.pain.h">现状痛点</span></p>
+                <ul>
+                  <li data-text-id="slide-04.l.pain.l1">督导每天人工检查 <b>500 张</b> 门店照片,效率低易漏</li>
+                  <li data-text-id="slide-04.l.pain.l2">5 类任务规则杂(开早/营业期/闭店/周/月),执行不齐</li>
+                  <li data-text-id="slide-04.l.pain.l3">门店每天"到底做什么"靠经验,不在线、不可追溯</li>
+                </ul>
+              </div>
+
+              <div class="sec is-fix">
+                <p class="h"><span>✦</span><span data-text-id="slide-04.l.fix.h">AI 介入路径</span></p>
+                <ul>
+                  <li data-text-id="slide-04.l.fix.l1"><b>任务统一推送</b> · 时段任务自动下发,门店免找规则</li>
+                  <li data-text-id="slide-04.l.fix.l2"><b>AI 质检</b> · 现场照片自动识别 + 标注异常 + 整改建议</li>
+                  <li data-text-id="slide-04.l.fix.l3"><b>督导只复核</b> · 从"全量人工看"→"AI 筛后人工抽检"</li>
+                </ul>
+              </div>
+
+              <div class="sec is-gain">
+                <p class="h"><span>✓</span><span data-text-id="slide-04.l.gain.h">量化成效</span></p>
+                <div class="kpi-strip">
+                  <div class="kpi-tile">
+                    <span class="num">≥ 90%</span>
+                    <span class="lbl" data-text-id="slide-04.l.gain.k1">AI 质检准确率</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="num">500 → 50</span>
+                    <span class="lbl" data-text-id="slide-04.l.gain.k2">督导每天复核照片</span>
+                  </div>
+                  <div class="kpi-tile">
+                    <span class="num">1 小时</span>
+                    <span class="lbl" data-text-id="slide-04.l.gain.k3">每位督导每日节省</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- RIGHT · AI 质检平台截图 -->
+            <div class="shot" role="img" aria-label="AI 质检平台 dashboard"></div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide case-slide" data-page="26" data-layout="content-2col" data-accent="teal" data-decor="teal-glow"
+           data-screen-label="05 罗莱家纺督导 · AI 自动检查门店仪容"
+           data-slide-key="luolai-compliance-inspection" id="luolai-compliance-inspection" data-source-deck="opple" data-source-page="30" data-source-key="case-luolai-store-grooming-inspection">
+        <div class="wordmark"></div>
+        <div class="header">
+          <h2 class="title-zh" data-text-id="slide-05.title">罗莱家纺督导 · AI 自动检查门店仪容 — 省下 40 万 / 年,达标率 +40%</h2>
+        </div>
+        <div class="stage">
+
+          <!-- 行业标签 + 钩子 -->
+          <div class="meta-row">
+            <span class="ind-tag" data-text-id="slide-05.industry">家纺零售 · 门店督导 / 仪容合规 · 客户案例</span>
+            <p class="hook"><span data-text-id="slide-05.hook.lead">原来每年花 </span><span class="accent" data-text-id="slide-05.hook.k1">40 万</span><span data-text-id="slide-05.hook.mid"> 养神秘访客,现在 AI 自动检 —— 达标率 </span><span class="accent" data-text-id="slide-05.hook.k2">+40%</span></p>
+          </div>
+
+          <!-- 3 hero KPI · 突出价值(降本 · 准确率 · 落地) -->
+          <div class="kpi-strip-feihe">
+            <div class="kpi">
+              <div class="v"><span data-text-id="slide-05.kpi-01.v">40</span><span class="u" data-text-id="slide-05.kpi-01.u">万元 / 年</span></div>
+              <div class="l" data-text-id="slide-05.kpi-01.l">神秘访客成本全部省下</div>
+              <div class="d" data-text-id="slide-05.kpi-01.d">督导不再跑门店 · 全网 100% 覆盖</div>
+            </div>
+            <div class="kpi is-orange">
+              <div class="v"><span data-text-id="slide-05.kpi-02.v">+40</span><span class="u" data-text-id="slide-05.kpi-02.u">%</span></div>
+              <div class="l" data-text-id="slide-05.kpi-02.l">门店仪容达标率提升</div>
+              <div class="d" data-text-id="slide-05.kpi-02.d">不通过自动重拍 · 结果同步绩效</div>
+            </div>
+            <div class="kpi is-violet">
+              <div class="v"><span data-text-id="slide-05.kpi-03.v">97</span><span class="u" data-text-id="slide-05.kpi-03.u">%+</span></div>
+              <div class="l" data-text-id="slide-05.kpi-03.l">AI 自动检查准确率</div>
+              <div class="d" data-text-id="slide-05.kpi-03.d">飞书多维表格 · 实时反馈</div>
+            </div>
+          </div>
+
+          <!-- 痛点 → 冲突 → 解法 → 价值 四节叙事 + 右侧配图位(待补) -->
+          <div class="case-body">
+            <div class="col-text">
+              <div class="row">
+                <span class="lbl is-orange">痛点</span>
+                <p data-text-id="slide-05.arc.pain">门店仪容标准化靠 <strong>区域经理现场巡检 + 神秘访客暗查</strong> · 人工整理表格 · 一周才出结果 · 覆盖差、落地难</p>
+              </div>
+              <div class="row">
+                <span class="lbl is-blue">冲突</span>
+                <p data-text-id="slide-05.arc.conflict">神秘访客每年成本 <strong>40 万元</strong>,督导跑遍门店,仍难保证全网 100% 覆盖与执行落地</p>
+              </div>
+              <div class="row">
+                <span class="lbl is-teal">解法</span>
+                <p data-text-id="slide-05.arc.solution">店员打卡上传全身照 → <strong>飞书多维表格</strong> → <strong>AI 实时检查</strong>仪容合规 → 不通过自动重拍 → 结果直接同步绩效</p>
+              </div>
+              <div class="row">
+                <span class="lbl is-violet">价值</span>
+                <p data-text-id="slide-05.arc.value">AI 替代人工合规检查 · 督导从「跑店」解放为「定标准、抓异常」 · 神秘访客成本 <strong>归零</strong> · 达标率 <strong>+40%</strong> · 标准真正落地</p>
+              </div>
+            </div>
+
+            <div class="col-visual">
+              <div class="case-img" role="img" aria-label="罗莱家纺门店仪容 AI 检查场景示意 · 店员打卡上传全身照 + 飞书多维表格 + AI 实时检查"></div>
+            </div>
+          </div>
+
+          <!-- 结尾呼应 · 回到「标准守护者」论点 -->
+          <div class="closing-strip" data-text-id="slide-05.closing">
+            <strong>从「靠勤勉巡检」到「AI 自动守护」</strong> · 让 <strong>40 万 / 年</strong>的合规成本归零 —— 这就是 AI 作为<strong>「标准守护者」</strong>走进零售门店的样子
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="slide-frame">
+      <div class="slide compliance-agent" data-layout="content-2col" data-accent="blue" data-decor="blue-glow"
+           data-screen-label="06 合规检查Agent" data-slide-key="marketing-compliance-agent" id="marketing-compliance-agent"
+           data-source-deck="ppt" data-source-page="6">
+        <div class="wordmark"></div>
+        <div class="header">
+          <h2 class="title-zh" data-text-id="slide-06.title">合规检查Agent：营销内容设计AI审查，审核效率翻倍</h2>
+        </div>
+        <div class="stage">
+          <div class="compliance-grid">
+            <div class="compliance-left">
+              <div class="agent-chip-grid">
+                <span data-text-id="slide-06.agent-01">合规检查</span>
+                <span data-text-id="slide-06.agent-02">舆情风险</span>
+                <span data-text-id="slide-06.agent-03">版权检查</span>
+                <span data-text-id="slide-06.agent-04">设计规范</span>
+                <span data-text-id="slide-06.agent-05">错别字检查</span>
+              </div>
+              <div class="compliance-steps">
+                <div class="cstep is-blue">
+                  <div class="step-head"><span data-text-id="slide-06.step-01.no">STEP 1</span><b data-text-id="slide-06.step-01.title">多模态感知</b></div>
+                  <p data-text-id="slide-06.step-01.body">OCR文字提取 + Logo检测 + 色彩分析，解析图片、文本、视频等多模态营销物料</p>
+                </div>
+                <div class="cstep is-violet">
+                  <div class="step-head"><span data-text-id="slide-06.step-02.no">STEP 2</span><b data-text-id="slide-06.step-02.title">五大Agent并行审核</b></div>
+                  <p data-text-id="slide-06.step-02.body">合规 / 舆情 / 设计 / 版权 / 校对，RAG检索法规知识库 + 规则引擎并行判断</p>
+                </div>
+                <div class="cstep is-teal">
+                  <div class="step-head"><span data-text-id="slide-06.step-03.no">STEP 3</span><b data-text-id="slide-06.step-03.title">决策Agent汇总</b></div>
+                  <p data-text-id="slide-06.step-03.body">输出综合评级、结构化审核报告，并聚合风险依据与修改建议</p>
+                </div>
+                <div class="cstep is-orange">
+                  <div class="step-head"><span data-text-id="slide-06.step-04.no">STEP 4</span><b data-text-id="slide-06.step-04.title">四级风险处置</b></div>
+                  <p data-text-id="slide-06.step-04.body">通过 / 低风险放行 / 中风险复核 / 高风险拦截</p>
+                </div>
+              </div>
+            </div>
+            <div class="compliance-right">
+              <div class="evidence-frame" role="img" aria-label="营销物料审核结果截图"
+                   style="background-image:url('input/ppt-media/image18.png')"></div>
+              <div class="detail-frame" role="img" aria-label="广告物料文案细节"
+                   style="background-image:url('input/ppt-media/image19.png')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-layout="quote" data-accent="blue" data-decor="blue-glow"
+           data-screen-label="07 超级情报员"
+           data-slide-key="super-intelligence-agent" id="super-intelligence-agent" data-source-deck="opple" data-source-page="24" data-source-key="quote-super-intelligence-agent">
+        <div class="wordmark"></div>
+        <div class="stack">
+          <hr class="keyline">
+          <blockquote data-text-id="slide-07.quote">超级情报员</blockquote>
+          <div class="attrib" data-text-id="slide-07.attrib">AI 替你看全球 · 把信号摆上你的桌</div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="32">
+      <div class="slide" data-layout="content-2col" data-accent="teal" data-screen-label="08 康师傅:汇聚一线会议信息,驱动敏捷决策" data-slide-key="master-kong-insight" id="master-kong-insight" data-source-deck="starbucks" data-source-page="32" data-source-key="master-kong-insight">
+        <div class="wordmark"></div>
+        <div class="client-mark" role="img" aria-label="康师傅"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-08.title">康师傅:汇聚一线会议信息,驱动敏捷决策</h2></div>
+        <div class="stage">
+
+          <div class="ttl-row">
+            <span class="ttl-eyebrow" data-text-id="slide-08.eyebrow">上传下达型流程</span>
+          </div>
+
+          <!-- ROW 2 LEFT · persona pill -->
+          <div class="persona-pill">
+              <div class="persona-avatar" aria-label="业务洞察数字员工">业务<br>洞察</div>
+              <div class="persona-meta">
+                <h3 data-text-id="slide-08.l.name">业务洞察数字员工</h3>
+                <dl>
+                  <dt data-text-id="slide-08.l.k1">角色定义</dt><dd data-text-id="slide-08.l.v1">业务洞察师</dd>
+                  <dt data-text-id="slide-08.l.k2">部门</dt><dd data-text-id="slide-08.l.v2">管理办公室</dd>
+                  <dt data-text-id="slide-08.l.k3">技能</dt><dd data-text-id="slide-08.l.v3">总结会议,洞察业务问题</dd>
+                </dl>
+              </div>
+            </div>
+
+          <!-- ROW 3 LEFT · 2,000 docs -->
+          <div class="doc-stage">
+              <div class="doc-grid">
+                <div class="doc-card"><span class="doc-h">销售晨会·华东</span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·华南</span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·华北</span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line full"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·华中</span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line short"></span><span class="doc-line full"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·西南</span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line med"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·西北</span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·东北</span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·川渝</span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line short"></span></div>
+                <div class="doc-card"><span class="doc-h">销售晨会·闽粤</span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line full"></span></div>
+                <div class="doc-card"><span class="doc-h">销售夕会·总部</span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line med"></span><span class="doc-line full"></span></div>
+                <div class="doc-card"><span class="doc-h">销售夕会·KA</span><span class="doc-line full"></span><span class="doc-line short"></span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line med"></span></div>
+                <div class="doc-card"><span class="doc-h">销售夕会·便利</span><span class="doc-line short"></span><span class="doc-line full"></span><span class="doc-line med"></span><span class="doc-line full"></span><span class="doc-line short"></span></div>
+              </div>
+              <div class="doc-overlay">
+                <span class="x-num" data-text-id="slide-08.l.x2k.num">× 2,000</span>
+                <span class="x-label" data-text-id="slide-08.l.x2k.lbl">销售会议</span>
+              </div>
+              <div class="doc-arrow" aria-hidden="true">
+                <svg viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 24 L46 24" stroke="#33D6C0" stroke-width="6" stroke-linecap="round"/>
+                  <path d="M36 8 L56 24 L36 40" stroke="#33D6C0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+              </div>
+            </div>
+
+          <!-- ROW 2 RIGHT · lede -->
+          <h3 class="lede" data-text-id="slide-08.r.lede">2,000 场销售晨会汇总后的洞察 <strong>10 分钟</strong>呈现在老板的桌面</h3>
+
+          <!-- ROW 3 RIGHT · 一线晨夕会洞察报告 -->
+          <div class="report-mock">
+              <div class="report-toc">
+                <div class="toc-h" data-text-id="slide-08.r.toc.h">康师傅 · 一线晨夕会深度洞察报告</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s1">1. 执行摘要与报告背景</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s2">2. 产品矩阵深度反馈</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s2-1">2.1 主推品类结构性获胜</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s2-2">2.2 战略 SKU 推动摩擦</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s2-3">2.3 新口味疲软与季节性</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s2-4">2.4 库存压力</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s3">3. 渠道动态与终端反馈</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s3-1">3.1 现代渠道:数据宿醉</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s3-2">3.2 便利店:未被攻克</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s3-3">3.3 季节性切换</div>
+                <div class="l2" data-text-id="slide-08.r.toc.s3-4">3.4 价格与竞品权衡</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s4">4. 团队管理与执行</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s5">5. 供应链与库存健康</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s6">6. 战略建议</div>
+                <div class="l1" data-text-id="slide-08.r.toc.s7">7. 数据透视表</div>
+              </div>
+              <div class="report-body">
+                <p class="doc-meta" data-text-id="slide-08.r.body.title">康师傅 · 一线晨夕会深度洞察报告:执行现状、市场反馈与战略博弈(<b>2026.01.08</b>)</p>
+                <p class="modified" data-text-id="slide-08.r.body.modified">1 月 13 日 修改</p>
+                <p class="callout" data-text-id="slide-08.r.body.callout"><strong>⚠</strong> 本报告基于 1 月 8 日约 2000 场一线晨会记录(150 万字)。一线声音带主观性与片段性,作为一手信号的补充与 AI 能力检验,不取代实地调研。</p>
+                <h4 data-text-id="slide-08.r.body.h1">1. 执行摘要与报告背景</h4>
+                <p data-text-id="slide-08.r.body.p1">本报告基于约 2000 场一线晨夕会记录的深度文本挖掘。作为一线直接来自销售前线的最原始反馈,这份材料剥离了层层报告的修饰,把饮品销售引擎背后的真实摩擦、市场温度以及执行偏差完整暴露出来。</p>
+                <p data-text-id="slide-08.r.body.p2">分析显示,销售组织正运行在一种"极限强度推动"模式下。趋势性品类(如无糖茶)展现自然增长,但战略性大单品的破局仍面临渠道结构、执行惯性以及工具摩擦的强力阻挠。</p>
+                <p data-text-id="slide-08.r.body.find-lead"><strong>关键发现:</strong></p>
+                <p data-text-id="slide-08.r.body.f1"><strong>1. 品类分化加剧。</strong>趋势性品类已自然形成"用脚投票",老品类陷入难推动的困境,暴露品牌在高端化和年龄结构升级中的结构性痛点。</p>
+                <p data-text-id="slide-08.r.body.f2"><strong>2. 执行层数字化疲劳。</strong>推广工具(如拍照打卡)合规率极低、操作摩擦极强,数字化工具被更多视为监管负担而非赋能。</p>
+              </div>
+            </div>
+
+          <!-- Bottom CTA -->
+          <div class="bottom-cta">
+            <div class="cta-pill" data-text-id="slide-08.cta-1">一手业务信息直达管理层</div>
+            <div class="cta-pill" data-text-id="slide-08.cta-2">发现"藏在水下"的问题</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-layout="quote" data-accent="blue" data-decor="blue-glow"
+           data-screen-label="09 业务教练"
+           data-slide-key="business-coach" id="business-coach" data-source-deck="opple" data-source-page="33" data-source-key="quote-knowledge-management">
+        <div class="wordmark"></div>
+        <div class="stack">
+          <hr class="keyline">
+          <blockquote data-text-id="slide-09.quote">业务教练</blockquote>
+          <div class="attrib" data-text-id="slide-09.attrib">把企业中老专家的隐性经验转化为组织的知识资产</div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="17">
+      <div class="slide" data-layout="content-2col" data-accent="blue" data-decor="blue-glow" data-screen-label="10 为什么隐形经验值得投入资源萃取" data-slide-key="knowledge-iceberg" id="knowledge-iceberg" data-source-deck="starbucks" data-source-page="17" data-source-key="knowledge-iceberg">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-10.title">为什么隐形经验值得投入资源萃取</h2></div>
+        <div class="stage">
+
+          <div class="iceberg-canvas">
+
+            <!-- 上 · 20% 显性 -->
+            <div class="above">
+              <div class="hero-block">
+                <span class="hero-pct" data-text-id="slide-10.above.pct">20%</span>
+                <span class="hero-tag" data-text-id="slide-10.above.tag">显性 · 浮在水面</span>
+                <p class="body-note" data-text-id="slide-10.above.note">基础制度、SOP、手册、文档说明、标准记录 — 在线化、可视化并不难。</p>
+              </div>
+            </div>
+
+            <!-- 下 · 80% 隐性 -->
+            <div class="below">
+              <div class="hero-block">
+                <span class="hero-pct" data-text-id="slide-10.below.pct">80%</span>
+                <span class="hero-name" data-text-id="slide-10.below.name">隐性知识资产</span>
+                <span class="hero-tag" data-text-id="slide-10.below.tag">藏在水面之下 · 难复制</span>
+                <p class="body-note" data-text-id="slide-10.below.note">老专家做事的<b>肌肉记忆、直觉与判断</b> — 重要,却很少被企业开发出来。</p>
+                <div class="points">
+                  <span class="pt"><span class="dot"></span><span data-text-id="slide-10.below.pt-1"><b>肌肉记忆</b> · 习惯成自然的工作动作</span></span>
+                  <span class="pt"><span class="dot"></span><span data-text-id="slide-10.below.pt-2"><b>直觉判断</b> · 不靠 SOP 也能拍板的能力</span></span>
+                  <span class="pt"><span class="dot"></span><span data-text-id="slide-10.below.pt-3"><b>经验调度</b> · 意外情境第一时间做对反应</span></span>
+                  <span class="pt"><span class="dot"></span><span data-text-id="slide-10.below.pt-4"><b>人脉与默契</b> · 跨部门协作中的潜规则</span></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="18">
+      <div class="slide" data-layout="content-2col" data-accent="blue" data-screen-label="11 用 AI 复制金牌店长的陈列直觉" data-slide-key="store-manager-display-instinct" id="store-manager-display-instinct" data-source-deck="starbucks" data-source-page="18" data-source-key="store-manager-display-instinct">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-11.title">用 AI 复制金牌店长的陈列直觉</h2></div>
+        <div class="stage">
+          <div class="pic-twin">
+
+            <!-- LEFT · 痛点 pill + 门店实拍 -->
+            <div class="pic-cell">
+              <span class="pic-pill" data-text-id="slide-11.l.pill">AI 视觉洞察 / 门店实拍反馈</span>
+              <div class="pic-frame" role="img" aria-label="门店实拍现场"></div>
+            </div>
+
+            <!-- RIGHT · 门店运营助手 AI chat demo -->
+            <div class="demo-cell">
+              <span class="demo-pill" data-text-id="slide-11.r.pill">门店运营助手 · 紧急调整建议</span>
+
+              <div class="phone" role="img" aria-label="门店运营助手 AI 对话演示">
+                <div class="ph-status">
+                  <span>10:18</span>
+                  <span class="right">
+                    <svg viewBox="0 0 18 12" width="18" height="12" fill="currentColor"><circle cx="3" cy="9" r="1.5"/><circle cx="8" cy="9" r="1.5"/><circle cx="13" cy="9" r="1.5"/></svg>
+                    <svg viewBox="0 0 16 12" width="16" height="12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5"/><rect x="4" y="6" width="3" height="6" rx="0.5"/><rect x="8" y="3" width="3" height="9" rx="0.5"/><rect x="12" y="0" width="3" height="12" rx="0.5"/></svg>
+                    <svg viewBox="0 0 22 12" width="22" height="12" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="2.5" width="18" height="7" rx="1.2"/><rect x="2" y="4" width="13" height="4" rx="0.6" fill="currentColor"/><rect x="19" y="4" width="2" height="4" rx="0.6" fill="currentColor"/></svg>
+                    <span style="font-size: 14px; font-weight: 600; line-height: 1; padding-left: 2px;">电源</span>
+                  </span>
+                </div>
+
+                <div class="ph-bar">
+                  <span class="back">‹</span>
+                  <span class="nav-title">门店运营助手 <span class="robot-tag">机器人</span></span>
+                  <span class="more">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+                  </span>
+                </div>
+
+                <div class="ph-tabs">
+                  <span class="tab is-active">消息</span>
+                  <span class="tab">陈列规范</span>
+                </div>
+
+                <div class="ph-divider">
+                  <span class="line"></span><span class="label">新话题</span><span class="line"></span>
+                </div>
+
+                <div class="ph-chat">
+                  <div class="ph-chat-inner">
+
+                    <div class="msg is-bot welcome">
+                      <span class="avatar">运营</span>
+                      <div class="bubble">
+                        <span class="lead" data-text-id="slide-11.chat.welcome.lead">你好,我是「门店运营助手」</span>
+                        <span data-text-id="slide-11.chat.welcome.body">把现场陈列照发给我,我比对金牌店长的陈列规范,给你紧急调整项。</span>
+                      </div>
+                    </div>
+
+                    <div class="msg is-user m1">
+                      <span class="avatar">员工</span>
+                      <div class="bubble" data-text-id="slide-11.chat.q1">[图片] 今早门口客流偏弱,过路客都走过去了 — 有什么金牌店长的 quick win?</div>
+                    </div>
+
+                    <div class="msg is-bot is-typing typing">
+                      <span class="avatar">运营</span>
+                      <div class="bubble"><span></span><span></span><span></span></div>
+                    </div>
+
+                    <div class="msg is-bot m2">
+                      <span class="avatar">运营</span>
+                      <div class="bubble">
+                        <span class="lead" data-text-id="slide-11.chat.a2.lead">参考金牌店长 <b>3 个引流小招</b></span>
+                        <span data-text-id="slide-11.chat.a2.body">投入低 / 当日见效:</span>
+                        <div class="fix-list">
+                          <span class="fix-item"><span class="num">1</span><span data-text-id="slide-11.chat.a2.f1">出餐口/烤炉旁加一台小电风扇,把烤香味往门口方向吹 — 老店长实测过路客流 <b>+18%</b></span></span>
+                          <span class="fix-item"><span class="num">2</span><span data-text-id="slide-11.chat.a2.f2">试吃台从中场往门口前移 1 米,做"人气感",路人从外面就看得到</span></span>
+                          <span class="fix-item"><span class="num">3</span><span data-text-id="slide-11.chat.a2.f3">玻璃门贴当日热销 SKU 海报(贴在视线高度 1.5 m),把进店决策从"看不到"变成"看一眼"</span></span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="ph-input">
+                  <span class="field" data-text-id="slide-11.input">问问门店运营助手</span>
+                  <span class="send">↑</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="19">
+      <div class="slide" data-layout="content-2col" data-accent="orange" data-screen-label="12 将最全面的经验装进每位营建经理的口袋" data-slide-key="construction-compliance" id="construction-compliance" data-source-deck="starbucks" data-source-page="19" data-source-key="construction-compliance">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-12.title">将最全面的经验装进每位营建经理的口袋</h2></div>
+        <div class="stage">
+          <div class="pic-twin">
+
+            <!-- LEFT · 痛点 pill + 平面图 -->
+            <div class="pic-cell">
+              <span class="pic-pill" data-text-id="slide-12.l.pill">出餐台距离垃圾回收区仅 1 米 · 按规无法过预审</span>
+              <div class="pic-frame" role="img" aria-label="店铺平面图 · 1 米合规风险"></div>
+            </div>
+
+            <!-- RIGHT · 专家 AI chat demo -->
+            <div class="demo-cell">
+              <span class="demo-pill" data-text-id="slide-12.r.pill">专家的「不返工」补救方案</span>
+
+              <div class="phone" role="img" aria-label="营建合规 AI 专家对话演示">
+                <div class="ph-status">
+                  <span>16:58</span>
+                  <span class="right">
+                    <svg viewBox="0 0 18 12" width="18" height="12" fill="currentColor"><circle cx="3" cy="9" r="1.5"/><circle cx="8" cy="9" r="1.5"/><circle cx="13" cy="9" r="1.5"/></svg>
+                    <svg viewBox="0 0 16 12" width="16" height="12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5"/><rect x="4" y="6" width="3" height="6" rx="0.5"/><rect x="8" y="3" width="3" height="9" rx="0.5"/><rect x="12" y="0" width="3" height="12" rx="0.5"/></svg>
+                    <svg viewBox="0 0 22 12" width="22" height="12" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="2.5" width="18" height="7" rx="1.2"/><rect x="2" y="4" width="13" height="4" rx="0.6" fill="currentColor"/><rect x="19" y="4" width="2" height="4" rx="0.6" fill="currentColor"/></svg>
+                    <span style="font-size: 14px; font-weight: 600; line-height: 1; padding-left: 2px;">电源</span>
+                  </span>
+                </div>
+
+                <div class="ph-bar">
+                  <span class="back">‹</span>
+                  <span class="nav-title">营建专家 <span class="robot-tag">机器人</span></span>
+                  <span class="more">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+                  </span>
+                </div>
+
+                <div class="ph-tabs">
+                  <span class="tab is-active">消息</span>
+                  <span class="tab">合规库</span>
+                </div>
+
+                <div class="ph-divider">
+                  <span class="line"></span><span class="label">新话题</span><span class="line"></span>
+                </div>
+
+                <div class="ph-chat">
+                  <div class="ph-chat-inner">
+
+                    <div class="msg is-bot welcome">
+                      <span class="avatar">专家</span>
+                      <div class="bubble">
+                        <span class="lead" data-text-id="slide-12.chat.welcome.lead">你好,我是「营建专家」</span>
+                        <span data-text-id="slide-12.chat.welcome.body">10 年门店营建经验。把规范、案例、补救方案都装在我这里,有合规风险随时问。</span>
+                      </div>
+                    </div>
+
+                    <div class="msg is-user m1">
+                      <span class="avatar">员工</span>
+                      <div class="bubble" data-text-id="slide-12.chat.q1">出餐台距离垃圾回收区仅 1 米,按规过不了预审 — 有不返工的补救方案吗?</div>
+                    </div>
+
+                    <div class="msg is-bot is-typing typing">
+                      <span class="avatar">专家</span>
+                      <div class="bubble"><span></span><span></span><span></span></div>
+                    </div>
+
+                    <div class="msg is-bot m2">
+                      <span class="avatar">专家</span>
+                      <div class="bubble">
+                        <span class="lead" data-text-id="slide-12.chat.a2.lead">这个 1 米卡在《GB/14881》</span>
+                        <span data-text-id="slide-12.chat.a2.body">不需要重做装修,有 <b>3 个不返工方案</b>:</span>
+                        <div class="sol-chips">
+                          <span class="sol-chip"><span class="num">A</span><span data-text-id="slide-12.chat.a2.s1">改用密闭式垃圾柜 + 单向风幕(可立即过审)</span></span>
+                          <span class="sol-chip"><span class="num">B</span><span data-text-id="slide-12.chat.a2.s2">出餐台与垃圾区之间加 1.2 m 隔板 + UV 杀菌灯</span></span>
+                          <span class="sol-chip"><span class="num">C</span><span data-text-id="slide-12.chat.a2.s3">调整出菜动线 70 cm 偏移,绕开直线交叉(图已生成)</span></span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="ph-input">
+                  <span class="field" data-text-id="slide-12.input">问问营建专家</span>
+                  <span class="send">↑</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="20">
+      <div class="slide" data-layout="content-2col" data-accent="teal" data-decor="teal-glow" data-screen-label="13 知识专家型｜AI 教练为员工提供 7×24 的服务培训" data-slide-key="haidilao-ai-coach" id="haidilao-ai-coach" data-source-deck="starbucks" data-source-page="20" data-source-key="haidilao-daming-bai">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-13.title">知识专家型｜AI 教练为员工提供 7×24 的服务培训</h2></div>
+        <div class="stage">
+          <div class="haidi-row">
+
+            <!-- LEFT · 飞书风手机 + 大明白 chat demo -->
+            <div class="phone" role="img" aria-label="海底捞大明白 AI 教练 · 飞书对话演示">
+
+              <div class="ph-status">
+                <span>16:58</span>
+                <span class="right">
+                  <svg viewBox="0 0 18 12" width="18" height="12" fill="currentColor"><circle cx="3" cy="9" r="1.5"/><circle cx="8" cy="9" r="1.5"/><circle cx="13" cy="9" r="1.5"/></svg>
+                  <svg viewBox="0 0 16 12" width="16" height="12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.5"/><rect x="4" y="6" width="3" height="6" rx="0.5"/><rect x="8" y="3" width="3" height="9" rx="0.5"/><rect x="12" y="0" width="3" height="12" rx="0.5"/></svg>
+                  <svg viewBox="0 0 22 12" width="22" height="12" fill="none" stroke="currentColor" stroke-width="1"><rect x="0.5" y="2.5" width="18" height="7" rx="1.2"/><rect x="2" y="4" width="13" height="4" rx="0.6" fill="currentColor"/><rect x="19" y="4" width="2" height="4" rx="0.6" fill="currentColor"/></svg><span style="font-size: 14px; font-weight: 600; line-height: 1; padding-left: 2px;">电源</span>
+                </span>
+              </div>
+
+              <div class="ph-bar">
+                <span class="back">‹</span>
+                <span class="badge">3</span>
+                <span class="nav-title">
+                  大明白 <span class="robot-tag">机器人</span>
+                </span>
+                <span class="more">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+                </span>
+              </div>
+
+              <div class="ph-tabs">
+                <span class="tab is-active">消息</span>
+                <span class="tab">文档/资料</span>
+                <span class="tab-add">+</span>
+              </div>
+
+              <div class="ph-divider">
+                <span class="line"></span>
+                <span class="label">新话题</span>
+                <span class="line"></span>
+              </div>
+
+              <div class="ph-chat">
+                <div class="ph-chat-inner">
+
+                  <!-- bot welcome (avatar + lead + body) -->
+                  <div class="msg is-bot welcome">
+                    <span class="avatar">大明白</span>
+                    <div class="bubble">
+                      <span class="lead">你好,我是"大明白"</span>
+                      门店员工的 AI 教练。我熟悉海底捞的所有规则、制度与服务标准,可以随时为你解答工作中的疑问。
+                    </div>
+                  </div>
+
+                  <!-- user q1 -->
+                  <div class="msg is-user m1">
+                    <span class="avatar">员工</span>
+                    <div class="bubble">顾客在店里过生日,我应该怎么准备?</div>
+                  </div>
+
+                  <!-- user q2 (制度类) -->
+                  <div class="msg is-user m2">
+                    <span class="avatar">员工</span>
+                    <div class="bubble">切换到制度类</div>
+                  </div>
+
+                  <!-- typing 1 -->
+                  <div class="msg is-bot is-typing typing">
+                    <span class="avatar">大明白</span>
+                    <div class="bubble"><span></span><span></span><span></span></div>
+                  </div>
+
+                  <!-- bot reply 1 — 切换确认 -->
+                  <div class="msg is-bot m4">
+                    <span class="avatar">大明白</span>
+                    <div class="bubble">已切换到 <span class="em">【制度类】</span> 技能分支,你可以问公司的各类制度问题。</div>
+                  </div>
+
+                  <!-- user q3 — 查标准 -->
+                  <div class="msg is-user m5">
+                    <span class="avatar">员工</span>
+                    <div class="bubble">北京店经理的住房补贴标准</div>
+                  </div>
+
+                  <!-- typing 2 -->
+                  <div class="msg is-bot is-typing typing-2">
+                    <span class="avatar">大明白</span>
+                    <div class="bubble"><span></span><span></span><span></span></div>
+                  </div>
+
+                  <!-- bot reply 2 — 标准内容 -->
+                  <div class="msg is-bot m6">
+                    <span class="avatar">大明白</span>
+                    <div class="bubble">
+                      <span class="lead">北京店经理 · 住房补贴标准</span>
+                      · 基本档:<b>¥4,000 / 月</b><br>
+                      · 入职 ≥ 2 年:<b>¥5,000 / 月</b><br>
+                      · 1.5 km 内门店:加发 <b>¥500</b><br>
+                      · 提交租房合同 + 房东信息后次月发放
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="ph-foot-ribbon">
+                <span class="new-topic">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  新话题
+                </span>
+              </div>
+
+              <div class="ph-input">
+                <span class="field">
+                  <span class="placeholder">沟通时请保持「公开可接受」</span>
+                  <span class="typed">北京店经理的住房补贴标准</span>
+                  <span class="caret"></span>
+                  <span class="expand" style="position:absolute; right:8px;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11V5h6M21 13v6h-6M3 5l7 7M21 19l-7-7"/></svg>
+                  </span>
+                </span>
+              </div>
+
+              <div class="ph-tools">
+                <span class="tool"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/></svg></span>
+                <span class="tool"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="11" r="3"/><path d="M19 12c0 4-3 7-7 8.5C8 19 5 16 5 12V6l7-3 7 3z"/></svg></span>
+                <span class="tool"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="14" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 19v3"/></svg></span>
+                <span class="tool"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="10" r="1.5" fill="currentColor"/><path d="M21 17l-5-5-9 9"/></svg></span>
+                <span class="tool" style="font-weight:700; font-size:18px;">Aa</span>
+                <span class="tool"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></span>
+              </div>
+
+            </div>
+
+            <!-- RIGHT · meta -->
+            <div class="haidi-meta">
+              <span class="haidi-pill" data-text-id="slide-13.pill">海底捞大明白 · 门店员工助手数字员工</span>
+              <span class="haidi-name" data-text-id="slide-13.name">大明白</span>
+              <p class="haidi-role" data-text-id="slide-13.role">角色定位 · 经验丰富的老店长 / 部门 · 大区 / 技能 · 熟悉海底捞规则与制度</p>
+              <div class="kpi-row">
+                <div class="kpi-tile">
+                  <span class="kpi-num" data-text-id="slide-13.k1.num">6000+</span>
+                  <span class="kpi-label" data-text-id="slide-13.k1.label">日均服务人数</span>
+                </div>
+                <div class="kpi-tile">
+                  <span class="kpi-num" data-text-id="slide-13.k2.num">87%</span>
+                  <span class="kpi-label" data-text-id="slide-13.k2.label">问题解答率</span>
+                </div>
+                <div class="kpi-tile">
+                  <span class="kpi-num" data-text-id="slide-13.k3.num">3.9 万 h</span>
+                  <span class="kpi-label" data-text-id="slide-13.k3.label">每月节省时间</span>
+                </div>
+              </div>
+              <p class="haidi-foot" data-text-id="slide-13.foot">每个门店每天解答 20 个问题 × 1300 家门店 × 每问省 3 分钟</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame" data-page="22">
+      <div class="slide" data-layout="content-2col" data-accent="blue" data-screen-label="14 围绕关键角色盘点知识图谱" data-slide-key="beauty-one-day-knowledge-map" id="beauty-one-day-knowledge-map" data-source-deck="starbucks" data-source-page="22" data-source-key="beauty-one-day">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-14.title">围绕关键角色盘点知识图谱</h2></div>
+        <div class="stage">
+
+          <div class="hero-row">
+            <div class="avatar" role="img" aria-label="美妆销售导购卡通头像">
+              <!-- AI 卡通风格 stylised portrait · 用户可后续替换为生成图 -->
+              <svg viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+                <!-- 背景已在 .avatar 上 -->
+                <!-- 头发(长发,黑棕色) -->
+                <path d="M28 72 Q24 50 38 36 Q44 22 66 20 Q88 22 94 36 Q108 50 104 72 Q104 80 100 84 L96 76 Q98 60 86 50 Q72 44 66 44 Q60 44 46 50 Q34 60 36 76 L32 84 Q28 80 28 72 Z" fill="#3a2a22"/>
+                <!-- 脸 -->
+                <ellipse cx="66" cy="68" rx="26" ry="30" fill="#ffd6b8"/>
+                <!-- 腮红 -->
+                <ellipse cx="48" cy="76" rx="6" ry="3.5" fill="#ff9f9a" opacity="0.55"/>
+                <ellipse cx="84" cy="76" rx="6" ry="3.5" fill="#ff9f9a" opacity="0.55"/>
+                <!-- 眼眶 -->
+                <ellipse cx="55" cy="64" rx="4.5" ry="5" fill="#fff"/>
+                <ellipse cx="77" cy="64" rx="4.5" ry="5" fill="#fff"/>
+                <!-- 瞳孔 -->
+                <circle cx="55" cy="65" r="3" fill="#3a2a22"/>
+                <circle cx="77" cy="65" r="3" fill="#3a2a22"/>
+                <circle cx="56" cy="64" r="1" fill="#fff"/>
+                <circle cx="78" cy="64" r="1" fill="#fff"/>
+                <!-- 眉 -->
+                <path d="M48 56 Q55 53 62 56" stroke="#3a2a22" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M70 56 Q77 53 84 56" stroke="#3a2a22" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <!-- 鼻 -->
+                <path d="M66 70 Q65 76 67 78" stroke="#d99069" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                <!-- 嘴 (微笑 + 口红色) -->
+                <path d="M60 84 Q66 90 72 84" stroke="#c4495a" stroke-width="2.4" fill="#e85f72" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- 耳环 -->
+                <circle cx="38" cy="70" r="2" fill="#ffd76e"/>
+                <circle cx="94" cy="70" r="2" fill="#ffd76e"/>
+                <!-- 衣领(暗色 v 领) -->
+                <path d="M40 110 Q66 118 92 110 L92 132 L40 132 Z" fill="#3c4a78"/>
+                <path d="M66 100 L58 116 L66 122 L74 116 Z" fill="#ffd6b8"/>
+              </svg>
+            </div>
+            <div class="role-block">
+              <span class="role-name" data-text-id="slide-14.role">美妆销售导购的 1 天</span>
+              <span class="role-quote" data-text-id="slide-14.intro">每个工作流程都有潜在的知识赋能 / 沉淀管理需求</span>
+            </div>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-swatch is-consume"></span><span data-text-id="slide-14.lg-1">知识消费</span></span>
+              <span class="legend-item"><span class="legend-swatch is-deposit"></span><span data-text-id="slide-14.lg-2">知识沉淀</span></span>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="head">
+              <span data-text-id="slide-14.h-time">时段</span>
+              <span data-text-id="slide-14.h-tasks">关键工作</span>
+              <span data-text-id="slide-14.h-libs">配套知识(消费 / 沉淀)</span>
+            </div>
+
+            <div class="ts-row">
+              <div class="ts-time" data-text-id="slide-14.t1.time">9:00–9:30<br>营业前准备</div>
+              <div class="ts-tasks">
+                <span data-text-id="slide-14.t1.task-01">1. 清洁柜台 · 用酒精棉片擦拭试用装、镜面、货架</span>
+                <span data-text-id="slide-14.t1.task-02">2. 检查库存 · 核对畅销品数量(如口红热门色号)</span>
+                <span data-text-id="slide-14.t1.task-03">3. 妆容准备 · 快速补妆(底妆服帖、眼妆精致、唇色饱满)</span>
+                <span data-text-id="slide-14.t1.task-04">4. 晨会 · 接收新品培训 + 昨日销售经验分享</span>
+              </div>
+              <div class="ts-libs">
+                <span class="lib-chip" data-text-id="slide-14.t1.lib-01">门店卫生陈列 SOP</span>
+                <span class="lib-chip" data-text-id="slide-14.t1.lib-02">最新营销活动介绍</span>
+                <span class="lib-chip" data-text-id="slide-14.t1.lib-03">产品知识问答</span>
+                <span class="lib-chip is-deposit" data-text-id="slide-14.t1.lib-04">优秀销售经验沉淀</span>
+              </div>
+            </div>
+            <div class="ts-divider"></div>
+
+            <div class="ts-row">
+              <div class="ts-time" data-text-id="slide-14.t2.time">9:30–12:00<br>营业中服务</div>
+              <div class="ts-tasks">
+                <span data-text-id="slide-14.t2.task-01">1. 迎宾 · 主动问候进店顾客</span>
+                <span data-text-id="slide-14.t2.task-02">2. 需求挖掘 · 为不同顾客定制化推荐</span>
+                <span data-text-id="slide-14.t2.task-03">3. 连带销售 · 妆容搭配引导多品组合</span>
+                <span data-text-id="slide-14.t2.task-04">4. 处理咨询 · 解答成分类疑问(如孕妇适用类)</span>
+              </div>
+              <div class="ts-libs">
+                <span class="lib-chip" data-text-id="slide-14.t2.lib-01">导购销售培训手册</span>
+                <span class="lib-chip is-deposit" data-text-id="slide-14.t2.lib-02">交叉销售反馈</span>
+                <span class="lib-chip" data-text-id="slide-14.t2.lib-03">门店常见问题 FAQ</span>
+              </div>
+            </div>
+            <div class="ts-divider"></div>
+
+            <div class="ts-row">
+              <div class="ts-time" data-text-id="slide-14.t3.time">12:00–13:00<br>午间营业</div>
+              <div class="ts-tasks">
+                <span data-text-id="slide-14.t3.task-01">1. 用餐 + 补妆 · 快速解决午餐与妆容</span>
+                <span data-text-id="slide-14.t3.task-02">2. 复盘数据 · 查看上午销售并分析未成交原因</span>
+                <span data-text-id="slide-14.t3.task-03">3. 库存管理 · 补货并整理陈列(按色系)</span>
+              </div>
+              <div class="ts-libs">
+                <span class="lib-chip" data-text-id="slide-14.t3.lib-01">门店货品管理 SOP</span>
+                <span class="lib-chip is-deposit" data-text-id="slide-14.t3.lib-02">每日销售经验复盘</span>
+              </div>
+            </div>
+            <div class="ts-divider"></div>
+
+            <div class="ts-row">
+              <div class="ts-time" data-text-id="slide-14.t4.time">13:00–22:00<br>营业中服务</div>
+              <div class="ts-tasks">
+                <span data-text-id="slide-14.t4.task-01">1. 体验服务 · 为顾客设计完整妆容(如"约会桃花妆"教学)</span>
+                <span data-text-id="slide-14.t4.task-02">2. 处理售后 · 为过敏顾客办理退货,推荐温和型护肤品</span>
+                <span data-text-id="slide-14.t4.task-03">3. 应对突发 · 处理客诉(如"赠品数量不符")</span>
+              </div>
+              <div class="ts-libs">
+                <span class="lib-chip" data-text-id="slide-14.t4.lib-01">最新美妆教学</span>
+                <span class="lib-chip" data-text-id="slide-14.t4.lib-02">门店卫生陈列 SOP</span>
+                <span class="lib-chip is-deposit" data-text-id="slide-14.t4.lib-03">客诉处理经验沉淀</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-page="32" data-layout="content-3up" data-accent="blue" data-decor="blue-glow"
+           data-screen-label="15 专家经验萃取 · 四项举措"
+           data-slide-key="expert-extraction-measures" id="expert-extraction-measures" data-source-deck="opple" data-source-page="38" data-source-key="four-extraction-measures">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh" data-text-id="slide-15.title">专家经验萃取 · 四项举措</h2></div>
+        <div class="stage">
+
+          <p class="top-quote">
+            <span data-text-id="slide-15.top-quote.lead">专家什么都不用多做,组织却第一次有了 </span><span class="key" data-text-id="slide-15.top-quote.key">留得住的知识资产</span><span data-text-id="slide-15.top-quote.tail">。</span>
+          </p>
+
+          <div class="grid">
+
+            <article class="knife-card kc-1">
+              <div class="kc-header">
+                <div class="kc-icon" role="img" aria-label="meeting"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                <span class="kc-num">第一项</span>
+                <h3 class="kc-name" data-text-id="slide-15.kc-1.name">会议萃取</h3>
+              </div>
+              <div class="kc-rows">
+                <div class="kc-row"><span class="kc-label">萃取什么</span><span class="kc-body" data-text-id="slide-15.kc-1.what">决策类 · 诊断类 · 协调类高密度会议</span></div>
+                <div class="kc-row"><span class="kc-label">怎么萃取</span><span class="kc-body" data-text-id="slide-15.kc-1.how">自动转录 + 结构化纪要 + 决策抽取入库</span></div>
+                <div class="kc-row"><span class="kc-label">为什么不抗拒</span><span class="kc-body" data-text-id="slide-15.kc-1.why">专家本来就在开会 · 0 额外动作</span></div>
+              </div>
+            </article>
+
+            <article class="knife-card kc-2">
+              <div class="kc-header">
+                <div class="kc-icon" role="img" aria-label="shadow"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="9" r="2.2" stroke-dasharray="3 2"/><path d="M13 21v-1.5a3.5 3.5 0 0 1 3.5-3.5h1A3.5 3.5 0 0 1 21 19.5V21" stroke-dasharray="3 2"/></svg></div>
+                <span class="kc-num">第二项</span>
+                <h3 class="kc-name" data-text-id="slide-15.kc-2.name">AI 影子陪岗</h3>
+              </div>
+              <div class="kc-rows">
+                <div class="kc-row"><span class="kc-label">萃取什么</span><span class="kc-body" data-text-id="slide-15.kc-2.what">老专家在带新人时的隐性教学和示范动作</span></div>
+                <div class="kc-row"><span class="kc-label">怎么萃取</span><span class="kc-body" data-text-id="slide-15.kc-2.how">新员工带 AI 一起跟岗 · AI 旁观沉淀</span></div>
+                <div class="kc-row"><span class="kc-label">为什么不抗拒</span><span class="kc-body" data-text-id="slide-15.kc-2.why">老专家在「带徒弟」中自然贡献</span></div>
+              </div>
+            </article>
+
+            <article class="knife-card kc-3">
+              <div class="kc-header">
+                <div class="kc-icon" role="img" aria-label="document"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></div>
+                <span class="kc-num">第三项</span>
+                <h3 class="kc-name" data-text-id="slide-15.kc-3.name">文档萃取</h3>
+              </div>
+              <div class="kc-rows">
+                <div class="kc-row"><span class="kc-label">萃取什么</span><span class="kc-body" data-text-id="slide-15.kc-3.what">复盘报告 · 批注工单 · 培训材料 · 文档评论</span></div>
+                <div class="kc-row"><span class="kc-label">怎么萃取</span><span class="kc-body" data-text-id="slide-15.kc-3.how">飞书文档 + 多维表格自动结构化抽取</span></div>
+                <div class="kc-row"><span class="kc-label">为什么不抗拒</span><span class="kc-body" data-text-id="slide-15.kc-3.why">这些文档专家本来就在写</span></div>
+              </div>
+            </article>
+
+            <article class="knife-card kc-4">
+              <span class="feat-badge" data-text-id="slide-15.kc-4.badge">★ 飞书独有</span>
+              <div class="kc-header">
+                <div class="kc-icon" role="img" aria-label="chat"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg></div>
+                <span class="kc-num">第四项</span>
+                <h3 class="kc-name" data-text-id="slide-15.kc-4.name">对话沉淀</h3>
+              </div>
+              <div class="kc-rows">
+                <div class="kc-row"><span class="kc-label">萃取什么</span><span class="kc-body" data-text-id="slide-15.kc-4.what">飞书 IM · 群聊 · 答疑时刻的高密度判断对话</span></div>
+                <div class="kc-row"><span class="kc-label">怎么萃取</span><span class="kc-body" data-text-id="slide-15.kc-4.how">群里的高频问答自动学习成 AI 知识</span></div>
+                <div class="kc-row"><span class="kc-label">为什么不抗拒</span><span class="kc-body" data-text-id="slide-15.kc-4.why">专家平时怎么聊,AI 就怎么学</span></div>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="disclaimer">
+            <span data-text-id="slide-15.disclaimer.lead">被动萃取能覆盖专家 </span><span class="em" data-text-id="slide-15.disclaimer.pct">70–80%</span><span data-text-id="slide-15.disclaimer.tail"> 的判断模式;剩余的深层直觉,留给智能体在真实决策中持续学习 — 我们不夸大。</span>
+          </p>
+
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-layout="quote" data-accent="violet" data-decor="violet-glow"
+           data-screen-label="16 数字分身"
+           data-slide-key="digital-clone" id="digital-clone" data-source-deck="opple" data-source-page="14" data-source-key="quote-digital-clone-relief-managers">
+        <div class="wordmark"></div>
+        <div class="stack">
+          <hr class="keyline">
+          <blockquote>数字分身</blockquote>
+          <div class="attrib">为管理者减负</div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-page="43" data-layout="content-2col" data-accent="violet" data-decor="violet-glow"
+           data-screen-label="17 AI + 管理的前提是让 AI 更懂你"
+           data-slide-key="ai-knows-you" id="ai-knows-you" data-source-deck="opple" data-source-page="15" data-source-key="ai-knows-you">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh">AI + 管理的前提是让 AI 更懂你</h2></div>
+        <div class="stage">
+          <div class="pic-twin">
+            <div class="pic-cell">
+              <div class="pic-frame" role="img" aria-label="AI 数字分身人设 · 记忆与人设"
+                   style="background-image: url('opple/input/记忆人设1.png')"></div>
+              <span class="pic-cap">你的 AI 助理 · 记忆人设</span>
+            </div>
+            <div class="pic-cell">
+              <div class="pic-frame" role="img" aria-label="AI 数字分身核心人设模型"
+                   style="background-image: url('opple/input/记忆人设2.png')"></div>
+              <span class="pic-cap">你的数字分身 · 核心模型</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-page="44" data-layout="content-2col" data-accent="blue"
+           data-screen-label="18 如何让 AI 更懂你 —— 从每场会议开始"
+           data-slide-key="meeting-recap-ai" id="meeting-recap-ai" data-source-deck="opple" data-source-page="16" data-source-key="meeting-recap-ai">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh">如何让 AI 更懂你 —— 从每场会议开始</h2></div>
+        <div class="stage">
+          <div class="src-twin">
+            <div class="src-col">
+              <span class="src-pill">近 1 年的会议文档及会议发言</span>
+              <div class="src-img" role="img" aria-label="近一年周会文档及发言"
+                   style="background-image: url('opple/input/近一年周会发言.png')"></div>
+            </div>
+            <div class="src-col is-violet">
+              <span class="src-pill">会议相关的待办及评论</span>
+              <div class="src-img" role="img" aria-label="会议文档及评论"
+                   style="background-image: url('opple/input/会议文档及评论.png')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="slide-frame">
+      <div class="slide" data-page="45" data-layout="content-2col" data-accent="violet" data-decor="violet-glow"
+           data-screen-label="19 懂你的 AI · 可以代你做方案评审"
+           data-slide-key="proxy-review-ai" id="proxy-review-ai" data-source-deck="opple" data-source-page="17" data-source-key="proxy-review-ai">
+        <div class="wordmark"></div>
+        <div class="header"><h2 class="title-zh">懂你的 AI · 可以代你做方案评审</h2></div>
+        <div class="stage">
+          <div class="pic-flow">
+            <div class="pic-cell">
+              <div class="img-bg is-cover" role="img" aria-label="AI 实战白皮书封面" style="background-image:url('opple/input/AI实战白皮书.jpg')"></div>
+            </div>
+            <div class="arrow" aria-hidden="true">
+              <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 40 L66 40"/>
+                <path d="M48 22 L66 40 L48 58"/>
+              </svg>
+            </div>
+            <div class="pic-cell">
+              <div class="img-bg is-review" role="img" aria-label="AI 白皮书评审 · 数字分身视角" style="background-image:url('opple/input/白皮书评审.png')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="assets/feishu-deck.js"></script>
+</body>
+</html>

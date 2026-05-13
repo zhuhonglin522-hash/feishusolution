@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feishu Solution · 演示集</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080c14;
+      --panel: #101828;
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #edf4ff;
+      --muted: #a8b3c7;
+      --accent: #20d3c2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(32, 211, 194, 0.18), transparent 32rem),
+        linear-gradient(135deg, #080c14 0%, #0b1324 48%, #090d16 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    main {
+      width: min(960px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 72px 0 56px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      font-weight: 760;
+    }
+
+    .subtitle {
+      margin: 18px 0 42px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .demo-list {
+      display: grid;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .demo-link {
+      display: block;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 24, 40, 0.72);
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+    }
+
+    .demo-link:hover {
+      transform: translateY(-1px);
+      border-color: rgba(32, 211, 194, 0.58);
+      background: rgba(18, 32, 54, 0.86);
+    }
+
+    .demo-name {
+      display: block;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .demo-meta {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 42px;
+      color: #748198;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Feishu Solution</h1>
+    <p class="subtitle">HTML 演示集合，可直接通过 GitHub Pages 在线预览。</p>
+
+    <section aria-labelledby="customer-section">
+      <h2 class="section-title" id="customer-section">客户交流</h2>
+      <ul class="demo-list">
+        <li>
+          <a class="demo-link" href="./miniso-ip-2026-05-13/">
+            <span class="demo-name">AI 驱动名创从零售公司走向 IP 运营公司的组织能力重构</span>
+            <span class="demo-meta">2026-05-13 · H5 演示 · 19 页</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>Hosted on GitHub Pages</footer>
+  </main>
+</body>
+</html>
